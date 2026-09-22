@@ -1,0 +1,38 @@
+package ar.com.avaco.nitrophyl.service.pieza;
+
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ar.com.avaco.fwk.core.component.service.NJBaseService;
+import ar.com.avaco.nitrophyl.domain.entities.pieza.TipoMovimientoStock;
+import ar.com.avaco.nitrophyl.domain.entities.pieza.insumo.MateriaPrima;
+import ar.com.avaco.nitrophyl.domain.entities.pieza.insumo.MateriaPrimaStockHistorial;
+import ar.com.avaco.nitrophyl.repository.pieza.MateriaPrimaStockHistorialRepository;
+
+@Transactional
+@Service("materiaPrimaStockHistorialService")
+public class MateriaPrimaStockHistorialServiceImpl extends NJBaseService<Long, MateriaPrimaStockHistorial, MateriaPrimaStockHistorialRepository> implements MateriaPrimaStockHistorialService {
+
+	@Autowired
+	private MateriaPrimaService materiaPrimaService;
+	
+	@Override
+	public MateriaPrimaStockHistorial save(MateriaPrimaStockHistorial entity) {
+		MateriaPrima materiaPrima = materiaPrimaService.get(entity.getMateriaPrima().getId());
+		Double stockActual = materiaPrima.getCantidadStock();
+		Double nuevoStock = TipoMovimientoStock.calcularStock(stockActual, entity.getTipo(), entity.getCantidad());
+		materiaPrima.setCantidadStock(nuevoStock);
+		entity.setMateriaPrima(materiaPrima);
+		entity.setUnidadMedida(materiaPrima.getUnidadMedidaStock());
+		return super.save(entity);
+	}
+	
+	@Resource(name = "materiaPrimaStockHistorialRepository")
+	void setRepository(MateriaPrimaStockHistorialRepository materiaPrimaStockHistorialRepository) {
+		this.repository = materiaPrimaStockHistorialRepository;
+	}
+
+}

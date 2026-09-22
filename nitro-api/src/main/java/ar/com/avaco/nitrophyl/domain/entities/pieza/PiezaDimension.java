@@ -1,0 +1,137 @@
+package ar.com.avaco.nitrophyl.domain.entities.pieza;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+
+import ar.com.avaco.fwk.core.domain.AuditableEntity;
+import ar.com.avaco.nitrophyl.domain.entities.molde.TipoDimension;
+
+@Entity
+@Table(name = "PIEZA_DIMENSION")
+public class PiezaDimension extends AuditableEntity<Long> {
+
+	private static final long serialVersionUID = 7387245754379595320L;
+
+	@Id
+	@GeneratedValue(generator = "PIEZA_DIMENSION_SEQ")
+	@GenericGenerator(name = "PIEZA_DIMENSION_SEQ", strategy = "org.hibernate.id.enhanced.SequenceStyleGenerator", parameters = {
+			@org.hibernate.annotations.Parameter(name = "sequence_name", value = "PIEZA_DIMENSION_SEQ"),
+			@org.hibernate.annotations.Parameter(name = "initial_value", value = "1"),
+			@org.hibernate.annotations.Parameter(name = "increment_size", value = "1") })
+	@Column(name = "ID_PIEZA_DIMENSION", unique = true, nullable = false)
+	private Long id;
+
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "ID_PIEZA")
+	private Pieza pieza;
+
+	@Column(name = "TIPO")
+	@Enumerated(EnumType.STRING)
+	private TipoDimension tipo;
+
+	@Column(name = "VALOR")
+	private Double valor;
+	
+	@Column(name = "CONTROLAR")
+	private Boolean controlar;
+	
+	@Column(name = "MINIMO")
+	private Double minimo;
+	
+	@Column(name = "MAXIMO")
+	private Double maximo;
+
+	@Column(name = "OBSERVACIONES")
+	private String observaciones;
+
+	public PiezaDimension clonar(String username, Date fechaHora, Pieza pieza) {
+		PiezaDimension clonada = new PiezaDimension();
+		clonada.resetearCreacion(username, fechaHora);
+		clonada.setObservaciones(observaciones);
+		clonada.setPieza(pieza);
+		clonada.setTipo(tipo);
+		clonada.setValor(valor);
+		clonada.setMinimo(minimo);
+		clonada.setMaximo(maximo);
+		clonada.setControlar(controlar);
+		return clonada;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Pieza getPieza() {
+		return pieza;
+	}
+
+	public void setPieza(Pieza pieza) {
+		this.pieza = pieza;
+	}
+
+	public TipoDimension getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoDimension tipo) {
+		this.tipo = tipo;
+	}
+
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
+
+	public Boolean getControlar() {
+		return controlar;
+	}
+
+	public void setControlar(Boolean controlar) {
+		this.controlar = controlar;
+	}
+
+	public Double getMinimo() {
+		return minimo;
+	}
+
+	public void setMinimo(Double minimo) {
+		this.minimo = minimo;
+	}
+
+	public Double getMaximo() {
+		return maximo;
+	}
+
+	public void setMaximo(Double maximo) {
+		this.maximo = maximo;
+	}
+
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+
+	
+	
+}

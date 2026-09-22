@@ -1,0 +1,25 @@
+package ar.com.avaco.nitrophyl.service.pieza;
+
+import java.util.List;
+
+import ar.com.avaco.fwk.core.component.service.NJService;
+import ar.com.avaco.nitrophyl.domain.entities.pieza.Pieza;
+import ar.com.avaco.nitrophyl.ws.dto.PiezaComboDTO;
+import ar.com.avaco.nitrophyl.ws.dto.PiezaFilterDTO;
+import ar.com.avaco.nitrophyl.ws.dto.PiezaGrillaDTO;
+
+public interface PiezaService extends NJService<Long, Pieza> {
+
+	Pieza getVigenteByCodigoInternoFormula(String codigoInterno, Long idFormula);
+
+	List<PiezaGrillaDTO> listGrilla(PiezaFilterDTO pfdto);
+
+	boolean existsByFormula(Long idFormula);
+
+	void actualizarFaltantes(Pieza pieza);
+
+	List<PiezaComboDTO> listCombo(String nombre, Long idCliente);
+
+	boolean existsByCodigoAndDetalleFormulaFormulaId(String codigo, Long idMaterial);
+
+}

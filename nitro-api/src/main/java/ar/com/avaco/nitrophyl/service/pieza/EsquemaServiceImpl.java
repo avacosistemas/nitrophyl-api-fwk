@@ -1,0 +1,54 @@
+package ar.com.avaco.nitrophyl.service.pieza;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ar.com.avaco.fwk.core.component.service.NJBaseService;
+import ar.com.avaco.nitrophyl.domain.entities.pieza.Pieza;
+import ar.com.avaco.nitrophyl.domain.entities.pieza.esquema.Esquema;
+import ar.com.avaco.nitrophyl.repository.pieza.EsquemaRepository;
+
+@Transactional
+@Service("esquemaService")
+public class EsquemaServiceImpl extends NJBaseService<Long, Esquema, EsquemaRepository> implements EsquemaService {
+
+	@Resource(name = "esquemaRepository")
+	void setRepository(EsquemaRepository esquemaRepository) {
+		this.repository = esquemaRepository;
+	}
+
+	@Autowired
+	private PiezaService piezaService;
+
+	@Override
+	public Esquema save(Esquema entity) {
+		Esquema save = super.save(entity);
+		Pieza pieza = save.getProceso().getPieza();
+		pieza.setProceso(save.getProceso());
+		this.piezaService.actualizarFaltantes(pieza);
+		return save;
+	}
+	
+	@Override
+	public void remove(Long id) {
+		Esquema esquema = this.get(id);
+		esquema.getProceso().getEsquema().remove(esquema);
+		this.piezaService.update(esquema.getProceso().getPieza());
+	}
+	
+	@Override
+	public void reordenar(Long idEsquema, Integer posicion) {
+		this.repository.moverEsquema(idEsquema, posicion);
+	}
+
+	@Override
+	public List<Esquema> listEsquemas(Long idProceso) {
+		return this.repository.findByProcesoIdOrderByPosicionAsc(idProceso);
+	}
+
+}

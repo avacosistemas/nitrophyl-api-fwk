@@ -1,0 +1,8 @@
+package ar.com.avaco.nitrophyl.ws.service;
+
+import ar.com.avaco.nitrophyl.ws.dto.{entity}DTO;
+import ar.com.avaco.fwk.core.component.epservice.CRUDAuditableEPService;
+
+public interface {entity}EPService extends CRUDAuditableEPService<Long, {entity}DTO> {
+
+}
