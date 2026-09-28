@@ -46,7 +46,7 @@ public class OrdenFabricacionEntrega extends AuditableEntity<Long> {
 	@Column(name = "FECHA")
 	private LocalDate fecha;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "ORDEN_FABRICACION_ENTREGA_LOTE", joinColumns = @JoinColumn(name = "ID_ORDEN_FAB_ENT", referencedColumnName = "ID_ORDEN_FAB_ENT"), inverseJoinColumns = @JoinColumn(name = "ID_LOTE", referencedColumnName = "ID_LOTE"))
 	private Set<Lote> lotes = new HashSet<Lote>();
 

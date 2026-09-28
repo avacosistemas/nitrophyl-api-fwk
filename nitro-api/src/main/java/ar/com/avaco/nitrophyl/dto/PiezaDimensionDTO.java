@@ -1,0 +1,88 @@
+package ar.com.avaco.nitrophyl.dto;
+
+import ar.com.avaco.fwk.core.component.dto.entity.DTOAuditableEntity;
+import ar.com.avaco.nitrophyl.domain.entities.molde.TipoDimension;
+
+public class PiezaDimensionDTO extends DTOAuditableEntity<Long> {
+
+	private Long id;
+
+	private Long idPieza;
+
+	private TipoDimension tipo;
+
+	private Double valor;
+
+	private Boolean controlar;
+
+	private Double minimo;
+
+	private Double maximo;
+
+	private String observaciones;
+
+	public Boolean getControlar() {
+		return controlar;
+	}
+
+	public void setControlar(Boolean controlar) {
+		this.controlar = controlar;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public TipoDimension getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoDimension tipo) {
+		this.tipo = tipo;
+	}
+
+	public Double getValor() {
+		return valor;
+	}
+
+	public void setValor(Double valor) {
+		this.valor = valor;
+	}
+
+	public Double getMinimo() {
+		return minimo;
+	}
+
+	public void setMinimo(Double minimo) {
+		this.minimo = minimo;
+	}
+
+	public Double getMaximo() {
+		return maximo;
+	}
+
+	public void setMaximo(Double maximo) {
+		this.maximo = maximo;
+	}
+
+	public String getObservaciones() {
+		return observaciones;
+	}
+
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+
+	public Long getIdPieza() {
+		return idPieza;
+	}
+
+	public void setIdPieza(Long idPieza) {
+		this.idPieza = idPieza;
+	}
+
+}

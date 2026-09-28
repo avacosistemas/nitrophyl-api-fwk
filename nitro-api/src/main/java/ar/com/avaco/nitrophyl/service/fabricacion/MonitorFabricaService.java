@@ -2,8 +2,8 @@ package ar.com.avaco.nitrophyl.service.fabricacion;
 
 import java.util.List;
 
-import ar.com.avaco.nitrophyl.ws.dto.DetalleMaquinaOrdenTrabajoDTO;
-import ar.com.avaco.nitrophyl.ws.dto.ResumenMaquinaOrdenTrabajoDTO;
+import ar.com.avaco.nitrophyl.dto.DetalleMaquinaOrdenTrabajoDTO;
+import ar.com.avaco.nitrophyl.dto.ResumenMaquinaOrdenTrabajoDTO;
 
 public interface MonitorFabricaService {
 

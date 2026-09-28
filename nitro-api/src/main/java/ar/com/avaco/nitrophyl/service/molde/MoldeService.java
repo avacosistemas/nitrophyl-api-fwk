@@ -4,8 +4,8 @@ import java.util.List;
 
 import ar.com.avaco.fwk.core.component.service.NJService;
 import ar.com.avaco.nitrophyl.domain.entities.molde.Molde;
-import ar.com.avaco.nitrophyl.ws.dto.MoldeFilterDTO;
-import ar.com.avaco.nitrophyl.ws.dto.MoldeListadoDTO;
+import ar.com.avaco.nitrophyl.dto.MoldeFilterDTO;
+import ar.com.avaco.nitrophyl.dto.MoldeListadoDTO;
 
 public interface MoldeService extends NJService<Long, Molde> {
 

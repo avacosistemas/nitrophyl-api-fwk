@@ -31,11 +31,11 @@ public class RegistroEnvioInformeCalidad extends AuditableEntity<Long> {
 	private Long id;
 
 	@JoinColumn(name = "ID_CLIENTE", nullable = true)
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Cliente cliente;
 
 	@JoinColumn(name = "ID_LOTE", nullable = false)
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Lote lote;
 
 	@Column(name = "EMAIL_ENVIADO")

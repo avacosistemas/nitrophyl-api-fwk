@@ -13,10 +13,10 @@ import ar.com.avaco.nitrophyl.domain.entities.pieza.Pieza;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.Proceso;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.Terminacion;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.moldeo.Vulcanizacion;
+import ar.com.avaco.nitrophyl.dto.PiezaComboDTO;
+import ar.com.avaco.nitrophyl.dto.PiezaFilterDTO;
+import ar.com.avaco.nitrophyl.dto.PiezaGrillaDTO;
 import ar.com.avaco.nitrophyl.repository.pieza.PiezaRepository;
-import ar.com.avaco.nitrophyl.ws.dto.PiezaComboDTO;
-import ar.com.avaco.nitrophyl.ws.dto.PiezaFilterDTO;
-import ar.com.avaco.nitrophyl.ws.dto.PiezaGrillaDTO;
 
 @Transactional
 @Service("piezaService")

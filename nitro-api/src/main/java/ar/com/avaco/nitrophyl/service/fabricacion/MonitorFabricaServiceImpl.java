@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ar.com.avaco.nitrophyl.dto.DetalleMaquinaOrdenTrabajoDTO;
+import ar.com.avaco.nitrophyl.dto.ResumenMaquinaOrdenTrabajoDTO;
 import ar.com.avaco.nitrophyl.repository.fabricacion.OrdenFabricacionRepository;
-import ar.com.avaco.nitrophyl.ws.dto.DetalleMaquinaOrdenTrabajoDTO;
-import ar.com.avaco.nitrophyl.ws.dto.ResumenMaquinaOrdenTrabajoDTO;
 
 @Service("monitorFabricaService")
 public class MonitorFabricaServiceImpl implements MonitorFabricaService {

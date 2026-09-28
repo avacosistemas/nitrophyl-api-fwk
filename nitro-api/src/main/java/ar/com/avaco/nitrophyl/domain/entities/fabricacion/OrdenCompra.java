@@ -55,7 +55,7 @@ public class OrdenCompra extends AuditableEntity<Long> {
 	@Column(name = "FECHA")
 	private LocalDate fecha;
 
-	@OneToOne(mappedBy = "ordenDeCompra", cascade = CascadeType.ALL, optional = false, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "ordenDeCompra", cascade = CascadeType.ALL, optional = false, fetch = FetchType.EAGER)
 	private OrdenCompraArchivo archivo;
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "ordenCompra", orphanRemoval = true)

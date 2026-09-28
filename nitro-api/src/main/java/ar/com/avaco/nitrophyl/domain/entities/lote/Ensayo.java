@@ -39,7 +39,7 @@ public class Ensayo extends AuditableEntity<Long> {
 	@Column(name = "ID_ENSAYO", unique = true, nullable = false)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "ID_LOTE")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Lote lote;
@@ -58,7 +58,7 @@ public class Ensayo extends AuditableEntity<Long> {
 	@Enumerated(EnumType.STRING)
 	private EstadoEnsayo estado;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "ensayo", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "ensayo", orphanRemoval = true)
 	private Set<EnsayoResultado> resultados = new HashSet<>();
 
 	public Long getId() {

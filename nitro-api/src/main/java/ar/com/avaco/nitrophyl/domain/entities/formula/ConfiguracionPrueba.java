@@ -34,7 +34,7 @@ public class ConfiguracionPrueba extends ar.com.avaco.fwk.core.domain.Entity<Lon
 	@Column(name = "ID_CONF_PRUEBA", unique = true, nullable = false)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "ID_MAQUINA")
 	private Maquina maquina;
 
@@ -50,17 +50,17 @@ public class ConfiguracionPrueba extends ar.com.avaco.fwk.core.domain.Entity<Lon
 	@Column(name = "VIGENTE", nullable = false)
 	private Boolean vigente;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "ID_FORMULA")
 	private Formula formula;
 
 	@Column(name = "OBSERVACIONES_REPORTE")
 	private String observacionesReporte;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "configuracionPrueba", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "configuracionPrueba", orphanRemoval = true)
 	private Set<ConfiguracionPruebaParametro> parametros = new HashSet<>();
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "configuracionPrueba", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "configuracionPrueba", orphanRemoval = true)
 	private Set<ConfiguracionPruebaCondicion> condiciones = new HashSet<>();
 
 	public Long getId() {

@@ -29,7 +29,7 @@ public class ConfiguracionPruebaCondicion extends ar.com.avaco.fwk.core.domain.E
 	@Column(name = "ID_CONF_PRUEBA_COND", unique = true, nullable = false)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "ID_CONF_PRUEBA")
 	private ConfiguracionPrueba configuracionPrueba;
 

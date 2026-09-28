@@ -27,7 +27,7 @@ import org.hibernate.annotations.GenericGenerator;
 import ar.com.avaco.fwk.core.domain.AuditableEntity;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.cliente.PiezaCliente;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.insumo.InsumoTratado;
-import ar.com.avaco.nitrophyl.ws.dto.PiezaGrillaDTO;
+import ar.com.avaco.nitrophyl.dto.PiezaGrillaDTO;
 
 @SqlResultSetMapping(name = "PiezaGrillaDTOMapper", classes = {
 		@ConstructorResult(targetClass = PiezaGrillaDTO.class, columns = {
@@ -88,7 +88,7 @@ public class Pieza extends AuditableEntity<Long> {
 	/**
 	 * Listado de dimensiones de la pieza.
 	 */
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pieza", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "pieza", orphanRemoval = true)
 	@Fetch(FetchMode.SELECT)
 	private Set<PiezaDimension> dimensiones = new HashSet<>();
 
@@ -107,27 +107,27 @@ public class Pieza extends AuditableEntity<Long> {
 	/**
 	 * Planos asociados a la pieza
 	 */
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pieza", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "pieza", orphanRemoval = true)
 	@Fetch(FetchMode.SELECT)
 	private Set<PiezaPlano> planos = new HashSet<>();
 
 	/**
 	 * Insumos de la pieza con su tratamiento y pegamento.
 	 */
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pieza", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "pieza", orphanRemoval = true)
 	@Fetch(FetchMode.SELECT)
 	private Set<InsumoTratado> insumos = new HashSet<>();
 
 	/**
 	 * Listado de moldes asociados de la pieza.
 	 */
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pieza", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "pieza", orphanRemoval = true)
 	private Set<PiezaMolde> moldes = new HashSet<>();
 
 	/**
 	 * Listado de espesores asociados de la pieza.
 	 */
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pieza", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "pieza", orphanRemoval = true)
 	private Set<PiezaEspesor> espesores = new HashSet<>();
 
 	/**
@@ -136,7 +136,7 @@ public class Pieza extends AuditableEntity<Long> {
 	@OneToOne(mappedBy = "pieza", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Proceso proceso;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "pieza", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "pieza", orphanRemoval = true)
 	private Set<PiezaCliente> clientes = new HashSet<>();
 
 	/**
@@ -169,7 +169,7 @@ public class Pieza extends AuditableEntity<Long> {
 	@Column(name = "OBSERVACIONES_REVISION")
 	private String observacionesRevision;
 
-	@OneToOne(mappedBy = "pieza", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "pieza", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private PiezaStock stock;
 
 	public static Pieza ofId(Long id) {

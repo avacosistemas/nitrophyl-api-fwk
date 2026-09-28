@@ -1,8 +1,8 @@
 package ar.com.avaco.nitrophyl.repository.pieza;
 
-import ar.com.avaco.nitrophyl.ws.dto.CotizacionDTO;
-import ar.com.avaco.nitrophyl.ws.dto.CotizacionFilterDTO;
 import ar.com.avaco.fwk.core.component.dto.PageDTO;
+import ar.com.avaco.nitrophyl.dto.CotizacionDTO;
+import ar.com.avaco.nitrophyl.dto.CotizacionFilterDTO;
 
 public interface CotizacionRepositoryCustom {
 

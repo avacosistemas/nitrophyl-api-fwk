@@ -44,7 +44,7 @@ public class Esquema extends AuditableEntity<Long> {
 	@Column(name = "TITULO")
 	private String titulo;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "esquema", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "esquema", orphanRemoval = true)
 	@OrderBy("posicion ASC")
 	private List<EsquemaPaso> pasos = new ArrayList<EsquemaPaso>();
 

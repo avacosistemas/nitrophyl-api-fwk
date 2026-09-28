@@ -16,7 +16,7 @@ import ar.com.avaco.nitrophyl.ws.service.{entity}EPService;
 import ar.com.avaco.fwk.core.component.dto.JSONResponse;
 
 @RestController
-public class {entity}RestController extends AbstractAuditableDTORestController<{entity}DTO, Long, {entity}EPService> {
+public class {entity}RestController extends AbstractDTORestController<{entity}DTO, Long, {entity}EPService> {
 
 	@Override
 	@RequestMapping(value = "/{entityMinuscula}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

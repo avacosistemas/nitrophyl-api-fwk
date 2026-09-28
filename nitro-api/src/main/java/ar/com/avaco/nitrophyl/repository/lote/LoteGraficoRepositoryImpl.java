@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import ar.com.avaco.fwk.core.component.repository.NJBaseRepository;
 import ar.com.avaco.nitrophyl.domain.entities.molde.LoteGrafico;
-import ar.com.avaco.nitrophyl.ws.dto.LoteGraficoSinArchivoDTO;
+import ar.com.avaco.nitrophyl.dto.LoteGraficoSinArchivoDTO;
 
 @Repository("loteGraficoRepository")
 public class LoteGraficoRepositoryImpl extends NJBaseRepository<Long, LoteGrafico>

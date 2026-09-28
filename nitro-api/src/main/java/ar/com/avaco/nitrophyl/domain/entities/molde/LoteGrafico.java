@@ -21,7 +21,7 @@ import org.hibernate.annotations.Type;
 
 import ar.com.avaco.nitrophyl.domain.entities.lote.Lote;
 import ar.com.avaco.nitrophyl.domain.entities.maquina.Maquina;
-import ar.com.avaco.nitrophyl.ws.dto.LoteGraficoSinArchivoDTO;
+import ar.com.avaco.nitrophyl.dto.LoteGraficoSinArchivoDTO;
 
 @SqlResultSetMapping(name="LoteGraficoSinArchivoDTOMapper",
 classes = {
@@ -36,7 +36,6 @@ classes = {
 
 @Entity
 @Table(name = "LOTE_GRAFICO")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class LoteGrafico extends ar.com.avaco.fwk.core.domain.Entity<Long> {
 
 	private static final long serialVersionUID = -1452187713424215163L;
@@ -60,7 +59,7 @@ public class LoteGrafico extends ar.com.avaco.fwk.core.domain.Entity<Long> {
 	@Column(name = "FECHA")
 	private Date fecha;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "ID_MAQUINA")
 	private Maquina maquina;
 

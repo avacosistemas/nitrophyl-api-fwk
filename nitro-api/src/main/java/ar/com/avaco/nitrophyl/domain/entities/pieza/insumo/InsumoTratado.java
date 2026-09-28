@@ -41,7 +41,7 @@ public class InsumoTratado extends AuditableEntity<Long> {
 	@Column(name = "ID_INSUMO_TRATADO", unique = true, nullable = false)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "ID_PIEZA")
 	private Pieza pieza;
 
@@ -59,7 +59,7 @@ public class InsumoTratado extends AuditableEntity<Long> {
 	@Fetch(FetchMode.SELECT)
 	private Set<Adhesivo> adhesivos = new HashSet<>();
 
-	@OneToMany(mappedBy = "insumoTratado", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "insumoTratado", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private Set<InsumoTratadoObservacionControl> observaciones = new HashSet<InsumoTratadoObservacionControl>();
 
 	/**

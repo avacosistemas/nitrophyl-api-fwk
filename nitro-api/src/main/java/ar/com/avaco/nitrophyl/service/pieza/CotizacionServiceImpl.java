@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.Pieza;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.cliente.Cotizacion;
+import ar.com.avaco.nitrophyl.dto.CotizacionDTO;
+import ar.com.avaco.nitrophyl.dto.CotizacionFilterDTO;
 import ar.com.avaco.nitrophyl.repository.pieza.CotizacionRepository;
 import ar.com.avaco.nitrophyl.repository.pieza.PiezaRepository;
-import ar.com.avaco.nitrophyl.ws.dto.CotizacionDTO;
-import ar.com.avaco.nitrophyl.ws.dto.CotizacionFilterDTO;
 import ar.com.avaco.fwk.core.component.dto.PageDTO;
 
 @Transactional

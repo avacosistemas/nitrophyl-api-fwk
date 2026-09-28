@@ -4,8 +4,8 @@ import java.util.List;
 
 import ar.com.avaco.fwk.core.component.service.NJService;
 import ar.com.avaco.nitrophyl.domain.entities.lote.Lote;
-import ar.com.avaco.nitrophyl.ws.dto.RegistroEnsayoLotePorMaquinaDTO;
-import ar.com.avaco.nitrophyl.ws.dto.ReporteEnsayoLotePorMaquinaFilterDTO;
+import ar.com.avaco.nitrophyl.dto.RegistroEnsayoLotePorMaquinaDTO;
+import ar.com.avaco.nitrophyl.dto.ReporteEnsayoLotePorMaquinaFilterDTO;
 
 public interface LoteService extends NJService<Long, Lote> {
 

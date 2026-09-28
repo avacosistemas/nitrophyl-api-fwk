@@ -2,7 +2,7 @@ package ar.com.avaco.nitrophyl.repository.lote;
 
 import java.util.List;
 
-import ar.com.avaco.nitrophyl.ws.dto.LoteGraficoSinArchivoDTO;
+import ar.com.avaco.nitrophyl.dto.LoteGraficoSinArchivoDTO;
 
 public interface LoteGraficoRepositoryCustom {
 

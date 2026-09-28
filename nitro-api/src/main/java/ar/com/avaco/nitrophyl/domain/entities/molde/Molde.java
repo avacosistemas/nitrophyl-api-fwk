@@ -21,14 +21,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import ar.com.avaco.fwk.core.domain.AuditableEntity;
 import ar.com.avaco.nitrophyl.domain.entities.cliente.Cliente;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.PiezaTipo;
-import ar.com.avaco.nitrophyl.ws.dto.MoldeListadoDTO;
+import ar.com.avaco.nitrophyl.dto.MoldeListadoDTO;
 
 @SqlResultSetMapping(name = "MoldeListadoDTOMapper", classes = {
 		@ConstructorResult(targetClass = MoldeListadoDTO.class, columns = {
@@ -93,10 +91,9 @@ public class Molde extends AuditableEntity<Long> {
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "MOLDE_TIPO_PIEZA", joinColumns = @JoinColumn(name = "ID_MOLDE", referencedColumnName = "ID_MOLDE"), inverseJoinColumns = @JoinColumn(name = "ID_PIEZA_TIPO", referencedColumnName = "ID_PIEZA_TIPO"))
-	@Fetch(FetchMode.SELECT)
 	private Set<PiezaTipo> tiposPieza = new HashSet<>();
 
-	@OneToMany(mappedBy = "molde", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "molde", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private Set<MoldeBoca> bocas = new HashSet<>();
 
 	@Column(name = "TIPO_MOLDE")

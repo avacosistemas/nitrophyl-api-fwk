@@ -39,15 +39,15 @@ public class ReporteLoteConfiguracionCliente extends ar.com.avaco.fwk.core.domai
 	private Long id;
 
 	@JoinColumn(name = "ID_CLIENTE", nullable = true)
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Cliente cliente;
 
 	@JoinColumn(name = "ID_FORMULA", nullable = false)
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Formula formula;
 
 	@JoinColumn(name = "ID_MAQUINA", nullable = true)
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Maquina maquina;
 
 	@Column(name = "MOSTRAR_PARAMETROS")

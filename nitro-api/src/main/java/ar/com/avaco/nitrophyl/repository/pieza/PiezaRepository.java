@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import ar.com.avaco.fwk.core.component.repository.NJRepository;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.Pieza;
-import ar.com.avaco.nitrophyl.ws.dto.PiezaComboDTO;
+import ar.com.avaco.nitrophyl.dto.PiezaComboDTO;
 
 public interface PiezaRepository extends NJRepository<Long, Pieza>, PiezaRepositoryCustom {
 
@@ -20,7 +20,7 @@ public interface PiezaRepository extends NJRepository<Long, Pieza>, PiezaReposit
 	@Query("UPDATE Pieza p SET p.faltantes = ?2 where p.id = ?1")
 	void actualizarFaltantes(Long idPieza, String faltantes);
 
-	@Query("SELECT DISTINCT new ar.com.avaco.nitrophyl.ws.dto.PiezaComboDTO(" +
+	@Query("SELECT DISTINCT new ar.com.avaco.nitrophyl.dto.PiezaComboDTO(" +
 		       "p.id, p.denominacion, p.detalleFormula.formula.nombre, p.codigo) " +
 		       "FROM Pieza p " +
 		       "LEFT JOIN p.clientes pc " +

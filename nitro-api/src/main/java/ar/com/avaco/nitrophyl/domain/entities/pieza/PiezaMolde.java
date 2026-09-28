@@ -31,11 +31,11 @@ public class PiezaMolde extends AuditableEntity<Long> {
 	@Column(name = "ID_PIEZA_MOLDE", unique = true, nullable = false)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "ID_PIEZA")
 	private Pieza pieza;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "ID_MOLDE")
 	private Molde molde;
 

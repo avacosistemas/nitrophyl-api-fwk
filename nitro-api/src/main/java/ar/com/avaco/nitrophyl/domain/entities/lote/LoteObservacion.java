@@ -30,7 +30,7 @@ public class LoteObservacion extends AuditableEntity<Long> {
 	@Column(name = "ID_LOTE_OBSERVACION", unique = true, nullable = false)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "ID_LOTE")
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Lote lote;

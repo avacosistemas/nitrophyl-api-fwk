@@ -16,8 +16,8 @@ import ar.com.avaco.fwk.core.component.dto.PageDTO;
 import ar.com.avaco.fwk.core.component.repository.NJBaseRepository;
 import ar.com.avaco.fwk.core.utils.DateUtils;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.OrdenFabricacion;
-import ar.com.avaco.nitrophyl.ws.dto.ListadoOrdenFabricacionDTO;
-import ar.com.avaco.nitrophyl.ws.dto.OrdenFabricacionFilterDTO;
+import ar.com.avaco.nitrophyl.dto.ListadoOrdenFabricacionDTO;
+import ar.com.avaco.nitrophyl.dto.OrdenFabricacionFilterDTO;
 
 @Repository("ordenFabricacionRepository")
 public class OrdenFabricacionRepositoryImpl extends NJBaseRepository<Long, OrdenFabricacion>

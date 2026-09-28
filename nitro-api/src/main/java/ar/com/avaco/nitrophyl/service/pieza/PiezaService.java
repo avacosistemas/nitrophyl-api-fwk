@@ -4,9 +4,9 @@ import java.util.List;
 
 import ar.com.avaco.fwk.core.component.service.NJService;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.Pieza;
-import ar.com.avaco.nitrophyl.ws.dto.PiezaComboDTO;
-import ar.com.avaco.nitrophyl.ws.dto.PiezaFilterDTO;
-import ar.com.avaco.nitrophyl.ws.dto.PiezaGrillaDTO;
+import ar.com.avaco.nitrophyl.dto.PiezaComboDTO;
+import ar.com.avaco.nitrophyl.dto.PiezaFilterDTO;
+import ar.com.avaco.nitrophyl.dto.PiezaGrillaDTO;
 
 public interface PiezaService extends NJService<Long, Pieza> {
 

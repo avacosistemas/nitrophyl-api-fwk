@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import ar.com.avaco.fwk.core.component.repository.NJBaseRepository;
 import ar.com.avaco.nitrophyl.domain.entities.lote.Lote;
-import ar.com.avaco.nitrophyl.ws.dto.RegistroEnsayoLotePorMaquinaDTO;
-import ar.com.avaco.nitrophyl.ws.dto.ReporteEnsayoLotePorMaquinaFilterDTO;
+import ar.com.avaco.nitrophyl.dto.RegistroEnsayoLotePorMaquinaDTO;
+import ar.com.avaco.nitrophyl.dto.ReporteEnsayoLotePorMaquinaFilterDTO;
 import ar.com.avaco.fwk.core.utils.DateUtils;
 
 @Repository("loteRepository")

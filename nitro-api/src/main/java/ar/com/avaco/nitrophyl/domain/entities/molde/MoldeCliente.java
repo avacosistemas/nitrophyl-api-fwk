@@ -20,12 +20,12 @@ public class MoldeCliente extends ar.com.avaco.fwk.core.domain.Entity<MoldeClien
 	@EmbeddedId
 	private MoldeClienteId id;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@MapsId("idMolde")
 	@JoinColumn(name = "ID_MOLDE")
 	private Molde molde;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@MapsId("idCliente")
 	@JoinColumn(name = "ID_CLIENTE")
 	private Cliente cliente;

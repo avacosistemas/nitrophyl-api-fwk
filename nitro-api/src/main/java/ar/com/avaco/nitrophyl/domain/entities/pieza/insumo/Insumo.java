@@ -35,7 +35,7 @@ public class Insumo extends AuditableEntity<Long> {
 	@Column(name = "NOMBRE")
 	private String nombre;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "ID_TIPO")
 	private TipoInsumo tipo;
 

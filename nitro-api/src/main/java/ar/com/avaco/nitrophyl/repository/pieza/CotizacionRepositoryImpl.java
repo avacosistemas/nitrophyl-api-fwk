@@ -9,8 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import ar.com.avaco.fwk.core.component.repository.NJBaseRepository;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.cliente.Cotizacion;
-import ar.com.avaco.nitrophyl.ws.dto.CotizacionDTO;
-import ar.com.avaco.nitrophyl.ws.dto.CotizacionFilterDTO;
+import ar.com.avaco.nitrophyl.dto.CotizacionDTO;
+import ar.com.avaco.nitrophyl.dto.CotizacionFilterDTO;
 import ar.com.avaco.fwk.core.component.dto.PageDTO;
 
 @Repository("cotizacionRepository")
@@ -33,7 +33,7 @@ public class CotizacionRepositoryImpl extends NJBaseRepository<Long, Cotizacion>
 
 		// --------- Query base ---------
 		StringBuilder sb = new StringBuilder();
-		sb.append("SELECT new ar.com.avaco.nitrophyl.ws.dto.CotizacionDTO(")
+		sb.append("SELECT new ar.com.avaco.nitrophyl.dto.CotizacionDTO(")
 				.append(" c.id, ")
 				.append(" c.piezaCliente.cliente.nombre, ")
 				.append(" c.piezaCliente.cliente.id, ")

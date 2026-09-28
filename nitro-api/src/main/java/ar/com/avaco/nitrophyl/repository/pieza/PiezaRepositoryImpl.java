@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import ar.com.avaco.fwk.core.component.repository.NJBaseRepository;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.Pieza;
-import ar.com.avaco.nitrophyl.ws.dto.PiezaFilterDTO;
-import ar.com.avaco.nitrophyl.ws.dto.PiezaGrillaDTO;
+import ar.com.avaco.nitrophyl.dto.PiezaFilterDTO;
+import ar.com.avaco.nitrophyl.dto.PiezaGrillaDTO;
 
 @Repository("piezaRepository")
 public class PiezaRepositoryImpl extends NJBaseRepository<Long, Pieza> implements PiezaRepositoryCustom {

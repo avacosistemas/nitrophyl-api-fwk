@@ -1,0 +1,8 @@
+package ar.com.avaco.nitrophyl.epservice;
+
+import ar.com.avaco.fwk.core.component.epservice.CRUDEPService;
+import ar.com.avaco.nitrophyl.dto.PrensaDTO;
+
+public interface PrensaEPService extends CRUDEPService<Long, PrensaDTO> {
+
+}

@@ -4,8 +4,8 @@ import java.util.List;
 
 import ar.com.avaco.fwk.core.component.service.NJService;
 import ar.com.avaco.nitrophyl.domain.entities.molde.LoteGrafico;
-import ar.com.avaco.nitrophyl.ws.dto.ArchivoDTO;
-import ar.com.avaco.nitrophyl.ws.dto.LoteGraficoSinArchivoDTO;
+import ar.com.avaco.nitrophyl.dto.ArchivoDTO;
+import ar.com.avaco.nitrophyl.dto.LoteGraficoSinArchivoDTO;
 
 public interface LoteGraficoService extends NJService<Long, LoteGrafico> {
 

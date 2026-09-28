@@ -6,8 +6,8 @@ import java.util.Set;
 import ar.com.avaco.fwk.core.component.service.NJService;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.OrdenCompraDetalle;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.OrdenFabricacion;
-import ar.com.avaco.nitrophyl.ws.dto.ListadoOrdenFabricacionDTO;
-import ar.com.avaco.nitrophyl.ws.dto.OrdenFabricacionFilterDTO;
+import ar.com.avaco.nitrophyl.dto.ListadoOrdenFabricacionDTO;
+import ar.com.avaco.nitrophyl.dto.OrdenFabricacionFilterDTO;
 import ar.com.avaco.fwk.core.component.dto.PageDTO;
 
 public interface OrdenFabricacionService extends NJService<Long, OrdenFabricacion> {

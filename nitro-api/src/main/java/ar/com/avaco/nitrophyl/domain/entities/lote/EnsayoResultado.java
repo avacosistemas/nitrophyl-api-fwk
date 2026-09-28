@@ -19,7 +19,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import ar.com.avaco.fwk.core.domain.AuditableEntity;
 import ar.com.avaco.nitrophyl.domain.entities.formula.ConfiguracionPruebaParametro;
-import ar.com.avaco.nitrophyl.ws.dto.RegistroEnsayoLotePorMaquinaDTO;
+import ar.com.avaco.nitrophyl.dto.RegistroEnsayoLotePorMaquinaDTO;
 
 @SqlResultSetMapping(name="RegistroEnsayoLotePorMaquinaDTOMapper",
 classes = {

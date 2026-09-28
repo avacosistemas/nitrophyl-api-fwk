@@ -15,8 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
@@ -34,7 +32,7 @@ public class RevisionParametros extends ar.com.avaco.fwk.core.domain.Entity<Long
 	@Column(name = "ID_REV_PARAM")
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "ID_FORMULA")
 	private Formula formula;
 
@@ -49,9 +47,8 @@ public class RevisionParametros extends ar.com.avaco.fwk.core.domain.Entity<Long
 	@Column(name = "FECHA_HASTA")
 	private Date fechaHasta;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "FORMULA_REV_PARAM_CONF_PRUEBA", joinColumns = @JoinColumn(name = "ID_FORMULA_REV_PARAM", referencedColumnName = "ID_REV_PARAM"), inverseJoinColumns = @JoinColumn(name = "ID_CONF_PRUEBA", referencedColumnName = "ID_CONF_PRUEBA"))
-	@Fetch(FetchMode.SELECT)
 	private Set<ConfiguracionPrueba> configuraciones = new HashSet<>();
 
 	public Long getId() {

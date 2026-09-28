@@ -30,7 +30,7 @@ public class PiezaEspesor extends AuditableEntity<Long> {
 	@Column(name = "ID_PIEZA_ESPESOR", unique = true, nullable = false)
 	private Long id;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "ID_PIEZA")
 	private Pieza pieza;
 

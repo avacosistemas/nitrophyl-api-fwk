@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import ar.com.avaco.fwk.core.component.repository.NJBaseRepository;
 import ar.com.avaco.nitrophyl.domain.entities.molde.Molde;
-import ar.com.avaco.nitrophyl.ws.dto.MoldeFilterDTO;
-import ar.com.avaco.nitrophyl.ws.dto.MoldeListadoDTO;
+import ar.com.avaco.nitrophyl.dto.MoldeFilterDTO;
+import ar.com.avaco.nitrophyl.dto.MoldeListadoDTO;
 
 @Repository("moldeRepository")
 public class MoldeRepositoryImpl extends NJBaseRepository<Long, Molde> implements MoldeRepositoryCustom {

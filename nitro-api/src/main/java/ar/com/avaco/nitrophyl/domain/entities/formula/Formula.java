@@ -9,8 +9,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -23,7 +21,6 @@ import ar.com.avaco.nitrophyl.domain.entities.pieza.UnidadDureza;
 
 @Entity
 @Table(name = "FORMULA")
-@Inheritance(strategy = InheritanceType.JOINED)
 public class Formula extends ar.com.avaco.fwk.core.domain.Entity<Long> {
 
 	/**

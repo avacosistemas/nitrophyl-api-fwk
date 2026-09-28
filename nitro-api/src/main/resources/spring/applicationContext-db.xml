@@ -33,16 +33,6 @@
 		<beans:property name="fileEncoding" value="UTF-8" />
 	</beans:bean>
 
-	<!-- DataSource map -->
-	<!-- <util:map id="dataSourceMap"> -->
-	<!-- <beans:entry key="DB_DRIVERCLASSNAME" -->
-	<!-- value="${DB_DRIVERCLASSNAME}" /> -->
-	<!-- <beans:entry key="DB_DIALECT" value="${DB_DIALECT}" /> -->
-	<!-- <beans:entry key="DB_USERNAME" value="${DB_USERNAME}" /> -->
-	<!-- <beans:entry key="DB_PASSWORD" value="${DB_PASSWORD}" /> -->
-	<!-- <beans:entry key="DB_URL" value="${DB_URL}" /> -->
-	<!-- </util:map> -->
-
 	<!-- EntityManagerFactory -->
 	<beans:bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
@@ -52,10 +42,8 @@
 		<beans:property name="packagesToScan">
 			<beans:array>
 				<beans:value>ar.com.avaco.fwk.security.domain</beans:value>
-				<beans:value>ar.com.avaco.arc.sec.domain</beans:value>
-				<beans:value>ar.com.avaco.commons.domain</beans:value>
-				<beans:value>ar.com.avaco.nitrophyl.domain</beans:value>
 				<beans:value>ar.com.avaco.fwk.commons.domain</beans:value>
+				<beans:value>ar.com.avaco.nitrophyl.domain</beans:value>
 			</beans:array>
 		</beans:property>
 		<beans:property name="dataSource" ref="dataSource" />
@@ -84,15 +72,5 @@
 		</beans:property>
 	</beans:bean>
 
-	<!-- Transaction Manager -->
-	<!-- <beans:bean id="transactionManager" -->
-	<!-- class="org.springframework.orm.jpa.JpaTransactionManager"> -->
-	<!-- <beans:property name="entityManagerFactory" -->
-	<!-- ref="entityManagerFactory" /> -->
-	<!-- <beans:property name="jpaDialect"> -->
-	<!-- <beans:bean -->
-	<!-- class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" /> -->
-	<!-- </beans:property> -->
-	<!-- </beans:bean> -->
 
 </beans:beans>

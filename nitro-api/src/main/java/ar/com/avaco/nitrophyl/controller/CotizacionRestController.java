@@ -1,0 +1,64 @@
+package ar.com.avaco.nitrophyl.controller;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import ar.com.avaco.fwk.core.component.controller.AbstractDTORestController;
+import ar.com.avaco.fwk.core.component.dto.JSONResponse;
+import ar.com.avaco.fwk.core.component.dto.PageDTO;
+import ar.com.avaco.fwk.core.exception.BusinessException;
+import ar.com.avaco.nitrophyl.dto.CotizacionDTO;
+import ar.com.avaco.nitrophyl.dto.CotizacionFilterDTO;
+import ar.com.avaco.nitrophyl.epservice.CotizacionEPService;
+import ar.com.avaco.nitrophyl.filter.CotizacionFilter;
+
+@RestController
+public class CotizacionRestController
+		extends AbstractDTORestController<CotizacionDTO, Long, CotizacionEPService> {
+
+	@RequestMapping(value = "/cotizacion", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<JSONResponse> list(CotizacionFilterDTO filterDTO) {
+		PageDTO<CotizacionDTO> page = this.service.list(filterDTO);
+		JSONResponse response = new JSONResponse();
+		response.setData(page);
+		response.setStatus(JSONResponse.OK);
+		return new ResponseEntity<JSONResponse>(response, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/cotizacion/vigente", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<JSONResponse> getVigente(@RequestParam Long idCliente, @RequestParam Long idPieza) {
+		CotizacionFilterDTO filterDTO = new CotizacionFilterDTO();
+		filterDTO.setIdCliente(idCliente);
+		filterDTO.setIdPieza(idPieza);
+		filterDTO.setAsc(false);
+		filterDTO.setIdx("fecha");
+		List<CotizacionDTO> listFilter = this.service.listFilter(new CotizacionFilter(filterDTO));
+		CotizacionDTO dto = listFilter.isEmpty() ? null : listFilter.get(0);
+		JSONResponse response = new JSONResponse();
+		response.setData(dto);
+		response.setStatus(JSONResponse.OK);
+		return new ResponseEntity<JSONResponse>(response, HttpStatus.OK);
+	}
+
+	@Override
+	@RequestMapping(value = "/cotizacion", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<JSONResponse> create(@RequestBody CotizacionDTO dto) throws BusinessException {
+		return super.create(dto);
+	}
+
+	@Resource(name = "cotizacionEPService")
+	public void setService(CotizacionEPService cotizacionEPService) {
+		super.service = cotizacionEPService;
+	}
+
+}

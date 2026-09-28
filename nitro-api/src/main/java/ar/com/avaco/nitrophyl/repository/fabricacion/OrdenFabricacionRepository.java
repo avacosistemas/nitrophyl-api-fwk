@@ -7,8 +7,8 @@ import org.springframework.data.repository.query.Param;
 
 import ar.com.avaco.fwk.core.component.repository.NJRepository;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.OrdenFabricacion;
-import ar.com.avaco.nitrophyl.ws.dto.DetalleMaquinaOrdenTrabajoDTO;
-import ar.com.avaco.nitrophyl.ws.dto.ResumenMaquinaOrdenTrabajoDTO;
+import ar.com.avaco.nitrophyl.dto.DetalleMaquinaOrdenTrabajoDTO;
+import ar.com.avaco.nitrophyl.dto.ResumenMaquinaOrdenTrabajoDTO;
 
 public interface OrdenFabricacionRepository
 		extends NJRepository<Long, OrdenFabricacion>, OrdenFabricacionRepositoryCustom {
@@ -28,7 +28,7 @@ public interface OrdenFabricacionRepository
 			+ "    AND UPPER(COALESCE(of2.estado, '')) <> 'FINALIZADA' " + ")", nativeQuery = true)
 	boolean existenOrdenesNoFinalizadasMismaOC(@Param("idOrdenFabricacion") Long idOrdenFabricacion);
 
-	@Query("SELECT new ar.com.avaco.nitrophyl.ws.dto.ResumenMaquinaOrdenTrabajoDTO(" +
+	@Query("SELECT new ar.com.avaco.nitrophyl.dto.ResumenMaquinaOrdenTrabajoDTO(" +
 		       "m.id, " +
 		       "s.id, " +
 		       "m.nombre, " +
@@ -43,7 +43,7 @@ public interface OrdenFabricacionRepository
 		       "ORDER BY s.nombre, m.nombre")
 	List<ResumenMaquinaOrdenTrabajoDTO> obtenerResumen();
 	
-	@Query("SELECT new ar.com.avaco.nitrophyl.ws.dto.DetalleMaquinaOrdenTrabajoDTO(" +
+	@Query("SELECT new ar.com.avaco.nitrophyl.dto.DetalleMaquinaOrdenTrabajoDTO(" +
 		       "ofab.id, " +
 		       "m.id, " +
 		       "ofab.numero, " +

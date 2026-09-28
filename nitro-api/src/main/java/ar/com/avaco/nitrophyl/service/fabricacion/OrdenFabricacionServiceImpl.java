@@ -15,9 +15,9 @@ import ar.com.avaco.nitrophyl.domain.entities.fabricacion.EstadoOrdenFabricacion
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.OrdenCompraDetalle;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.OrdenCompraDetallePedido;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.OrdenFabricacion;
+import ar.com.avaco.nitrophyl.dto.ListadoOrdenFabricacionDTO;
+import ar.com.avaco.nitrophyl.dto.OrdenFabricacionFilterDTO;
 import ar.com.avaco.nitrophyl.repository.fabricacion.OrdenFabricacionRepository;
-import ar.com.avaco.nitrophyl.ws.dto.ListadoOrdenFabricacionDTO;
-import ar.com.avaco.nitrophyl.ws.dto.OrdenFabricacionFilterDTO;
 import ar.com.avaco.fwk.core.component.dto.PageDTO;
 
 @Transactional

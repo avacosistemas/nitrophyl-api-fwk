@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.molde.Molde;
 import ar.com.avaco.nitrophyl.domain.entities.molde.MoldeDimension;
+import ar.com.avaco.nitrophyl.dto.MoldeFilterDTO;
+import ar.com.avaco.nitrophyl.dto.MoldeListadoDTO;
 import ar.com.avaco.nitrophyl.repository.molde.MoldeFotoRepository;
 import ar.com.avaco.nitrophyl.repository.molde.MoldePlanoRepository;
 import ar.com.avaco.nitrophyl.repository.molde.MoldeRepository;
-import ar.com.avaco.nitrophyl.ws.dto.MoldeFilterDTO;
-import ar.com.avaco.nitrophyl.ws.dto.MoldeListadoDTO;
 
 @Service("moldeService")
 public class MoldeServiceImpl extends NJBaseService<Long, Molde, MoldeRepository> implements MoldeService {

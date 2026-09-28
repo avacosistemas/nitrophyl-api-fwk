@@ -62,7 +62,7 @@ public class OrdenFabricacion extends AuditableEntity<Long> {
 	@Column(name = "ESTADO")
 	private EstadoOrdenFabricacion estado;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "ordenFabricacion", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "ordenFabricacion", orphanRemoval = true)
 	private Set<OrdenFabricacionEntrega> entregas = new HashSet<OrdenFabricacionEntrega>();
 
 	@ManyToOne
