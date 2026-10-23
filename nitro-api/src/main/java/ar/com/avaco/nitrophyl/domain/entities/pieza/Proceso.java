@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -23,6 +24,7 @@ import org.hibernate.annotations.FetchMode;
 
 import ar.com.avaco.fwk.core.domain.AuditableEntity;
 import ar.com.avaco.nitrophyl.domain.entities.fabrica.Prensa;
+import ar.com.avaco.nitrophyl.domain.entities.molde.Troquel;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.esquema.Esquema;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.moldeo.Bombeo;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.moldeo.Precalentamiento;
@@ -75,6 +77,10 @@ public class Proceso extends AuditableEntity<Long> {
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "proceso", orphanRemoval = true)
 	private Set<Esquema> esquema = new HashSet<>();
 
+	@ManyToOne(fetch = FetchType.EAGER, optional = true)
+	@JoinColumn(name = "ID_TROQUEL", nullable = true)
+	private Troquel troquel;
+
 	public Proceso clonar(String username, Date fechaHora, Pieza pieza) {
 		Proceso clonada = new Proceso();
 		clonada.resetearCreacion(username, fechaHora);
@@ -87,6 +93,7 @@ public class Proceso extends AuditableEntity<Long> {
 		clonada.getPrensas().addAll(prensas);
 		clonada.setTerminacion(terminacion.clonar(username, fechaHora, clonada));
 		clonada.setVulcanizacion(vulcanizacion);
+		clonada.setTroquel(troquel);
 		return clonada;
 	}
 
@@ -183,6 +190,14 @@ public class Proceso extends AuditableEntity<Long> {
 		p.setId(id);
 		p.setPieza(Pieza.ofId(id));
 		return p;
+	}
+
+	public Troquel getTroquel() {
+		return troquel;
+	}
+
+	public void setTroquel(Troquel troquel) {
+		this.troquel = troquel;
 	}
 
 }

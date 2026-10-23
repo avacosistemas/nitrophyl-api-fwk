@@ -33,6 +33,15 @@ public class OrdenCompraRestController
 		return OKPAGE(listFilterCount);
 	}
 
+	@RequestMapping(value = "/ordenCompra/comprobanteValido", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<JSONResponse> validarComprobante(OrdenCompraDTO oc) {
+		OrdenCompraFilterDTO ordenCompraFilterDTO = new OrdenCompraFilterDTO();
+		ordenCompraFilterDTO.setComprobante(oc.getComprobante());
+		ordenCompraFilterDTO.setIdCliente(oc.getIdCliente());
+		int cantidad = this.service.listCount(new OrdenCompraFilter(ordenCompraFilterDTO));
+		return OKDATA(cantidad == 0);
+	}
+	
 	@Override
 	@RequestMapping(value = "/ordenCompra", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> create(@RequestBody OrdenCompraDTO dto) throws BusinessException {

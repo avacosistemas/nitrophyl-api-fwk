@@ -10,6 +10,8 @@ public class ListadoOrdenFabricacionDTO extends DTOEntity<Long> {
 
 	private String fechaOC;
 
+	private String comprobante;
+
 	private Integer totalSolicitado;
 
 	private String fechaEntregaSolicitada;
@@ -245,6 +247,14 @@ public class ListadoOrdenFabricacionDTO extends DTOEntity<Long> {
 
 	public void setMaquinaNombre(String maquinaNombre) {
 		this.maquinaNombre = maquinaNombre;
+	}
+
+	public String getComprobante() {
+		return comprobante;
+	}
+
+	public void setComprobante(String comprobante) {
+		this.comprobante = comprobante;
 	}
 
 }

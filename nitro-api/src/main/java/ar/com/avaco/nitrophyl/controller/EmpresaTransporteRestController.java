@@ -2,7 +2,6 @@ package ar.com.avaco.nitrophyl.controller;
 
 import javax.annotation.Resource;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,10 +25,7 @@ public class EmpresaTransporteRestController extends AbstractDTORestController<E
 	@RequestMapping(value = "/empresaTransporte", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> list(EmpresaTransporteFilterDTO dto) {
 		PageDTO<EmpresaTransporteDTO> listFilterCount = this.service.listFilterCount(new EmpresaTransporteFilter(dto));
-		JSONResponse response = new JSONResponse();
-		response.setData(listFilterCount);
-		response.setStatus(JSONResponse.OK);
-		return new ResponseEntity<JSONResponse>(response, HttpStatus.OK);
+		return OKPAGE(listFilterCount);
 	}
 
 	@Override

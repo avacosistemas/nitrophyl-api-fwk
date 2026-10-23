@@ -65,7 +65,7 @@ public class ReporteLoteConfiguracionCliente extends ar.com.avaco.fwk.core.domai
 	@Column(name = "ENVIAR_GRAFICO")
 	private Boolean enviarGrafico;
 
-	@ManyToMany(fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "REPORTE_LOTE_CONF_PRUEBA", joinColumns = @JoinColumn(name = "ID_REPORTE_LOTE_CONF_CLIENTE", referencedColumnName = "ID_REPORTE_LOTE_CONF_CLIENTE"), inverseJoinColumns = @JoinColumn(name = "ID_MAQUINA_PRUEBA", referencedColumnName = "ID_MAQUINA_PRUEBA"))
 	@Fetch(FetchMode.SELECT)
 	private Set<MaquinaPrueba> pruebas = new HashSet<>();

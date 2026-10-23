@@ -3,15 +3,13 @@ package ar.com.avaco.nitrophyl.service.fabricacion;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.fwk.core.exception.ErrorValidationException;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.EstadoOrdenCompra;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.OrdenCompra;
 import ar.com.avaco.nitrophyl.repository.fabricacion.OrdenCompraRepository;
 
-@Transactional
+//@Transactional
 @Service("ordenCompraService")
 public class OrdenCompraServiceImpl extends NJBaseService<Long, OrdenCompra, OrdenCompraRepository>
 		implements OrdenCompraService {

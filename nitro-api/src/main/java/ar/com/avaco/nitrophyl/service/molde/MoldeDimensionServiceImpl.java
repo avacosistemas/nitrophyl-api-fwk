@@ -7,13 +7,11 @@ import javax.annotation.Resource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.molde.MoldeDimension;
 import ar.com.avaco.nitrophyl.repository.molde.MoldeDimensionRepository;
 
-@Transactional
+//@Transactional
 @Service("moldeDimensionService")
 public class MoldeDimensionServiceImpl extends NJBaseService<Long, MoldeDimension, MoldeDimensionRepository>
 		implements MoldeDimensionService {

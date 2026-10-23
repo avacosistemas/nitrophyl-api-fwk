@@ -4,15 +4,13 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.TipoMovimientoStock;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.insumo.MateriaPrima;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.insumo.MateriaPrimaStockHistorial;
 import ar.com.avaco.nitrophyl.repository.pieza.MateriaPrimaStockHistorialRepository;
 
-@Transactional
+//@Transactional
 @Service("materiaPrimaStockHistorialService")
 public class MateriaPrimaStockHistorialServiceImpl extends NJBaseService<Long, MateriaPrimaStockHistorial, MateriaPrimaStockHistorialRepository> implements MateriaPrimaStockHistorialService {
 

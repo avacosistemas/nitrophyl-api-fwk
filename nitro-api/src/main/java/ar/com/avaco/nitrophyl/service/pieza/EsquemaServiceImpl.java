@@ -6,14 +6,12 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.Pieza;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.esquema.Esquema;
 import ar.com.avaco.nitrophyl.repository.pieza.EsquemaRepository;
 
-@Transactional
+//@Transactional
 @Service("esquemaService")
 public class EsquemaServiceImpl extends NJBaseService<Long, Esquema, EsquemaRepository> implements EsquemaService {
 
@@ -27,11 +25,11 @@ public class EsquemaServiceImpl extends NJBaseService<Long, Esquema, EsquemaRepo
 
 	@Override
 	public Esquema save(Esquema entity) {
-		Esquema save = super.save(entity);
-		Pieza pieza = save.getProceso().getPieza();
-		pieza.setProceso(save.getProceso());
+		Esquema esquema = super.save(entity);
+		Pieza pieza = esquema.getProceso().getPieza();
+		pieza.setProceso(esquema.getProceso());
 		this.piezaService.actualizarFaltantes(pieza);
-		return save;
+		return esquema;
 	}
 	
 	@Override

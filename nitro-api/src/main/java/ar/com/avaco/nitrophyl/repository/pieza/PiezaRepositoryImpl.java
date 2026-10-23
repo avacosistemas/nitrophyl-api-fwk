@@ -27,33 +27,48 @@ public class PiezaRepositoryImpl extends NJBaseRepository<Long, Pieza> implement
 		if (filtro.getNombre() != null)
 			filtro.setNombre(filtro.getNombre().toUpperCase());
 		
-		String query = " SELECT cast(COUNT(*) OVER() as integer) as rows, p.denominacion as denominacion, p.faltantes as faltantes, " + 
-				"  cast(p.id_pieza as integer) as idPieza, p.codigo, cast(p.vigente as boolean), " + 
-				"  cast(p.revision as integer), p.fecha_revision as fechaRevision, " + 
-				"  pt.nombre as tipo, m.nombre as material, " +
-				"  CASE " + 
-				"    WHEN p.vigente = true AND p.revision = v.max_revision THEN true" + 
-				"    ELSE false" + 
-				"  END AS puedeGenerarRevision," +
-				"  f.nombre as formula, " + 
-				"  CASE" + 
-				"    WHEN p.vigente = false AND p.revision = v.max_revision THEN true " + 
-				"    ELSE false " + 
-				"  END AS puedeMarcarVigente, " +
-				" pc.nombre_pieza_personalizado as piezaPersonalizada, " +
-				" cli.nombre as cliente " +
-				" FROM pieza p " + 
-				" LEFT JOIN ( " + 
-				"    SELECT codigo, MAX(revision) AS max_revision " + 
-				"    FROM pieza " + 
-				"    GROUP BY codigo " + 
-				" ) v ON p.codigo = v.codigo " + 
-				" left join formula f on f.id_formula = p.id_formula " + 
-				" left join material m on m.id_material = f.id_material " + 
-				" left join pieza_tipo pt on pt.id_pieza_tipo = p.id_tipo " + 
-				" LEFT JOIN pieza_cliente pc ON pc.id_pieza = p.id_pieza " +
-				" left join cliente cli on cli.id_cliente = pc.id_cliente " +
-				" where 1 = 1 ";
+		String query = " SELECT cast(COUNT(*) OVER() as integer) as rows, " +
+		        " p.denominacion as denominacion, " +
+		        " p.faltantes as faltantes, " +
+		        " cast(p.id_pieza as integer) as idPieza, " +
+		        " p.codigo, " +
+		        " cast(p.vigente as boolean), " +
+		        " cast(p.revision as integer), " +
+		        " p.fecha_revision as fechaRevision, " +
+		        " pt.nombre as tipo, " +
+		        " m.nombre as material, " +
+
+		        " CASE " +
+		        "   WHEN p.vigente = true AND p.revision = v.max_revision THEN true " +
+		        "   ELSE false " +
+		        " END AS puedeGenerarRevision, " +
+
+		        " f.nombre as formula, " +
+
+		        " CASE " +
+		        "   WHEN p.vigente = false AND p.revision = v.max_revision THEN true " +
+		        "   ELSE false " +
+		        " END AS puedeMarcarVigente, " +
+
+		        " pc.nombre_pieza_personalizado as piezaPersonalizada, " +
+		        " cli.nombre as cliente " +
+
+		        " FROM pieza p " +
+
+		        " LEFT JOIN ( " +
+		        "   SELECT codigo, id_formula, MAX(revision) AS max_revision " +
+		        "   FROM pieza " +
+		        "   GROUP BY codigo, id_formula " +
+		        " ) v ON p.codigo = v.codigo " +
+		        "      AND p.id_formula = v.id_formula " +
+
+		        " LEFT JOIN formula f ON f.id_formula = p.id_formula " +
+		        " LEFT JOIN material m ON m.id_material = f.id_material " +
+		        " LEFT JOIN pieza_tipo pt ON pt.id_pieza_tipo = p.id_tipo " +
+		        " LEFT JOIN pieza_cliente pc ON pc.id_pieza = p.id_pieza " +
+		        " LEFT JOIN cliente cli ON cli.id_cliente = pc.id_cliente " +
+
+		        " WHERE 1 = 1 ";
 		
 		if (filtro.getSoloVigentes() != null)
 			query += " and p.vigente = " +  filtro.getSoloVigentes();
@@ -88,7 +103,7 @@ public class PiezaRepositoryImpl extends NJBaseRepository<Long, Pieza> implement
 		
 		if (filtro.getPageSize() != null && filtro.getPage() != null) {
 			query += " limit " + filtro.getPageSize();
-			query += " offset " + (filtro.getPage() - 1);
+			query += " offset " + (filtro.getPage());
 		}
 		
 		

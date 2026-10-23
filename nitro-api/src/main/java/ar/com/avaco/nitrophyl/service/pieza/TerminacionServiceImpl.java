@@ -4,13 +4,11 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.Terminacion;
 import ar.com.avaco.nitrophyl.repository.pieza.TerminacionRepository;
 
-@Transactional
+//@Transactional
 @Service("terminacionService")
 public class TerminacionServiceImpl extends NJBaseService<Long, Terminacion, TerminacionRepository>
 		implements TerminacionService {

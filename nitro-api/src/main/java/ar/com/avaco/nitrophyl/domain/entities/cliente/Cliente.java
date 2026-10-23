@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -58,7 +59,7 @@ public class Cliente extends ar.com.avaco.fwk.core.domain.Entity<Long> {
 	 * @PrimaryKeyJoinColumn private Contacto contacto;
 	 */
 
-	@OneToMany(targetEntity = Contacto.class, mappedBy = "cliente")
+	@OneToMany(targetEntity = Contacto.class, mappedBy = "cliente", fetch = FetchType.LAZY)
 	private Set<Contacto> contactos = new HashSet<>();
 
 	/**

@@ -375,5 +375,9 @@ public class Pieza extends AuditableEntity<Long> {
 	public void setStock(PiezaStock stock) {
 		this.stock = stock;
 	}
+	
+	public String getDescripcion() {
+		return "(" + this.codigo + ") " + this.denominacion;
+	}
 
 }

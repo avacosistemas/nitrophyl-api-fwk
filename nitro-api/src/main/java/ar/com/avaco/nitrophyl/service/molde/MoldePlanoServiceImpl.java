@@ -11,15 +11,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.fwk.core.exception.BusinessException;
 import ar.com.avaco.fwk.core.exception.ErrorValidationException;
 import ar.com.avaco.nitrophyl.domain.entities.molde.MoldePlano;
 import ar.com.avaco.nitrophyl.repository.molde.MoldePlanoRepository;
 
-@Transactional
+//@Transactional
 @Service("moldePlanoService")
 public class MoldePlanoServiceImpl extends NJBaseService<Long, MoldePlano, MoldePlanoRepository>
 		implements MoldePlanoService {

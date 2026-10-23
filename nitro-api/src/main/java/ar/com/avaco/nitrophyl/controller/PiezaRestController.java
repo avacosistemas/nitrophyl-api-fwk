@@ -41,10 +41,7 @@ public class PiezaRestController extends AbstractDTORestController<PiezaDTO, Lon
 	@RequestMapping(value = "/pieza", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> list(PiezaFilterDTO filterDTO) {
 		PageDTO<PiezaGrillaDTO> page = this.service.listGrilla(filterDTO);
-		JSONResponse response = new JSONResponse();
-		response.setData(page);
-		response.setStatus(JSONResponse.OK);
-		return new ResponseEntity<JSONResponse>(response, HttpStatus.OK);
+		return OKPAGE(page);
 	}
 
 	@RequestMapping(value = "/pieza/combo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

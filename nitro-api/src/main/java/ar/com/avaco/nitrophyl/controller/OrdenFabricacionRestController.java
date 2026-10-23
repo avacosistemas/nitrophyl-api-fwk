@@ -20,7 +20,6 @@ import ar.com.avaco.fwk.core.component.dto.PageDTO;
 import ar.com.avaco.nitrophyl.dto.ListadoOrdenFabricacionDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenFabricacionAsignacionDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenFabricacionDTO;
-import ar.com.avaco.nitrophyl.dto.OrdenFabricacionEntregaDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenFabricacionFilterDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenTrabajoResponseDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenTrabajoResumenDTO;
@@ -33,10 +32,7 @@ public class OrdenFabricacionRestController
 	@RequestMapping(value = "/ordenFabricacion", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> listOrdenesFabricacion(OrdenFabricacionFilterDTO ordenFabricacionFilterDTO) {
 		PageDTO<ListadoOrdenFabricacionDTO> listFilterCount = this.service.listFilterCount(ordenFabricacionFilterDTO);
-		JSONResponse response = new JSONResponse();
-		response.setData(listFilterCount);
-		response.setStatus(JSONResponse.OK);
-		return new ResponseEntity<JSONResponse>(response, HttpStatus.OK);
+		return OKPAGE(listFilterCount);
 	}
 
 	@RequestMapping(value = "/ordenFabricacion/{idOrdenCompra}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -60,15 +56,6 @@ public class OrdenFabricacionRestController
 	public ResponseEntity<JSONResponse> asignar(@PathVariable Long idOrdenFabricacion,
 			Integer nuevaPosicion) {
 		this.service.reordenar(idOrdenFabricacion, nuevaPosicion);
-		JSONResponse response = new JSONResponse();
-		response.setStatus(JSONResponse.OK);
-		return new ResponseEntity<JSONResponse>(response, HttpStatus.OK);
-	}
-
-	@RequestMapping(value = "/ordenFabricacion/registrarEntrega/{idOrdenFabricacion}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<JSONResponse> registrarEntrega(@PathVariable Long idOrdenFabricacion,
-			@RequestBody OrdenFabricacionEntregaDTO entrega) {
-		this.service.registrarEntrega(idOrdenFabricacion, entrega);
 		JSONResponse response = new JSONResponse();
 		response.setStatus(JSONResponse.OK);
 		return new ResponseEntity<JSONResponse>(response, HttpStatus.OK);

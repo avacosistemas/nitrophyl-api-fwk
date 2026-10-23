@@ -9,15 +9,13 @@ import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.fwk.core.exception.BusinessException;
 import ar.com.avaco.fwk.core.exception.ErrorValidationException;
 import ar.com.avaco.nitrophyl.domain.entities.molde.MoldeFoto;
 import ar.com.avaco.nitrophyl.repository.molde.MoldeFotoRepository;
 
-@Transactional
+//@Transactional
 @Service("moldeFotoService")
 public class MoldeFotoServiceImpl extends NJBaseService<Long, MoldeFoto, MoldeFotoRepository>
 		implements MoldeFotoService {

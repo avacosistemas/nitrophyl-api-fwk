@@ -6,14 +6,12 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.fwk.core.exception.ErrorValidationException;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.cliente.PiezaCliente;
 import ar.com.avaco.nitrophyl.repository.pieza.PiezaClienteRepository;
 
-@Transactional
+//@Transactional
 @Service("piezaClienteService")
 public class PiezaClienteServiceImpl extends NJBaseService<Long, PiezaCliente, PiezaClienteRepository>
 		implements PiezaClienteService {

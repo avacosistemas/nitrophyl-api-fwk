@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,19 +26,13 @@ public class PiezaClienteRestController
 	@RequestMapping(value = "/piezaCliente", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> listCliente(@RequestParam Long idCliente) {
 		List<PiezaClienteDTO> list = this.service.listEq("cliente.id", idCliente);
-		JSONResponse response = new JSONResponse();
-		response.setData(list);
-		response.setStatus(JSONResponse.OK);
-		return new ResponseEntity<JSONResponse>(response, HttpStatus.OK);
+		return OKDATA(list);
 	}
 
 	@RequestMapping(value = "/piezaCliente/{idPieza}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> list(@PathVariable Long idPieza) {
 		List<PiezaClienteDTO> list = this.service.listEq("pieza.id", idPieza);
-		JSONResponse response = new JSONResponse();
-		response.setData(list);
-		response.setStatus(JSONResponse.OK);
-		return new ResponseEntity<JSONResponse>(response, HttpStatus.OK);
+		return OKDATA(list);
 	}
 
 	@Override

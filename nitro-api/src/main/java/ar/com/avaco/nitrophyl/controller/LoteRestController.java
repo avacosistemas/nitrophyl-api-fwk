@@ -97,6 +97,8 @@ public class LoteRestController extends AbstractDTORestController<LoteDTO, Long,
 		filter.setAsc(false);
 		filter.setIdx("fechaEstado");
 		filter.setExcluirPendientes(false);
+		filter.setPage(0);
+		filter.setPageSize(20);
 		List<LoteDTO> listFilter = super.service.listFilter(new LoteFilter(filter));
 		JSONResponse response = new JSONResponse();
 		response.setData(listFilter);

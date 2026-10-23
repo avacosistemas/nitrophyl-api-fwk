@@ -43,17 +43,15 @@ import ar.com.avaco.nitrophyl.dto.ItemOrdenTrabajoDTO;
 import ar.com.avaco.nitrophyl.dto.ListadoOrdenFabricacionDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenFabricacionAsignacionDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenFabricacionDTO;
-import ar.com.avaco.nitrophyl.dto.OrdenFabricacionEntregaDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenFabricacionFilterDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenTrabajoEntregaDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenTrabajoResponseDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenTrabajoResumenDTO;
 import ar.com.avaco.nitrophyl.service.fabricacion.OrdenCompraService;
 import ar.com.avaco.nitrophyl.service.fabricacion.OrdenFabricacionService;
-import ar.com.avaco.nitrophyl.service.lote.LoteService;
 import ar.com.avaco.nitrophyl.service.pieza.PiezaControlService;
 
-@Transactional
+//@Transactional
 @Service("ordenFabricacionEPService")
 public class OrdenFabricacionEPServiceImpl
 		extends CRUDAuditableEPBaseService<Long, OrdenFabricacionDTO, OrdenFabricacion, OrdenFabricacionService>
@@ -71,9 +69,6 @@ public class OrdenFabricacionEPServiceImpl
 
 	@Autowired
 	private PiezaControlService piezaControlService;
-
-	@Autowired
-	private LoteService loteService;
 
 	@Override
 	@Resource(name = "ordenFabricacionService")
@@ -145,63 +140,10 @@ public class OrdenFabricacionEPServiceImpl
 
 		this.service.update(ordenFabricacion);
 
-		OrdenCompra ordenCompra = ordenFabricacion.getOrdenCompraDetalle().getOrdenCompraDetalle().getOrdenCompra();
+		OrdenCompra ordenCompra = ordenFabricacion.getOrdenCompraDetallePedido().getOrdenCompraDetalle().getOrdenCompra();
 
 		ordenCompra.setEstado(EstadoOrdenCompra.EN_PROCESO);
 
-		this.ordenCompraService.update(ordenCompra);
-	}
-
-	private OrdenFabricacionEntrega generarEntrega(Long idOrdenFabricacion, OrdenFabricacionEntregaDTO entrega) {
-		OrdenFabricacionEntrega ofe = new OrdenFabricacionEntrega();
-		ofe.setCantidad(entrega.getCantidad());
-		ofe.setFecha(entrega.getFecha());
-
-		entrega.getIdLote().forEach(idlote -> ofe.getLotes().add(loteService.get(idlote)));
-
-		ofe.setOperario(usuarioService.get(entrega.getIdUsuario()));
-		return ofe;
-	}
-
-	@Override
-	public void registrarEntrega(Long idOrdenFabricacion, OrdenFabricacionEntregaDTO entrega) {
-
-		// Obtengo la OF
-		OrdenFabricacion ordenFabricacion = this.service.get(idOrdenFabricacion);
-
-		// Genero la entrega
-		OrdenFabricacionEntrega generarEntrega = generarEntrega(idOrdenFabricacion, entrega);
-
-		// Le asocio la OF
-		generarEntrega.setOrdenFabricacion(ordenFabricacion);
-
-		// La agrego a la OF
-		ordenFabricacion.getEntregas().add(generarEntrega);
-
-		// Calculo el total de las entregas de la OF
-		int total = ordenFabricacion.getEntregas().stream().mapToInt(OrdenFabricacionEntrega::getCantidad).sum();
-
-		OrdenCompra ordenCompra = ordenFabricacion.getOrdenCompraDetalle().getOrdenCompraDetalle().getOrdenCompra();
-
-		// Si esta completa, reviso si las otras ordenes de fabricacion asociadas a la
-		// orden de compra estan finalizadas
-		if (total == ordenFabricacion.getOrdenCompraDetalle().getCantidad()) {
-			// Seteo la orden de fabricacion como finalizada
-			ordenFabricacion.setEstado(EstadoOrdenFabricacion.FINALIZADA);
-
-			// Busco si todas las otras ordenes de fabricacion estan finalizadas
-
-			if (!this.service.hayPendientes(idOrdenFabricacion)) {
-				ordenCompra.setEstado(EstadoOrdenCompra.FABRICADA);
-			} else {
-				ordenCompra.setEstado(EstadoOrdenCompra.EN_PROCESO);
-			}
-
-		} else {
-			ordenFabricacion.setEstado(EstadoOrdenFabricacion.EN_PROCESO);
-		}
-
-		this.service.update(ordenFabricacion);
 		this.ordenCompraService.update(ordenCompra);
 	}
 
@@ -231,12 +173,12 @@ public class OrdenFabricacionEPServiceImpl
 
 		// entregas.sort(Comparator.comparing(OrdenTrabajoEntregaDTO::getFecha));
 
-		OrdenCompra oc = ordenFabricacion.getOrdenCompraDetalle().getOrdenCompraDetalle().getOrdenCompra();
+		OrdenCompra oc = ordenFabricacion.getOrdenCompraDetallePedido().getOrdenCompraDetalle().getOrdenCompra();
 
 		Cliente clienteOF = oc.getCliente();
 		String cliente = clienteOF.getNombre();
 		String fechaEmision = ordenFabricacion.getFecha().format(DateUtils.DATE_TIME_FORMATTER_DD_MM_YYYY);
-		String fechaEntrega = ordenFabricacion.getOrdenCompraDetalle().getFechaEntregaSolicitada()
+		String fechaEntrega = ordenFabricacion.getOrdenCompraDetallePedido().getFechaEntregaSolicitada()
 				.format(DateUtils.DATE_TIME_FORMATTER_DD_MM_YYYY);
 		String numeroOT = ordenFabricacion.getNumeroOT();
 		String observaciones = oc.getObservaciones();
@@ -254,7 +196,7 @@ public class OrdenFabricacionEPServiceImpl
 				.mediosEnvio(mediosEnvio)
 				.domicilioEnvio(oc.getDomicilioEnvio() != null ? oc.getDomicilioEnvio().getDomicilio() : null).build();
 
-		Pieza piezaOC = ordenFabricacion.getOrdenCompraDetalle().getOrdenCompraDetalle().getPieza();
+		Pieza piezaOC = ordenFabricacion.getOrdenCompraDetallePedido().getOrdenCompraDetalle().getPieza();
 
 		List<PiezaControl> controlesConfigurados = piezaControlService.listControlesConfigurados(piezaOC.getId());
 
@@ -267,14 +209,15 @@ public class OrdenFabricacionEPServiceImpl
 
 		Molde moldePieza = piezaOC.getMoldes().iterator().next().getMolde();
 
-		Integer cantidad = ordenFabricacion.getOrdenCompraDetalle().getCantidad();
+		Integer cantidad = ordenFabricacion.getOrdenCompraDetallePedido().getCantidad();
 		Formula formulaPieza = piezaOC.getDetalleFormula().getFormula();
 		String formula = formulaPieza.getNombre();
 		String hojaProceso = piezaOC.getProceso().getHojaProceso();
-		String pieza = piezaOC.getDenominacion();
+		String pieza = piezaOC.getDescripcion();
 		String material = formulaPieza.getMaterial().getNombre();
 		String molde = moldePieza.getCodigo();
-		String postCura = piezaOC.getProceso().getPostCura();
+		String postCuraValor = piezaOC.getProceso().getPostCura();
+		String postCura = StringUtils.isNoneBlank(postCuraValor) && !postCuraValor.trim().toUpperCase().equalsIgnoreCase("NO") ? postCuraValor : null;
 
 		String plano = "";
 
@@ -288,13 +231,13 @@ public class OrdenFabricacionEPServiceImpl
 		String identificacion = piezaOC.getProceso().getTerminacion() != null
 				? piezaOC.getProceso().getTerminacion().getIdentificacion()
 				: null;
-		String observacionPieza = ordenFabricacion.getOrdenCompraDetalle().getOrdenCompraDetalle().getObservacion();
+		String observacionPieza = ordenFabricacion.getOrdenCompraDetallePedido().getOrdenCompraDetalle().getObservacion();
 
-		Cotizacion vigente = ordenFabricacion.getOrdenCompraDetalle().getOrdenCompraDetalle().getCotizacion();
+		Cotizacion vigente = ordenFabricacion.getOrdenCompraDetallePedido().getOrdenCompraDetalle().getCotizacion();
 
-		String observacionDescuento = ordenFabricacion.getOrdenCompraDetalle().getOrdenCompraDetalle()
+		String observacionDescuento = ordenFabricacion.getOrdenCompraDetallePedido().getOrdenCompraDetalle()
 				.getObservacionDescuento();
-		Double descuento = ordenFabricacion.getOrdenCompraDetalle().getOrdenCompraDetalle().getDescuento();
+		Double descuento = ordenFabricacion.getOrdenCompraDetallePedido().getOrdenCompraDetalle().getDescuento();
 		String descuentoString = null;
 		String descuentoValorString = null;
 		if (descuento != null) {
@@ -303,7 +246,7 @@ public class OrdenFabricacionEPServiceImpl
 			descuentoValorString = valor.toString();
 		}
 
-		Troquel troquel = piezaOC.getMoldes().iterator().next().getMolde().getTroquel();
+		Troquel troquel = piezaOC.getProceso().getTroquel();
 		String troquelNombre = troquel != null ? troquel.getNombre() : null;
 
 		String insumos = null;
@@ -335,7 +278,7 @@ public class OrdenFabricacionEPServiceImpl
 
 		ordenes.forEach(o -> {
 
-			String cliente = o.getOrdenCompraDetalle().getOrdenCompraDetalle().getOrdenCompra().getCliente()
+			String cliente = o.getOrdenCompraDetallePedido().getOrdenCompraDetalle().getOrdenCompra().getCliente()
 					.getNombre();
 
 			List<OrdenTrabajoResumenDTO> listaPorCliente = resumenes.get(cliente);
@@ -344,14 +287,14 @@ public class OrdenFabricacionEPServiceImpl
 
 			Integer cantidadFabricada = o.getEntregas().stream().mapToInt(OrdenFabricacionEntrega::getCantidad).sum();
 
-			OrdenCompraDetallePedido detalle = o.getOrdenCompraDetalle();
+			OrdenCompraDetallePedido detalle = o.getOrdenCompraDetallePedido();
 			Pieza pieza = detalle.getOrdenCompraDetalle().getPieza();
 			OrdenTrabajoResumenDTO resumen = OrdenTrabajoResumenDTO.builder().cantidadFabricada(cantidadFabricada)
 					.cantidadTotal(detalle.getCantidad())
 					.fechaEntrega(DateUtils.toString(detalle.getFechaEntregaSolicitada(), "dd/MM/yyyy"))
 					.formula(pieza.getDetalleFormula().getFormula().getNombre()).hp(pieza.getProceso().getHojaProceso())
 					.maquina(o.getMaquina() != null ? o.getMaquina().getNombre() : "").numeroOt(o.getNumeroOT())
-					.ordenCompra(o.getOrdenCompraDetalle().getOrdenCompraDetalle().getOrdenCompra().getComprobante())
+					.ordenCompra(o.getOrdenCompraDetallePedido().getOrdenCompraDetalle().getOrdenCompra().getComprobante())
 					.pieza(pieza.getDenominacion()).sector(o.getSector() != null ? o.getSector().getNombre() : "")
 					.build();
 			listaPorCliente.add(resumen);

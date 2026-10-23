@@ -55,7 +55,7 @@ public interface OrdenFabricacionRepository
 		       "ocdp.fechaEntregaSolicitada, " +
 		       "ofab.posicion) " +
 		       "FROM OrdenFabricacion ofab " +
-		       "JOIN ofab.ordenCompraDetalle ocdp " +
+		       "JOIN ofab.ordenCompraDetallePedido ocdp " +
 		       "JOIN ocdp.ordenCompraDetalle ocd " +
 		       "LEFT JOIN ofab.maquina m " +
 		       "WHERE ofab.sector.id = :idSector " +

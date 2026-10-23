@@ -5,13 +5,11 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.molde.MoldeObservacion;
 import ar.com.avaco.nitrophyl.repository.molde.MoldeObservacionRepository;
 
-@Transactional
+//@Transactional
 @Service("moldeObservacionService")
 public class MoldeObservacionServiceImpl extends NJBaseService<Long, MoldeObservacion, MoldeObservacionRepository>
 		implements MoldeObservacionService {

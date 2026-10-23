@@ -1,5 +1,9 @@
 package ar.com.avaco.nitrophyl.controller;
 
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.annotation.Resource;
 
 import org.springframework.http.MediaType;
@@ -22,7 +26,14 @@ public class PiezaTipoRestController extends AbstractDTORestController<PiezaTipo
 	@Override
 	@RequestMapping(value = "/piezaTipo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> list() {
-		return super.list();
+		List<PiezaTipoDTO> list = this.service.list();
+		list = list.stream().sorted(new Comparator<PiezaTipoDTO>() {
+			@Override
+			public int compare(PiezaTipoDTO o1, PiezaTipoDTO o2) {
+				return o1.getNombre().compareTo(o2.getNombre());
+			}
+		}).collect(Collectors.toList());
+		return OKDATA(list);
 	}
 
 	@Override

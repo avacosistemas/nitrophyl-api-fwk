@@ -3,13 +3,11 @@ package ar.com.avaco.nitrophyl.service.formula;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.formula.RevisionParametros;
 import ar.com.avaco.nitrophyl.repository.material.RevisionParametrosRepository;
 
-@Transactional
+//@Transactional
 @Service("revisionParametroService")
 public class RevisionParametroServiceImpl extends NJBaseService<Long, RevisionParametros, RevisionParametrosRepository> implements RevisionParametroService {
 

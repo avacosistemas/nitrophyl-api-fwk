@@ -6,8 +6,6 @@ import java.util.stream.Collectors;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.formula.ConfiguracionPrueba;
 import ar.com.avaco.nitrophyl.domain.entities.formula.Formula;
@@ -17,7 +15,7 @@ import ar.com.avaco.nitrophyl.repository.material.FormulaRepository;
 import ar.com.avaco.nitrophyl.repository.material.RevisionParametrosRepository;
 import ar.com.avaco.fwk.core.utils.DateUtils;
 
-@Transactional
+//@Transactional
 @Service("formulaService")
 public class FormulaServiceImpl extends NJBaseService<Long, Formula, FormulaRepository> implements FormulaService {
 
@@ -43,7 +41,7 @@ public class FormulaServiceImpl extends NJBaseService<Long, Formula, FormulaRepo
 
 	@Override
 	public Formula clone(Formula entity) {
-		Formula one = this.get(entity.getId());
+		Formula one = getDetached(entity.getId());
 		entity.setId(null);
 		entity.setVersion(one.getVersion() + 1);
 		entity.setFecha(DateUtils.getFechaYHoraActual());

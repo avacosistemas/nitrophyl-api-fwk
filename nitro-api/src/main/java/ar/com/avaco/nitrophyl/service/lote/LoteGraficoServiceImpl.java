@@ -6,15 +6,13 @@ import java.util.Optional;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.molde.LoteGrafico;
 import ar.com.avaco.nitrophyl.dto.ArchivoDTO;
 import ar.com.avaco.nitrophyl.dto.LoteGraficoSinArchivoDTO;
 import ar.com.avaco.nitrophyl.repository.lote.LoteGraficoRepository;
 
-@Transactional
+//@Transactional
 @Service("loteGraficoService")
 public class LoteGraficoServiceImpl extends NJBaseService<Long, LoteGrafico, LoteGraficoRepository>
 		implements LoteGraficoService {

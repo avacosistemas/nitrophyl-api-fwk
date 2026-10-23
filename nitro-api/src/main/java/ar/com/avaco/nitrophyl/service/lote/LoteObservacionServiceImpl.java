@@ -3,13 +3,11 @@ package ar.com.avaco.nitrophyl.service.lote;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.lote.LoteObservacion;
 import ar.com.avaco.nitrophyl.repository.lote.LoteObservacionRepository;
 
-@Transactional
+//@Transactional
 @Service("loteObservacionService")
 public class LoteObservacionServiceImpl extends NJBaseService<Long, LoteObservacion, LoteObservacionRepository>
 		implements LoteObservacionService {

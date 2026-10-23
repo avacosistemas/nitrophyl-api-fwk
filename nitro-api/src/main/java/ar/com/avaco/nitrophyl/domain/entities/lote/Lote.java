@@ -68,8 +68,8 @@ public class Lote extends AuditableEntity<Long> {
 	private Set<Ensayo> ensayos = new HashSet<Ensayo>();
 
 	// FIXME CAMBIAR optional a false luego de setear todos los valores
-	@Fetch(FetchMode.JOIN)
-	@ManyToOne(fetch = FetchType.EAGER, optional = true)
+	@Fetch(FetchMode.SELECT)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "ID_REVISION_PARAMETROS")
 	private RevisionParametros revisionParametros;
 

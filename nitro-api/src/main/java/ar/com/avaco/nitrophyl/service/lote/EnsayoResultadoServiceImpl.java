@@ -5,13 +5,11 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.lote.EnsayoResultado;
 import ar.com.avaco.nitrophyl.repository.lote.EnsayoResultadoRepository;
 
-@Transactional
+//@Transactional
 @Service("ensayoResultadoService")
 public class EnsayoResultadoServiceImpl extends NJBaseService<Long, EnsayoResultado, EnsayoResultadoRepository>
 		implements EnsayoResultadoService {

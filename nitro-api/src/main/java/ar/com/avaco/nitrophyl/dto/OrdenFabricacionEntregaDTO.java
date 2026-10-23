@@ -6,7 +6,11 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-public class OrdenFabricacionEntregaDTO {
+import ar.com.avaco.fwk.core.component.dto.entity.DTOAuditableEntity;
+
+public class OrdenFabricacionEntregaDTO extends DTOAuditableEntity<Long> {
+
+	private Long id;
 
 	private Integer cantidad;
 
@@ -16,6 +20,18 @@ public class OrdenFabricacionEntregaDTO {
 	private List<Long> idLote = new ArrayList<Long>();
 
 	private Long idUsuario;
+
+	private List<LoteEntregaDTO> lotes = new ArrayList<LoteEntregaDTO>();
+
+	private EmpleadoDTO operario;
+
+	public EmpleadoDTO getOperario() {
+		return operario;
+	}
+
+	public void setOperario(EmpleadoDTO operario) {
+		this.operario = operario;
+	}
 
 	public Integer getCantidad() {
 		return cantidad;
@@ -47,6 +63,22 @@ public class OrdenFabricacionEntregaDTO {
 
 	public void setIdLote(List<Long> idLote) {
 		this.idLote = idLote;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public List<LoteEntregaDTO> getLotes() {
+		return lotes;
+	}
+
+	public void setLotes(List<LoteEntregaDTO> lotes) {
+		this.lotes = lotes;
 	}
 
 }

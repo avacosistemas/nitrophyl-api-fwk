@@ -29,7 +29,7 @@ public class LoteRepositoryImpl extends NJBaseRepository<Long, Lote> implements 
 			filtro.setAsc(true);
 		}
 		
-		if (filtro.getIdx().isEmpty()) {
+		if (StringUtils.isEmpty(filtro.getIdx())) {
 			filtro.setIdx("d.fecha");
 		}
 		
@@ -74,7 +74,7 @@ public class LoteRepositoryImpl extends NJBaseRepository<Long, Lote> implements 
 			query += " and l.id_formula = " + filtro.getIdFormula();
 		}
 
-		if (!filtro.getEstadoEnsayo().isEmpty()) {
+		if (!StringUtils.isEmpty(filtro.getEstadoEnsayo())) {
 			query += " and e.estado = '" + filtro.getEstadoEnsayo() + "' ";
 		}
 		

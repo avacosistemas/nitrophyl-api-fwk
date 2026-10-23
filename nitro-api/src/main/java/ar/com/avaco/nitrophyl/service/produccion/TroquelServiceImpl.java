@@ -3,13 +3,11 @@ package ar.com.avaco.nitrophyl.service.produccion;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.molde.Troquel;
 import ar.com.avaco.nitrophyl.repository.produccion.TroquelRepository;
 
-@Transactional
+//@Transactional
 @Service("troquelService")
 public class TroquelServiceImpl extends NJBaseService<Long, Troquel, TroquelRepository> implements TroquelService {
 

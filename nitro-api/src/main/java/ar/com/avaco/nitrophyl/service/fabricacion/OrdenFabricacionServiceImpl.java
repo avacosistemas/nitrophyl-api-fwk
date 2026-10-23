@@ -8,8 +8,6 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.EstadoOrdenFabricacion;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.OrdenCompraDetalle;
@@ -20,7 +18,7 @@ import ar.com.avaco.nitrophyl.dto.OrdenFabricacionFilterDTO;
 import ar.com.avaco.nitrophyl.repository.fabricacion.OrdenFabricacionRepository;
 import ar.com.avaco.fwk.core.component.dto.PageDTO;
 
-@Transactional
+//@Transactional
 @Service("ordenFabricacionService")
 public class OrdenFabricacionServiceImpl extends NJBaseService<Long, OrdenFabricacion, OrdenFabricacionRepository>
 		implements OrdenFabricacionService {
@@ -48,7 +46,7 @@ public class OrdenFabricacionServiceImpl extends NJBaseService<Long, OrdenFabric
 		of.setFecha(LocalDate.now());
 		of.setAnio(LocalDate.now().getYear());
 		of.setNumero(this.repository.obtenerSiguienteNumero(of.getAnio()));
-		of.setOrdenCompraDetalle(pedido);
+		of.setOrdenCompraDetallePedido(pedido);
 		return of;
 	}
 

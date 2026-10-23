@@ -47,5 +47,7 @@ public class OrdenFabricacionFilterDTO extends SortPageDTO {
 	private Long idSeccion;
 	
 	private Long idMaquina;
+	
+	private String comprobante;
 
 }

@@ -54,6 +54,10 @@ public class PiezaCreacionDTO extends DTOEntity<Long> {
 
 	private String hojaProceso;
 
+	private String troquel;
+
+	private Long idTroquel;
+
 	public String getHojaProceso() {
 		return hojaProceso;
 	}
@@ -228,6 +232,22 @@ public class PiezaCreacionDTO extends DTOEntity<Long> {
 
 	public void setObservacionesCotizacionCliente(String observacionesCotizacionCliente) {
 		this.observacionesCotizacionCliente = observacionesCotizacionCliente;
+	}
+
+	public String getTroquel() {
+		return troquel;
+	}
+
+	public void setTroquel(String troquel) {
+		this.troquel = troquel;
+	}
+
+	public Long getIdTroquel() {
+		return idTroquel;
+	}
+
+	public void setIdTroquel(Long idTroquel) {
+		this.idTroquel = idTroquel;
 	}
 
 }

@@ -5,13 +5,11 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.insumo.TipoInsumo;
 import ar.com.avaco.nitrophyl.repository.pieza.TipoInsumoRepository;
 
-@Transactional
+//@Transactional
 @Service("tipoInsumoService")
 public class TipoInsumoServiceImpl extends NJBaseService<Long, TipoInsumo, TipoInsumoRepository>
 		implements TipoInsumoService {

@@ -13,8 +13,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.fwk.core.exception.BusinessException;
 import ar.com.avaco.fwk.core.exception.ErrorValidationException;
@@ -24,7 +22,7 @@ import ar.com.avaco.nitrophyl.domain.entities.cliente.TipoContacto;
 import ar.com.avaco.nitrophyl.repository.cliente.ClienteRepository;
 import ar.com.avaco.nitrophyl.repository.cliente.ContactoRepository;
 
-@Transactional
+//@Transactional
 @Service("clienteService")
 public class ClienteServiceImpl extends NJBaseService<Long, Cliente, ClienteRepository> implements ClienteService {
 

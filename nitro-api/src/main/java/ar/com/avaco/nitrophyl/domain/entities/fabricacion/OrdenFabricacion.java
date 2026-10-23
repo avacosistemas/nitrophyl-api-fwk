@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -56,13 +55,13 @@ public class OrdenFabricacion extends AuditableEntity<Long> {
 	 */
 	@ManyToOne
 	@JoinColumn(name = "ID_OC_DET_PEDIDO", nullable = false)
-	private OrdenCompraDetallePedido ordenCompraDetalle;
+	private OrdenCompraDetallePedido ordenCompraDetallePedido;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "ESTADO")
 	private EstadoOrdenFabricacion estado;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "ordenFabricacion", orphanRemoval = true)
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "ordenFabricacion")
 	private Set<OrdenFabricacionEntrega> entregas = new HashSet<OrdenFabricacionEntrega>();
 
 	@ManyToOne
@@ -110,12 +109,12 @@ public class OrdenFabricacion extends AuditableEntity<Long> {
 		this.numero = numero;
 	}
 
-	public OrdenCompraDetallePedido getOrdenCompraDetalle() {
-		return ordenCompraDetalle;
+	public OrdenCompraDetallePedido getOrdenCompraDetallePedido() {
+		return ordenCompraDetallePedido;
 	}
 
-	public void setOrdenCompraDetalle(OrdenCompraDetallePedido ordenCompraDetalle) {
-		this.ordenCompraDetalle = ordenCompraDetalle;
+	public void setOrdenCompraDetallePedido(OrdenCompraDetallePedido ordenCompraDetallePedido) {
+		this.ordenCompraDetallePedido = ordenCompraDetallePedido;
 	}
 
 	public EstadoOrdenFabricacion getEstado() {

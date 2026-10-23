@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import ar.com.avaco.nitrophyl.domain.entities.pieza.Proceso;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.esquema.Esquema;
+import ar.com.avaco.nitrophyl.domain.entities.pieza.esquema.EsquemaPaso;
 import ar.com.avaco.nitrophyl.dto.EsquemaDTO;
 import ar.com.avaco.nitrophyl.service.pieza.EsquemaService;
 import ar.com.avaco.fwk.core.component.epservice.CRUDAuditableEPBaseService;
@@ -21,13 +22,34 @@ public class EsquemaEPServiceImpl extends CRUDAuditableEPBaseService<Long, Esque
 	}
 
 	@Override
-	protected Esquema convertToEntity(EsquemaDTO dto) {
-		Esquema entity = super.convertToEntity(dto);
-		entity.setProceso(Proceso.ofId(dto.getIdProceso()));
+	protected Esquema convertToEntityForUpdate(EsquemaDTO dto) {
+		Esquema entity = this.service.get(dto.getId());
+		entity.setImagen(dto.getImagen());
+		entity.setPosicion(dto.getPosicion());
+		entity.setTitulo(dto.getTitulo());
+		entity.getPasos().clear();
+		dto.getPasos().forEach(pdto -> {
+			EsquemaPaso paso = new EsquemaPaso();
+			paso.setDescripcion(pdto.getDescripcion());
+			paso.setEsquema(entity);
+			paso.setPaso(pdto.getPaso());
+			paso.setPosicion(pdto.getPosicion());
+			entity.getPasos().add(paso);
+		});
+		return entity;
+	}
+
+	@Override
+	protected Esquema convertToEntityForSave(EsquemaDTO dto) {
+		Esquema entity = new Esquema();
+		entity.setId(dto.getId());
+		entity.setImagen(dto.getImagen());
+		entity.setPosicion(dto.getPosicion());
+		entity.setTitulo(dto.getTitulo());
 		entity.getPasos().forEach(paso -> paso.setEsquema(entity));
 		return entity;
 	}
-	
+
 	@Override
 	public void reordenar(Long idEsquema, Integer posicion) {
 		this.service.reordenar(idEsquema, posicion);

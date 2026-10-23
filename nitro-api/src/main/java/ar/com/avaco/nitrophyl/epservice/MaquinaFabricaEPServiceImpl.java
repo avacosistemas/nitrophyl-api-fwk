@@ -3,16 +3,13 @@ package ar.com.avaco.nitrophyl.epservice;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.epservice.CRUDAuditableEPBaseService;
-import ar.com.avaco.fwk.core.component.epservice.CRUDEPBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.MaquinaFabrica;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.SectorFabrica;
 import ar.com.avaco.nitrophyl.dto.MaquinaFabricaDTO;
 import ar.com.avaco.nitrophyl.service.produccion.MaquinaFabricaService;
 
-@Transactional
+//@Transactional
 @Service("maquinaFabricaEPService")
 public class MaquinaFabricaEPServiceImpl
 		extends CRUDAuditableEPBaseService<Long, MaquinaFabricaDTO, MaquinaFabrica, MaquinaFabricaService>

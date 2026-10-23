@@ -5,14 +5,12 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.nitrophyl.domain.entities.pieza.PiezaControl;
 import ar.com.avaco.nitrophyl.dto.PiezaControlDTO;
 import ar.com.avaco.nitrophyl.service.pieza.PiezaControlService;
 import ar.com.avaco.fwk.core.component.epservice.CRUDAuditableEPBaseService;
 
-@Transactional
+//@Transactional
 @Service("piezaControlEPService")
 public class PiezaControlEPServiceImpl
 		extends CRUDAuditableEPBaseService<Long, PiezaControlDTO, PiezaControl, PiezaControlService>

@@ -1,8 +1,8 @@
 package ar.com.avaco.nitrophyl.domain.entities.pieza.esquema;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,7 +46,7 @@ public class Esquema extends AuditableEntity<Long> {
 
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "esquema", orphanRemoval = true)
 	@OrderBy("posicion ASC")
-	private List<EsquemaPaso> pasos = new ArrayList<EsquemaPaso>();
+	private Set<EsquemaPaso> pasos = new HashSet<EsquemaPaso>();
 
 	@Column(name = "IMAGEN", nullable = true)
 	@Type(type = "org.hibernate.type.BinaryType")
@@ -71,11 +71,11 @@ public class Esquema extends AuditableEntity<Long> {
 		this.imagen = imagen;
 	}
 
-	public List<EsquemaPaso> getPasos() {
+	public Set<EsquemaPaso> getPasos() {
 		return pasos;
 	}
 
-	public void setPasos(List<EsquemaPaso> pasos) {
+	public void setPasos(Set<EsquemaPaso> pasos) {
 		this.pasos = pasos;
 	}
 

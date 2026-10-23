@@ -51,6 +51,7 @@ public class OrdenFabricacionRepositoryImpl extends NJBaseRepository<Long, Orden
 		sql.append("     v.id_orden_compra, ");
 		sql.append("     v.estado_oc, ");
 		sql.append("     v.fecha_oc, ");
+		sql.append("     v.comprobante_oc, ");
 		sql.append("     v.total_solicitado, ");
 		sql.append("     v.fecha_entrega_solicitada, ");
 		sql.append("     v.id_orden_fabricacion, ");
@@ -141,71 +142,80 @@ public class OrdenFabricacionRepositoryImpl extends NJBaseRepository<Long, Orden
 			params.put("estadoOF", filter.getEstado().name());
 		}
 
+		if (StringUtils.isNotBlank(filter.getComprobante())) {
+		    sql.append(" AND LOWER(v.comprobante_oc) LIKE LOWER(:comprobante) ");
+		    params.put("comprobante", "%" + filter.getComprobante().trim() + "%");
+		}
+		
 		String orderBy = null;
 
 		if (filter.getIdx() != null) {
 
-		    switch (filter.getIdx()) {
+			switch (filter.getIdx()) {
 
-		    case "fecha_OC":
-		        orderBy = "v.fecha_oc";
-		        break;
+			case "fecha_OC":
+				orderBy = "v.fecha_oc";
+				break;
 
-		    case "cliente":
-		        orderBy = "v.cliente_nombre";
-		        break;
+			case "cliente":
+				orderBy = "v.cliente_nombre";
+				break;
 
-		    case "pieza":
-		        orderBy = "v.pieza_codigo";
-		        break;
+			case "pieza":
+				orderBy = "v.pieza_codigo";
+				break;
 
-		    case "formula":
-		        orderBy = "v.formula_nombre";
-		        break;
+			case "formula":
+				orderBy = "v.formula_nombre";
+				break;
 
-		    case "ocCantidad":
-		        orderBy = "v.total_solicitado";
-		        break;
+			case "ocCantidad":
+				orderBy = "v.total_solicitado";
+				break;
 
-		    case "fecha_OF":
-		        orderBy = "v.fecha_of";
-		        break;
+			case "fecha_OF":
+				orderBy = "v.fecha_of";
+				break;
 
-		    case "fecha_entrega":
-		        orderBy = "v.fecha_entrega_solicitada";
-		        break;
+			case "fecha_entrega":
+				orderBy = "v.fecha_entrega_solicitada";
+				break;
 
-		    case "estado":
-		        orderBy = "v.estado_of";
-		        break;
+			case "estado":
+				orderBy = "v.estado_of";
+				break;
 
-		    case "ofNumero":
-		        orderBy = "v.numero";
-		        break;
+			case "ofNumero":
+				orderBy = "v.numero";
+				break;
 
-		    case "entregadas":
-		        orderBy = "v.total_fabricado";
-		        break;
+			case "entregadas":
+				orderBy = "v.total_fabricado";
+				break;
 
-		    case "saldo":
-		        orderBy = "v.saldo";
-		        break;
+			case "saldo":
+				orderBy = "v.saldo";
+				break;
+			
+			case "comprobante":
+			    orderBy = "v.comprobante_oc";
+			    break;
 
-		    default:
-		        break;
-		    }
+			default:
+				break;
+			}
 		}
 
 		if (orderBy != null && filter.getAsc() != null) {
 
-		    sql.append(" ORDER BY ");
-		    sql.append(orderBy);
+			sql.append(" ORDER BY ");
+			sql.append(orderBy);
 
-		    if (filter.getAsc()) {
-		        sql.append(" ASC ");
-		    } else {
-		        sql.append(" DESC ");
-		    }
+			if (filter.getAsc()) {
+				sql.append(" ASC ");
+			} else {
+				sql.append(" DESC ");
+			}
 		}
 
 		Query query = entityManager.createNativeQuery(sql.toString());
@@ -220,56 +230,32 @@ public class OrdenFabricacionRepositoryImpl extends NJBaseRepository<Long, Orden
 		List<ListadoOrdenFabricacionDTO> result = new ArrayList<>();
 
 		for (Object[] r : rows) {
-
-			ListadoOrdenFabricacionDTO dto = new ListadoOrdenFabricacionDTO();
-
-			dto.setIdOrdenCompra(((Number) r[0]).longValue());
-
-			dto.setEstadoOC((String) r[1]);
-
-			dto.setFechaOC(DateUtils.toString((Date) r[2], DateUtils.PATTERN_dd_MM_yyyy));
-
-			dto.setTotalSolicitado(((Number) r[3]).intValue());
-
-			dto.setFechaEntregaSolicitada(DateUtils.toString((Date) r[4], DateUtils.PATTERN_dd_MM_yyyy));
-
-			dto.setIdOrdenFabricacion(((Number) r[5]).longValue());
-
-			dto.setFechaOF(DateUtils.toString((Date) r[6], DateUtils.PATTERN_dd_MM_yyyy));
-
-			dto.setNumero(((Number) r[7]).intValue());
-
-			dto.setAnio(((Number) r[8]).intValue());
-
-			dto.setEstadoOF((String) r[9]);
-
-			dto.setIdCliente(((Number) r[10]).longValue());
-
-			dto.setClienteNombre((String) r[11]);
-
-			dto.setIdPieza(((Number) r[12]).longValue());
-
-			dto.setPiezaCodigo((String) r[13]);
-
-			dto.setIdFormula(((Number) r[14]).longValue());
-
-			dto.setFormulaNombre((String) r[15]);
-
-			dto.setIdSeccion(r[16] != null ? ((Number) r[16]).longValue() : null);
-
-			dto.setSeccionNombre((String) r[17]);
-
-			dto.setIdMaquina(r[18] != null ? ((Number) r[18]).longValue() : null);
-
-			dto.setMaquinaNombre((String) r[19]);
-
-			dto.setTotalFabricado(((Number) r[20]).intValue());
-
-			dto.setSaldo(((Number) r[21]).intValue());
-
-			dto.setTotalRegistros(((Number) r[22]).longValue());
-
-			result.add(dto);
+		    ListadoOrdenFabricacionDTO dto = new ListadoOrdenFabricacionDTO();
+		    dto.setIdOrdenCompra(((Number) r[0]).longValue());
+		    dto.setEstadoOC((String) r[1]);
+		    dto.setFechaOC(DateUtils.toString((Date) r[2], DateUtils.PATTERN_dd_MM_yyyy));
+		    dto.setComprobante((String) r[3]);
+		    dto.setTotalSolicitado(((Number) r[4]).intValue());
+		    dto.setFechaEntregaSolicitada(DateUtils.toString((Date) r[5], DateUtils.PATTERN_dd_MM_yyyy));
+		    dto.setIdOrdenFabricacion(((Number) r[6]).longValue());
+		    dto.setFechaOF(DateUtils.toString((Date) r[7], DateUtils.PATTERN_dd_MM_yyyy));
+		    dto.setNumero(((Number) r[8]).intValue());
+		    dto.setAnio(((Number) r[9]).intValue());
+		    dto.setEstadoOF((String) r[10]);
+		    dto.setIdCliente(((Number) r[11]).longValue());
+		    dto.setClienteNombre((String) r[12]);
+		    dto.setIdPieza(((Number) r[13]).longValue());
+		    dto.setPiezaCodigo((String) r[14]);
+		    dto.setIdFormula(((Number) r[15]).longValue());
+		    dto.setFormulaNombre((String) r[16]);
+		    dto.setIdSeccion(r[17] != null ? ((Number) r[17]).longValue() : null);
+		    dto.setSeccionNombre((String) r[18]);
+		    dto.setIdMaquina(r[19] != null ? ((Number) r[19]).longValue() : null);
+		    dto.setMaquinaNombre((String) r[20]);
+		    dto.setTotalFabricado(((Number) r[21]).intValue());
+		    dto.setSaldo(((Number) r[22]).intValue());
+		    dto.setTotalRegistros(((Number) r[23]).longValue());
+		    result.add(dto);
 		}
 
 		Long totalRegistros = 0L;
@@ -278,7 +264,8 @@ public class OrdenFabricacionRepositoryImpl extends NJBaseRepository<Long, Orden
 			totalRegistros = result.get(0).getTotalRegistros();
 		}
 
-	return new PageDTO<ListadoOrdenFabricacionDTO>(result, totalRegistros.intValue(),filter.getPageSize() , filter.getPage());
+		return new PageDTO<ListadoOrdenFabricacionDTO>(result, totalRegistros.intValue(), filter.getPageSize(),
+				filter.getPage());
 	}
 
 }

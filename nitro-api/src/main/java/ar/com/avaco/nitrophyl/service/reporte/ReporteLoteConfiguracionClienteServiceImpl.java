@@ -6,8 +6,6 @@ import java.util.Optional;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.fwk.core.exception.ErrorValidationException;
 import ar.com.avaco.nitrophyl.domain.entities.cliente.Cliente;
@@ -15,7 +13,7 @@ import ar.com.avaco.nitrophyl.domain.entities.formula.Formula;
 import ar.com.avaco.nitrophyl.domain.entities.reporte.ReporteLoteConfiguracionCliente;
 import ar.com.avaco.nitrophyl.repository.reporte.ReporteLoteConfiguracionClienteRepository;
 
-@Transactional
+//@Transactional
 @Service("reporteLoteConfiguracionClienteService")
 public class ReporteLoteConfiguracionClienteServiceImpl
 		extends NJBaseService<Long, ReporteLoteConfiguracionCliente, ReporteLoteConfiguracionClienteRepository>

@@ -3,8 +3,6 @@ package ar.com.avaco.nitrophyl.epservice;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
 
 import ar.com.avaco.fwk.core.component.dto.PageDTO;
@@ -22,7 +20,7 @@ import ar.com.avaco.nitrophyl.dto.CotizacionFilterDTO;
 import ar.com.avaco.nitrophyl.service.pieza.CotizacionService;
 import ar.com.avaco.nitrophyl.service.pieza.PiezaClienteService;
 
-@Transactional
+//@Transactional
 @Service("cotizacionEPService")
 public class CotizacionEPServiceImpl extends
 		CRUDAuditableEPBaseService<Long, CotizacionDTO, Cotizacion, CotizacionService> implements CotizacionEPService {

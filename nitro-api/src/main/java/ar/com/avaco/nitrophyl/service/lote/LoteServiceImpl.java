@@ -7,8 +7,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.formula.Formula;
 import ar.com.avaco.nitrophyl.domain.entities.formula.RevisionParametros;
@@ -21,7 +19,7 @@ import ar.com.avaco.nitrophyl.repository.lote.LoteRepository;
 import ar.com.avaco.nitrophyl.service.formula.FormulaService;
 import ar.com.avaco.fwk.core.utils.DateUtils;
 
-@Transactional
+//@Transactional
 @Service("loteService")
 public class LoteServiceImpl extends NJBaseService<Long, Lote, LoteRepository> implements LoteService {
 

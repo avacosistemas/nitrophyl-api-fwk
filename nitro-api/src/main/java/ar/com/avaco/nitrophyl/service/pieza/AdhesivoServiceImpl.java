@@ -3,13 +3,11 @@ package ar.com.avaco.nitrophyl.service.pieza;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.insumo.Adhesivo;
 import ar.com.avaco.nitrophyl.repository.pieza.AdhesivoRepository;
 
-@Transactional
+//@Transactional
 @Service("adhesivoService")
 public class AdhesivoServiceImpl extends NJBaseService<Long, Adhesivo, AdhesivoRepository> implements AdhesivoService {
 

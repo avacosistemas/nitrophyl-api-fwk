@@ -7,15 +7,13 @@ import javax.annotation.Resource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.molde.MoldeRegistro;
 import ar.com.avaco.nitrophyl.domain.entities.molde.TipoRegistroMolde;
 import ar.com.avaco.nitrophyl.repository.molde.MoldeRegistroRepository;
 import ar.com.avaco.fwk.core.utils.DateUtils;
 
-@Transactional
+//@Transactional
 @Service("moldeRegistroService")
 public class MoldeRegistroServiceImpl extends NJBaseService<Long, MoldeRegistro, MoldeRegistroRepository>
 		implements MoldeRegistroService {

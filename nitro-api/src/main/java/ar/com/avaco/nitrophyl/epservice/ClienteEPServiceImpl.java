@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.com.avaco.fwk.core.domain.filter.AbstractFilter;
@@ -19,12 +20,16 @@ import ar.com.avaco.nitrophyl.domain.entities.cliente.Provincia;
 import ar.com.avaco.nitrophyl.dto.ClienteDTO;
 import ar.com.avaco.nitrophyl.dto.ContactoDTO;
 import ar.com.avaco.nitrophyl.dto.PaisDTO;
+import ar.com.avaco.nitrophyl.service.administracion.PaisService;
 import ar.com.avaco.nitrophyl.service.cliente.ClienteService;
 import ar.com.avaco.fwk.core.component.epservice.CRUDEPBaseService;
 
 @Service("clienteEPService")
 public class ClienteEPServiceImpl extends CRUDEPBaseService<Long, ClienteDTO, Cliente, ClienteService>
 		implements ClienteEPService {
+	
+	@Autowired
+	private PaisService paisService;
 
 	public ClienteEPServiceImpl() {
 		super(Cliente.class, ClienteDTO.class);
@@ -46,7 +51,7 @@ public class ClienteEPServiceImpl extends CRUDEPBaseService<Long, ClienteDTO, Cl
 	public List<ClienteDTO> list() {
 		return convertToDtos(this.service.list());
 	}
-	
+
 	@Override
 	public String getCorreoInformes(Long idCliente) {
 		return this.service.getCorreoInformes(idCliente);
@@ -122,13 +127,13 @@ public class ClienteEPServiceImpl extends CRUDEPBaseService<Long, ClienteDTO, Cl
 			clienteDTO.setLocalidad(entity.getLocalidad());
 			if (entity.getProvincia() != null)
 				clienteDTO.setProvincia(entity.getProvincia().name());
-			
+
 			PaisDTO paisDTO = new PaisDTO();
 			paisDTO.setId(entity.getPais().getId());
 			paisDTO.setNombre(entity.getPais().getNombre());
-			
+
 			clienteDTO.setPaisDTO(paisDTO);
-			
+
 			clienteDTO.setEmail(entity.getEmail());
 			clienteDTO.setWebSite(entity.getWebSite());
 			clienteDTO.setCuit(entity.getCuit());
@@ -171,13 +176,13 @@ public class ClienteEPServiceImpl extends CRUDEPBaseService<Long, ClienteDTO, Cl
 		cliente.setLocalidad(dto.getLocalidad());
 		if (StringUtils.isNotBlank(dto.getProvincia()))
 			cliente.setProvincia(Provincia.valueOf(dto.getProvincia()));
-		
-		Pais pais = new Pais();
-		pais.setId(dto.getPaisDTO().getId());
-		pais.setNombre(dto.getPaisDTO().getNombre());
-		
+
+		Pais pais = paisService.get(dto.getPaisDTO().getId());
+//		pais.setId(dto.getPaisDTO().getId());
+//		pais.setNombre(dto.getPaisDTO().getNombre());
+
 		cliente.setPais(pais);
-		
+
 		cliente.setEmail(dto.getEmail());
 		cliente.setWebSite(dto.getWebSite());
 		cliente.setCUIT(dto.getCuit());
@@ -204,18 +209,16 @@ public class ClienteEPServiceImpl extends CRUDEPBaseService<Long, ClienteDTO, Cl
 
 		return contacto;
 	}
-	
+
 	@Override
 	public void deleteContacto(Long idContactoCliente) {
 		this.service.deleteContacto(idContactoCliente);
 	}
-	
+
 	@Override
 	@Resource(name = "clienteService")
 	protected void setService(ClienteService service) {
 		this.service = service;
 	}
-
-
 
 }

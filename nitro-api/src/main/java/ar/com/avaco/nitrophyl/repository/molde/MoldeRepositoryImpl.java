@@ -92,7 +92,7 @@ public class MoldeRepositoryImpl extends NJBaseRepository<Long, Molde> implement
 
 		query += " limit " + filtro.getPageSize();
 		Integer first = filtro.getPage() != null ? filtro.getPage() : 1;
-		query += " offset " + (first - 1);
+		query += " offset " + (first);
 		return query;
 	}
 

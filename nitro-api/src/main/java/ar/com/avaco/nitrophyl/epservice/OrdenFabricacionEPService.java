@@ -4,14 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import ar.com.avaco.fwk.core.component.dto.PageDTO;
+import ar.com.avaco.fwk.core.component.epservice.CRUDEPService;
 import ar.com.avaco.nitrophyl.dto.ListadoOrdenFabricacionDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenFabricacionAsignacionDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenFabricacionDTO;
-import ar.com.avaco.nitrophyl.dto.OrdenFabricacionEntregaDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenFabricacionFilterDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenTrabajoResponseDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenTrabajoResumenDTO;
-import ar.com.avaco.fwk.core.component.epservice.CRUDEPService;
 
 public interface OrdenFabricacionEPService extends CRUDEPService<Long, OrdenFabricacionDTO> {
 
@@ -20,8 +19,6 @@ public interface OrdenFabricacionEPService extends CRUDEPService<Long, OrdenFabr
 	void create(Long idOrdenCompra);
 
 	void asignar(Long idOrdenFabricacion, OrdenFabricacionAsignacionDTO asignacion);
-
-	void registrarEntrega(Long idOrdenFabricacion, OrdenFabricacionEntregaDTO entrega);
 
 	OrdenTrabajoResponseDTO generarOrdenTrabajo(Long idOrdenFabricacion);
 

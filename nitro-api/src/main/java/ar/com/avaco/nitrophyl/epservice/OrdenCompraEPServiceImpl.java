@@ -7,8 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.transaction.Transactional;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +34,7 @@ import ar.com.avaco.nitrophyl.service.pieza.PiezaService;
 import ar.com.avaco.fwk.core.utils.DateUtils;
 import ar.com.avaco.fwk.core.component.epservice.CRUDAuditableEPBaseService;
 
-@Transactional
+//@Transactional
 @Service("ordenCompraEPService")
 public class OrdenCompraEPServiceImpl
 		extends CRUDAuditableEPBaseService<Long, OrdenCompraDTO, OrdenCompra, OrdenCompraService>

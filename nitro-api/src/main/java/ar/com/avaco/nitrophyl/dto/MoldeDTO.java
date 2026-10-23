@@ -30,25 +30,6 @@ public class MoldeDTO extends DTOAuditableEntity<Long> {
 	private Double profundidad;
 	private Double diametro;
 
-	private String troquel;
-	private Long idTroquel;
-
-	public String getTroquel() {
-		return troquel;
-	}
-
-	public void setTroquel(String troquel) {
-		this.troquel = troquel;
-	}
-
-	public Long getIdTroquel() {
-		return idTroquel;
-	}
-
-	public void setIdTroquel(Long idTroquel) {
-		this.idTroquel = idTroquel;
-	}
-
 	public TipoMolde getTipoMolde() {
 		return tipoMolde;
 	}

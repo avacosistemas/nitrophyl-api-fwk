@@ -9,18 +9,22 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import ar.com.avaco.fwk.core.component.dto.PageDTO;
+import ar.com.avaco.fwk.core.component.epservice.CRUDAuditableEPBaseService;
 import ar.com.avaco.fwk.core.exception.BusinessException;
 import ar.com.avaco.fwk.core.exception.ErrorValidationException;
+import ar.com.avaco.fwk.core.utils.DateUtils;
 import ar.com.avaco.nitrophyl.domain.entities.cliente.Cliente;
 import ar.com.avaco.nitrophyl.domain.entities.fabrica.Prensa;
 import ar.com.avaco.nitrophyl.domain.entities.formula.Formula;
 import ar.com.avaco.nitrophyl.domain.entities.molde.Molde;
 import ar.com.avaco.nitrophyl.domain.entities.molde.PlanoClasificacion;
+import ar.com.avaco.nitrophyl.domain.entities.molde.Troquel;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.Pieza;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.PiezaControl;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.PiezaDimension;
@@ -58,11 +62,9 @@ import ar.com.avaco.nitrophyl.service.pieza.CotizacionService;
 import ar.com.avaco.nitrophyl.service.pieza.PiezaControlService;
 import ar.com.avaco.nitrophyl.service.pieza.PiezaService;
 import ar.com.avaco.nitrophyl.service.pieza.PiezaTipoService;
-import ar.com.avaco.fwk.core.component.dto.PageDTO;
-import ar.com.avaco.fwk.core.utils.DateUtils;
-import ar.com.avaco.fwk.core.component.epservice.CRUDAuditableEPBaseService;
+import ar.com.avaco.nitrophyl.service.produccion.TroquelService;
 
-@Transactional
+//@Transactional
 @Service("piezaEPService")
 public class PiezaEPServiceImpl extends CRUDAuditableEPBaseService<Long, PiezaDTO, Pieza, PiezaService>
 		implements PiezaEPService {
@@ -89,6 +91,9 @@ public class PiezaEPServiceImpl extends CRUDAuditableEPBaseService<Long, PiezaDT
 	@Autowired
 	private PiezaControlService piezaControlService;
 
+	@Autowired
+	private TroquelService troquelService;
+	
 	@Override
 	public PageDTO<PiezaGrillaDTO> listGrilla(PiezaFilterDTO filter) {
 		List<PiezaGrillaDTO> listGrilla = this.service.listGrilla(filter);
@@ -204,6 +209,16 @@ public class PiezaEPServiceImpl extends CRUDAuditableEPBaseService<Long, PiezaDT
 		Proceso proceso = new Proceso();
 		proceso.setHojaProceso(dto.getHojaProceso());
 
+		if (dto.getIdTroquel() != null) {
+		    Troquel t = troquelService.get(dto.getIdTroquel());
+		    proceso.setTroquel(t);
+		} else if (StringUtils.isNotBlank(dto.getTroquel())) {
+		    Troquel t = new Troquel();
+		    t.setNombre(dto.getTroquel());
+		    t = troquelService.save(t);
+		    proceso.setTroquel(t);
+		}
+		
 		// Asocio la terminacion
 		Terminacion terminacion = new Terminacion();
 		terminacion.setProceso(proceso);
@@ -262,6 +277,11 @@ public class PiezaEPServiceImpl extends CRUDAuditableEPBaseService<Long, PiezaDT
 		dto.setCodigo(pieza.getCodigo());
 		dto.setNombreFormula(pieza.getDetalleFormula().getFormula().getNombre());
 
+		if (pieza.getProceso().getTroquel() != null) {
+			dto.setTroquel(pieza.getProceso().getTroquel().getNombre());
+			dto.setIdTroquel(pieza.getProceso().getTroquel().getId());
+		}
+		
 		pieza.getEspesores().forEach(espesor -> {
 			EspesorDTO e = new EspesorDTO();
 			e.setId(espesor.getId());
@@ -336,6 +356,15 @@ public class PiezaEPServiceImpl extends CRUDAuditableEPBaseService<Long, PiezaDT
 		pieza.getEspesores().clear();
 		pieza.getEspesores().addAll(espesoresActualizado);
 
+		if (piezaFormula.getIdTroquel() != null) {
+			pieza.getProceso().setTroquel(troquelService.get((piezaFormula.getIdTroquel())));
+		} else if (StringUtils.isNoneBlank(piezaFormula.getTroquel())) {
+			Troquel t = Troquel.ofId(piezaFormula.getIdTroquel());
+			t.setNombre(piezaFormula.getTroquel());
+			t = troquelService.save(t);
+			pieza.getProceso().setTroquel(t);
+		}
+		
 		pieza.getDetalleFormula().setObservacionesPesoCrudo(piezaFormula.getObservacionesPesoCrudo());
 		pieza.getDetalleFormula().setPesoCrudo(piezaFormula.getPesoCrudo());
 		pieza.setObservacionesRevision(piezaFormula.getObservacionesRevision());

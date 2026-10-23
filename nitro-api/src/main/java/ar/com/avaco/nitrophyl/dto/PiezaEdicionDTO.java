@@ -61,6 +61,10 @@ public class PiezaEdicionDTO extends DTOEntity<Long> {
 
 	private Integer cantidadInsumos;
 
+	private String troquel;
+
+	private Long idTroquel;
+
 	public Boolean getRequiereInsumos() {
 		return requiereInsumos;
 	}
@@ -259,6 +263,22 @@ public class PiezaEdicionDTO extends DTOEntity<Long> {
 
 	public void setEspesores(Set<EspesorDTO> espesores) {
 		this.espesores = espesores;
+	}
+
+	public String getTroquel() {
+		return troquel;
+	}
+
+	public void setTroquel(String troquel) {
+		this.troquel = troquel;
+	}
+
+	public Long getIdTroquel() {
+		return idTroquel;
+	}
+
+	public void setIdTroquel(Long idTroquel) {
+		this.idTroquel = idTroquel;
 	}
 
 }

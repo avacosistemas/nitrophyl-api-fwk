@@ -3,8 +3,6 @@ package ar.com.avaco.nitrophyl.service.pieza;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.Pieza;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.cliente.Cotizacion;
@@ -14,7 +12,7 @@ import ar.com.avaco.nitrophyl.repository.pieza.CotizacionRepository;
 import ar.com.avaco.nitrophyl.repository.pieza.PiezaRepository;
 import ar.com.avaco.fwk.core.component.dto.PageDTO;
 
-@Transactional
+//@Transactional
 @Service("cotizacionService")
 public class CotizacionServiceImpl extends NJBaseService<Long, Cotizacion, CotizacionRepository>
 		implements CotizacionService {

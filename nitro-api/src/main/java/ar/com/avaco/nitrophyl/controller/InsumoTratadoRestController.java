@@ -32,10 +32,7 @@ public class InsumoTratadoRestController extends AbstractDTORestController<Insum
 	@RequestMapping(value = "/insumoTratado/pieza/{idPieza}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> list(@PathVariable Long idPieza) {
 		List<InsumoTratadoDTO> list = this.service.listEq("pieza.id", idPieza);
-		JSONResponse response = new JSONResponse();
-		response.setData(list);
-		response.setStatus(JSONResponse.OK);
-		return new ResponseEntity<JSONResponse>(response, HttpStatus.OK);
+		return OKDATA(list);
 	}
 	
 	@Override

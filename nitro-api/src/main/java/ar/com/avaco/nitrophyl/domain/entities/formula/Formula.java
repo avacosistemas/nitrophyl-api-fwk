@@ -60,7 +60,7 @@ public class Formula extends ar.com.avaco.fwk.core.domain.Entity<Long> {
 	/**
 	 * Ultima revision vigente de parametros
 	 */
-	@ManyToOne(fetch = FetchType.EAGER, optional = true)
+	@ManyToOne(fetch = FetchType.LAZY, optional = true)
 	@JoinColumn(name = "ID_REV_PARAM")
 	@Fetch(FetchMode.JOIN)
 	private RevisionParametros revision;

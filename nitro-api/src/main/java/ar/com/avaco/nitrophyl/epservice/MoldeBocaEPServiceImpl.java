@@ -7,8 +7,6 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.exception.BusinessException;
 import ar.com.avaco.nitrophyl.domain.entities.molde.Molde;
 import ar.com.avaco.nitrophyl.domain.entities.molde.MoldeBoca;
@@ -19,7 +17,7 @@ import ar.com.avaco.nitrophyl.service.molde.MoldeObservacionService;
 import ar.com.avaco.nitrophyl.service.molde.MoldeService;
 import ar.com.avaco.fwk.core.component.epservice.CRUDAuditableEPBaseService;
 
-@Transactional
+//@Transactional
 @Service("moldeBocaEPService")
 public class MoldeBocaEPServiceImpl extends CRUDAuditableEPBaseService<Long, MoldeBocaDTO, MoldeBoca, MoldeBocaService>
 		implements MoldeBocaEPService {

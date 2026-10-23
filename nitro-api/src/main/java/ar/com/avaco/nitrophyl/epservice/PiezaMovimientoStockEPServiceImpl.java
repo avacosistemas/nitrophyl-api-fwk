@@ -6,8 +6,6 @@ import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.nitrophyl.domain.entities.pieza.OrigenMovimientoStock;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.Pieza;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.PiezaMovimientoStock;
@@ -16,7 +14,7 @@ import ar.com.avaco.nitrophyl.service.pieza.PiezaMovimientoStockService;
 import ar.com.avaco.nitrophyl.service.pieza.PiezaStockService;
 import ar.com.avaco.fwk.core.component.epservice.CRUDAuditableEPBaseService;
 
-@Transactional
+//@Transactional
 @Service("piezaMovimientoStockEPService")
 public class PiezaMovimientoStockEPServiceImpl extends
 		CRUDAuditableEPBaseService<Long, PiezaMovimientoStockDTO, PiezaMovimientoStock, PiezaMovimientoStockService>

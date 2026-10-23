@@ -103,18 +103,6 @@ public class Molde extends AuditableEntity<Long> {
 	@Column(name = "FALTANTES", insertable = false, updatable = false)
 	private String faltantes;
 
-	@ManyToOne(fetch = FetchType.EAGER, optional = true)
-	@JoinColumn(name = "ID_TROQUEL", nullable = true)
-	private Troquel troquel;
-
-	public Troquel getTroquel() {
-		return troquel;
-	}
-
-	public void setTroquel(Troquel troquel) {
-		this.troquel = troquel;
-	}
-
 	public Integer getCantidadBocas() {
 		return cantidadBocas;
 	}

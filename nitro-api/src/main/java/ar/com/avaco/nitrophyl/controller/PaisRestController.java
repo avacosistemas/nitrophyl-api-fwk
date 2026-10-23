@@ -1,5 +1,8 @@
 package ar.com.avaco.nitrophyl.controller;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.annotation.Resource;
 
 import org.springframework.http.MediaType;
@@ -22,7 +25,9 @@ public class PaisRestController extends AbstractDTORestController<PaisDTO, Long,
 	@Override
 	@RequestMapping(value = "/pais", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> list() {
-		return super.list();
+		Set<PaisDTO> paises = new HashSet<PaisDTO>();
+		paises.addAll(this.service.list());
+		return OKDATA(paises);
 	}
 
 	@Override

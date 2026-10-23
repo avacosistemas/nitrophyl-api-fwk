@@ -7,8 +7,6 @@ import java.util.Optional;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.fwk.core.utils.DateUtils;
 import ar.com.avaco.nitrophyl.domain.entities.formula.ConfiguracionPrueba;
@@ -18,7 +16,7 @@ import ar.com.avaco.nitrophyl.repository.lote.LoteRepository;
 import ar.com.avaco.nitrophyl.repository.material.ConfiguracionPruebaRepository;
 import ar.com.avaco.nitrophyl.repository.material.RevisionParametrosRepository;
 
-@Transactional
+//@Transactional
 @Service("configuracionPruebaService")
 public class ConfiguracionPruebaServiceImpl extends
 		NJBaseService<Long, ConfiguracionPrueba, ConfiguracionPruebaRepository> implements ConfiguracionPruebaService {
