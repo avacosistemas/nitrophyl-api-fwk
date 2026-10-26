@@ -13,12 +13,15 @@ public class PiezaComboDTO {
 
 	private String codigo;
 
-	public PiezaComboDTO(Long id, String denominacion, String formula, String codigo) {
+	private String codigoCliente;
+
+	public PiezaComboDTO(Long id, String denominacion, String formula, String codigo, String codigoCliente) {
 		super();
 		this.id = id;
 		this.denominacion = denominacion;
 		this.codigo = codigo;
 		this.formula = formula;
+		this.codigoCliente = codigoCliente;
 	}
 
 	public Long getId() {
@@ -51,6 +54,14 @@ public class PiezaComboDTO {
 
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
+	}
+
+	public String getCodigoCliente() {
+		return codigoCliente;
+	}
+
+	public void setCodigoCliente(String codigoCliente) {
+		this.codigoCliente = codigoCliente;
 	}
 
 }

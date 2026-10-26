@@ -11,6 +11,11 @@ import ar.com.avaco.nitrophyl.repository.pieza.PiezaMoldeRepository;
 @Service("piezaMoldeService")
 public class PiezaMoldeServiceImpl extends NJBaseService<Long, PiezaMolde, PiezaMoldeRepository> implements PiezaMoldeService {
 
+	@Override
+	public void deleteAssociation(Long id) {
+		this.repository.deleteAssociationById(id);
+	}
+
 	@Resource(name = "piezaMoldeRepository")
 	void setRepository(PiezaMoldeRepository piezaMoldeRepository) {
 		this.repository = piezaMoldeRepository;

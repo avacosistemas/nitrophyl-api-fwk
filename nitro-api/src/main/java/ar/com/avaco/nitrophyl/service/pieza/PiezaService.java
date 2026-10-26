@@ -18,7 +18,7 @@ public interface PiezaService extends NJService<Long, Pieza> {
 
 	void actualizarFaltantes(Pieza pieza);
 
-	List<PiezaComboDTO> listCombo(String nombre, Long idCliente);
+	List<PiezaComboDTO> listCombo(String nombre, Long idCliente, boolean soloDelCliente);
 
 	boolean existsByCodigoAndDetalleFormulaFormulaId(String codigo, Long idMaterial);
 

@@ -1,6 +1,11 @@
 package ar.com.avaco.nitrophyl.service.pieza;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
@@ -109,8 +114,17 @@ public class PiezaServiceImpl extends NJBaseService<Long, Pieza, PiezaRepository
 	}
 
 	@Override
-	public List<PiezaComboDTO> listCombo(String nombre, Long idCliente) {
-		return this.repository.listPiezasCombo(nombre, idCliente);
+	public List<PiezaComboDTO> listCombo(String nombre, Long idCliente, boolean soloDelCliente) {
+		List<PiezaComboDTO> piezas = this.repository.listPiezasCombo(nombre, idCliente, soloDelCliente);
+		Map<List<String>, PiezaComboDTO> piezasUnicas = new LinkedHashMap<>();
+		for (PiezaComboDTO pieza : piezas) {
+			List<String> clave = Arrays.asList(
+					StringUtils.trimToEmpty(pieza.getCodigo()),
+					StringUtils.trimToEmpty(pieza.getDenominacion()).toLowerCase(Locale.ROOT),
+					StringUtils.trimToEmpty(pieza.getCodigoCliente()));
+			piezasUnicas.putIfAbsent(clave, pieza);
+		}
+		return new ArrayList<>(piezasUnicas.values());
 	}
 
 	@Override

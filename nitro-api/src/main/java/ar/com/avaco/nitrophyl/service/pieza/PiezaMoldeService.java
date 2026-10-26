@@ -5,4 +5,6 @@ import ar.com.avaco.nitrophyl.domain.entities.pieza.PiezaMolde;
 
 public interface PiezaMoldeService extends NJService<Long, PiezaMolde> {
 
+	void deleteAssociation(Long id);
+
 }

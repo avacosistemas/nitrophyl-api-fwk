@@ -50,6 +50,11 @@ public class PiezaMoldeEPServiceImpl extends CRUDAuditableEPBaseService<Long, Pi
 		this.service = service;
 	}
 
+	@Override
+	public void deleteAssociation(Long id) {
+		this.service.deleteAssociation(id);
+	}
+
 	@Resource(name = "moldeService")
 	public void setMoldeService(MoldeService moldeService) {
 		this.moldeService = moldeService;

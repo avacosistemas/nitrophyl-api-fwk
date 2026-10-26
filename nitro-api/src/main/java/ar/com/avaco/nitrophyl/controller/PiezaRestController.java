@@ -46,8 +46,10 @@ public class PiezaRestController extends AbstractDTORestController<PiezaDTO, Lon
 
 	@RequestMapping(value = "/pieza/combo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> listombo(@RequestParam(required = false) String nombre,
-			@RequestParam(required = false) Long idCliente) {
-		List<PiezaComboDTO> list = this.service.listCombo(nombre, idCliente);
+			@RequestParam(required = false) Long idCliente,
+			@RequestParam(required = false) Boolean soloDelCliente) {
+		boolean filtrarPorCliente = soloDelCliente != null ? soloDelCliente.booleanValue() : idCliente != null;
+		List<PiezaComboDTO> list = this.service.listCombo(nombre, idCliente, filtrarPorCliente);
 		JSONResponse response = new JSONResponse();
 		response.setData(list);
 		response.setStatus(JSONResponse.OK);

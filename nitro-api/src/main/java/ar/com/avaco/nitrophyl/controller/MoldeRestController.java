@@ -227,8 +227,8 @@ public class MoldeRestController extends AbstractDTORestController<MoldeDTO, Lon
 	public ResponseEntity<JSONResponse> getCombo(MoldeFilterDTO filter) throws Exception {
 		filter.setAsc(true);
 		filter.setIdx("codigo");
-		filter.setPage(1);
-		filter.setPageSize(200);
+		filter.setPage(0);
+		filter.setPageSize(1000);
 		PageDTO<MoldeListadoDTO> page = this.service.list(filter);
 		List<ComboDTO> combo = new ArrayList<ComboDTO>();
 		if (page.getList() != null && !page.getList().isEmpty())

@@ -373,8 +373,8 @@ public class PiezaEPServiceImpl extends CRUDAuditableEPBaseService<Long, PiezaDT
 	}
 
 	@Override
-	public List<PiezaComboDTO> listCombo(String nombre, Long idCliente) {
-		return this.service.listCombo(nombre, idCliente);
+	public List<PiezaComboDTO> listCombo(String nombre, Long idCliente, boolean soloDelCliente) {
+		return this.service.listCombo(nombre, idCliente, soloDelCliente);
 	}
 
 	@Override

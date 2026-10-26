@@ -21,7 +21,7 @@ public interface PiezaRepository extends NJRepository<Long, Pieza>, PiezaReposit
 	void actualizarFaltantes(Long idPieza, String faltantes);
 
 	@Query("SELECT DISTINCT new ar.com.avaco.nitrophyl.dto.PiezaComboDTO(" +
-		       "p.id, p.denominacion, p.detalleFormula.formula.nombre, p.codigo) " +
+		       "p.id, p.denominacion, p.detalleFormula.formula.nombre, p.codigo, pc.nombrePiezaPersonalizado) " +
 		       "FROM Pieza p " +
 		       "LEFT JOIN p.clientes pc " +
 		       "WHERE p.vigente = true " +
@@ -29,13 +29,16 @@ public interface PiezaRepository extends NJRepository<Long, Pieza>, PiezaReposit
 		       ":nombre IS NULL " +
 		       "OR LOWER(p.denominacion) LIKE LOWER(CONCAT('%', :nombre, '%')) " +
 		       "OR LOWER(p.codigo) LIKE LOWER(CONCAT('%', :nombre, '%')) " +
-		       "OR LOWER(p.detalleFormula.formula.nombre) LIKE LOWER(CONCAT('%', :nombre, '%'))" +
+		       "OR LOWER(p.detalleFormula.formula.nombre) LIKE LOWER(CONCAT('%', :nombre, '%')) " +
+		       "OR LOWER(pc.nombrePiezaPersonalizado) LIKE LOWER(CONCAT('%', :nombre, '%'))" +
 		       ") " +
 		       "AND (:idCliente IS NULL OR pc.cliente.id = :idCliente) " +
+		       "AND (:soloDelCliente = false OR :idCliente IS NULL OR pc.id IS NOT NULL) " +
 		       "ORDER BY p.denominacion")
-		List<PiezaComboDTO> listPiezasCombo(
-		    @Param("nombre") String nombre,
-		    @Param("idCliente") Long idCliente);
+	List<PiezaComboDTO> listPiezasCombo(
+	    @Param("nombre") String nombre,
+	    @Param("idCliente") Long idCliente,
+	    @Param("soloDelCliente") boolean soloDelCliente);
 
 	boolean existsByCodigoAndDetalleFormulaFormulaId(String codigo, Long idMaterial);
 

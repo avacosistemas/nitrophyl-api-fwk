@@ -29,7 +29,7 @@ public interface PiezaEPService extends CRUDEPService<Long, PiezaDTO> {
 
 	void update(Long idPieza, PiezaPUTDTO piezaFormula);
 
-	List<PiezaComboDTO> listCombo(String nombre, Long idCliente);
+	List<PiezaComboDTO> listCombo(String nombre, Long idCliente, boolean soloDelCliente);
 
 	void copiar(PiezaBaseDTO dto) throws BusinessException;
 

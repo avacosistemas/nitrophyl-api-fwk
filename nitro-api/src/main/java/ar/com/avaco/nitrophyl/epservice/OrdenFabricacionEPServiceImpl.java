@@ -255,12 +255,18 @@ public class OrdenFabricacionEPServiceImpl
 					.map(it -> it.getInsumo().getNombre() + " (" + it.getInsumo().getTipo().getNombre() + ")")
 					.collect(Collectors.joining(" - "));
 		}
+		String codigoPiezaCliente = vigente.getPiezaCliente() != null
+				? vigente.getPiezaCliente().getNombrePiezaPersonalizado()
+				: null;
+		String tituloPieza = StringUtils.isNotBlank(codigoPiezaCliente)
+				? pieza + " - " + codigoPiezaCliente
+				: pieza;
 
 		ItemOrdenTrabajoDTO item = ItemOrdenTrabajoDTO.builder().identficacion(identificacion).cantidadTotal(cantidad)
 				.troquel(troquelNombre).controlCalidad(controles).formula(formula).hp(hojaProceso).idItem(1L)
 				.material(material).matriz(molde).pc(postCura).planoRev(plano).observacion(observacionPieza)
 				.insumos(insumos).descuento(descuentoString).precioDescuento(descuentoValorString)
-				.observacionDescuento(observacionDescuento).titulo(pieza).ubicacion(ubicacion)
+				.observacionDescuento(observacionDescuento).titulo(tituloPieza).ubicacion(ubicacion)
 				.cotizacion(vigente.getValor()).fechaCotizacion(vigente.getFecha()).entregas(entregas).build();
 		List<ItemOrdenTrabajoDTO> itemsOT = new ArrayList<ItemOrdenTrabajoDTO>();
 		itemsOT.add(item);

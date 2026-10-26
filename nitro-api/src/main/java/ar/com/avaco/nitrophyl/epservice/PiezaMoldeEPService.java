@@ -5,4 +5,6 @@ import ar.com.avaco.nitrophyl.dto.PiezaMoldeDTO;
 
 public interface PiezaMoldeEPService extends CRUDEPService<Long, PiezaMoldeDTO> {
 
+	void deleteAssociation(Long id);
+
 }
