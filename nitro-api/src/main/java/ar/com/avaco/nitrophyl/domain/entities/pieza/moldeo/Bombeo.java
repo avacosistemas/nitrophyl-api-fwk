@@ -50,6 +50,17 @@ public class Bombeo extends AuditableEntity<Long> {
 
 	@Column(name = "PRESION")
 	private Double presion;
+	
+	@Column(name = "POSICION")
+	private Integer posicion;
+	
+	public Integer getPosicion() {
+		return posicion;
+	}
+
+	public void setPosicion(Integer posicion) {
+		this.posicion = posicion;
+	}
 
 	public Integer getCantidad() {
 		return cantidad;

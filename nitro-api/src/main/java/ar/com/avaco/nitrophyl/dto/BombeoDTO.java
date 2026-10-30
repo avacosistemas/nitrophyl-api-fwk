@@ -5,12 +5,22 @@ import ar.com.avaco.fwk.core.component.dto.entity.DTOAuditableEntity;
 public class BombeoDTO extends DTOAuditableEntity<Long> {
 
 	private Long id;
-	
+
 	private String tipo;
 
 	private Integer cantidad;
 
 	private Double presion;
+
+	private Integer posicion;
+
+	public Integer getPosicion() {
+		return posicion;
+	}
+
+	public void setPosicion(Integer posicion) {
+		this.posicion = posicion;
+	}
 
 	public String getTipo() {
 		return tipo;
@@ -44,6 +54,4 @@ public class BombeoDTO extends DTOAuditableEntity<Long> {
 		this.id = id;
 	}
 
-	
-	
 }

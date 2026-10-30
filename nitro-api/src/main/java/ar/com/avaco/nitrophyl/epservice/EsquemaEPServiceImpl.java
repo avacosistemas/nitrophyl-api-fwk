@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.com.avaco.nitrophyl.domain.entities.pieza.Proceso;
@@ -11,15 +12,21 @@ import ar.com.avaco.nitrophyl.domain.entities.pieza.esquema.Esquema;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.esquema.EsquemaPaso;
 import ar.com.avaco.nitrophyl.dto.EsquemaDTO;
 import ar.com.avaco.nitrophyl.service.pieza.EsquemaService;
+import ar.com.avaco.nitrophyl.service.pieza.ProcesoService;
 import ar.com.avaco.fwk.core.component.epservice.CRUDAuditableEPBaseService;
 
 @Service("esquemaEPService")
 public class EsquemaEPServiceImpl extends CRUDAuditableEPBaseService<Long, EsquemaDTO, Esquema, EsquemaService>
 		implements EsquemaEPService {
 
+	@Autowired
+	private ProcesoService procesoService;
+	
 	public EsquemaEPServiceImpl() {
 		super(Esquema.class, EsquemaDTO.class);
 	}
+	
+	
 
 	@Override
 	protected Esquema convertToEntityForUpdate(EsquemaDTO dto) {
@@ -41,7 +48,9 @@ public class EsquemaEPServiceImpl extends CRUDAuditableEPBaseService<Long, Esque
 
 	@Override
 	protected Esquema convertToEntityForSave(EsquemaDTO dto) {
+		Proceso proceso = procesoService.get(dto.getIdProceso());
 		Esquema entity = new Esquema();
+		entity.setProceso(proceso);
 		entity.setId(dto.getId());
 		entity.setImagen(dto.getImagen());
 		entity.setPosicion(dto.getPosicion());
