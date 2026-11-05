@@ -8,4 +8,6 @@ public interface PiezaPlanoEPService extends CRUDEPService<Long, PiezaPlanoDTO> 
 
 	ArchivoDTO getPlanoArchivo(Long id);
 
+	void deleteAssociation(Long id);
+
 }

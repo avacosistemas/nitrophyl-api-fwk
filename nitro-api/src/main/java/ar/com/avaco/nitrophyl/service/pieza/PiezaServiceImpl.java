@@ -121,6 +121,7 @@ public class PiezaServiceImpl extends NJBaseService<Long, Pieza, PiezaRepository
 			List<String> clave = Arrays.asList(
 					StringUtils.trimToEmpty(pieza.getCodigo()),
 					StringUtils.trimToEmpty(pieza.getDenominacion()).toLowerCase(Locale.ROOT),
+					StringUtils.trimToEmpty(pieza.getFormula()).toLowerCase(Locale.ROOT),
 					StringUtils.trimToEmpty(pieza.getCodigoCliente()));
 			piezasUnicas.putIfAbsent(clave, pieza);
 		}

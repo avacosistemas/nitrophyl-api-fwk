@@ -27,6 +27,12 @@ public class MoldeRepositoryImpl extends NJBaseRepository<Long, Molde> implement
 
 		NativeQuery<MoldeListadoDTO> createSQLQuery = getCurrentSession().createNativeQuery(query)
 				.setResultSetMapping("MoldeListadoDTOMapper");
+		if (StringUtils.isNotEmpty(filtro.getCodigo()))
+			createSQLQuery.setParameter("codigo", "%" + filtro.getCodigo() + "%");
+		if (StringUtils.isNotEmpty(filtro.getEstado()))
+			createSQLQuery.setParameter("estado", filtro.getEstado());
+		if (StringUtils.isNotEmpty(filtro.getNombre()))
+			createSQLQuery.setParameter("nombre", "%" + filtro.getNombre() + "%");
 
 		List<MoldeListadoDTO> list = createSQLQuery.list();
 
@@ -79,13 +85,13 @@ public class MoldeRepositoryImpl extends NJBaseRepository<Long, Molde> implement
 			query += " and molde.diametro <= " + filtro.getDiametromax();
 
 		if (StringUtils.isNotEmpty(filtro.getCodigo()))
-			query += " and molde.codigo like '%" + filtro.getCodigo() + "%' ";
+			query += " and molde.codigo like :codigo ";
 
 		if (StringUtils.isNotEmpty(filtro.getEstado()))
-			query += " and molde.estado = '" + filtro.getEstado() + "' ";
+			query += " and molde.estado = :estado ";
 
 		if (StringUtils.isNotEmpty(filtro.getNombre()))
-			query += " and molde.nombre like '%" + filtro.getNombre() + "%' ";
+			query += " and molde.nombre like :nombre ";
 
 		if (StringUtils.isNotEmpty(filtro.getIdx()))
 			query += " order by molde." + filtro.getIdx() + (filtro.getAsc() ? " asc " : " desc ");  

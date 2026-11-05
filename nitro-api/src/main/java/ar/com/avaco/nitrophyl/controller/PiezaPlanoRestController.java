@@ -57,7 +57,11 @@ public class PiezaPlanoRestController extends AbstractDTORestController<PiezaPla
 	@Override
 	@RequestMapping(value = "/piezaPlano/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> delete(@PathVariable Long id) throws BusinessException {
-		return super.delete(id);
+		this.service.deleteAssociation(id);
+		JSONResponse response = new JSONResponse();
+		response.setData(true);
+		response.setStatus(JSONResponse.OK);
+		return new ResponseEntity<JSONResponse>(response, HttpStatus.OK);
 	}
 
 	@Resource(name = "piezaPlanoEPService")

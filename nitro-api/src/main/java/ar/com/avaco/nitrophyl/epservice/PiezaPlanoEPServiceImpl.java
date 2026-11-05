@@ -49,4 +49,9 @@ public class PiezaPlanoEPServiceImpl extends
 		return archivoDTO;
 	}
 
+	@Override
+	public void deleteAssociation(Long id) {
+		this.service.deleteAssociation(id);
+	}
+
 }

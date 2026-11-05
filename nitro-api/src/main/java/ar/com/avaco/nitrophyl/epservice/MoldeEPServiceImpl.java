@@ -110,9 +110,9 @@ public class MoldeEPServiceImpl extends CRUDAuditableEPBaseService<Long, MoldeDT
 		molde.setUbicacion(dto.getUbicacion());
 		molde.setCantidadBocas(dto.getCantidadBocas());
 		molde.setTipoMolde(dto.getTipoMolde());
-		Cliente duenio = clienteService.get(dto.getIdClienteDuenio());
 
 		if (!dto.isPropio()) {
+			Cliente duenio = clienteService.get(dto.getIdClienteDuenio());
 			molde.setDuenio(duenio);
 		}
 
@@ -406,14 +406,16 @@ public class MoldeEPServiceImpl extends CRUDAuditableEPBaseService<Long, MoldeDT
 	    entity = service.save(entity); // ahora entity.getId() EXISTE y está MANAGED
 
 	    // 2. Crear relación MoldeCliente CORRECTAMENTE
-	    Cliente cliente = clienteService.get(dto.getIdClienteDuenio());
+	    if (dto.getIdClienteDuenio() != null) {
+	    	Cliente cliente = clienteService.get(dto.getIdClienteDuenio());
 
-	    MoldeCliente mc = new MoldeCliente();
-	    mc.setId(new MoldeClienteId(entity.getId(), cliente.getId()));
-	    mc.setMolde(entity);
-	    mc.setCliente(cliente);
-
-	    entity.getClientes().add(mc);
+		    MoldeCliente mc = new MoldeCliente();
+		    mc.setId(new MoldeClienteId(entity.getId(), cliente.getId()));
+		    mc.setMolde(entity);
+		    mc.setCliente(cliente);
+	
+		    entity.getClientes().add(mc);
+	    }
 
 	    // 3. Dimensiones
 	    setearDimensiones(dto, entity);
