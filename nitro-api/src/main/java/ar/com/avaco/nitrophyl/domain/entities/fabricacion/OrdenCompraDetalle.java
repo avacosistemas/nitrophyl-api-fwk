@@ -1,7 +1,8 @@
 package ar.com.avaco.nitrophyl.domain.entities.fabricacion;
 
-import java.util.HashSet;
 import java.util.Set;
+import java.util.HashSet;
+
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,7 +19,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import ar.com.avaco.fwk.core.domain.AuditableEntity;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.Pieza;
-import ar.com.avaco.nitrophyl.domain.entities.pieza.PiezaReservaStock;
 import ar.com.avaco.nitrophyl.domain.entities.pieza.cliente.Cotizacion;
 
 @Entity
@@ -59,9 +59,6 @@ public class OrdenCompraDetalle extends AuditableEntity<Long> {
 
 	@Column(name = "OBSERVACION")
 	private String observacion;
-
-	@OneToMany(mappedBy = "ordenCompraDetalle")
-	private Set<PiezaReservaStock> reservas = new HashSet<PiezaReservaStock>();
 
 	public Long getId() {
 		return id;
@@ -117,14 +114,6 @@ public class OrdenCompraDetalle extends AuditableEntity<Long> {
 
 	public void setObservacion(String observacion) {
 		this.observacion = observacion;
-	}
-
-	public Set<PiezaReservaStock> getReservas() {
-		return reservas;
-	}
-
-	public void setReservas(Set<PiezaReservaStock> reservas) {
-		this.reservas = reservas;
 	}
 
 	public String getObservacionDescuento() {

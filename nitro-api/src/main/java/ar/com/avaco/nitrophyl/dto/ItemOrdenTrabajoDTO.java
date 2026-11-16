@@ -25,6 +25,15 @@ public class ItemOrdenTrabajoDTO {
 	@JsonProperty("cantidad_total")
 	private Integer cantidadTotal;
 
+	@JsonProperty("cantidad_stock")
+	private Integer cantidadStock;
+
+	@JsonProperty("cantidad_a_fabricar")
+	private Integer cantidadAFabricar;
+
+	@JsonProperty("cantidad_entregada")
+	private Integer cantidadEntregada;
+
 	private String material;
 
 	private String formula;

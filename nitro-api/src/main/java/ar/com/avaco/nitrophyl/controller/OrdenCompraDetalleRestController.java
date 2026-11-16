@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.Map;
 
 import ar.com.avaco.fwk.core.component.controller.AbstractDTORestController;
 import ar.com.avaco.fwk.core.component.dto.JSONResponse;
@@ -17,7 +18,8 @@ import ar.com.avaco.nitrophyl.dto.OrdenCompraDetalleDTO;
 import ar.com.avaco.nitrophyl.epservice.OrdenCompraDetalleEPService;
 
 @RestController
-public class OrdenCompraDetalleRestController extends AbstractDTORestController<OrdenCompraDetalleDTO, Long, OrdenCompraDetalleEPService> {
+public class OrdenCompraDetalleRestController
+		extends AbstractDTORestController<OrdenCompraDetalleDTO, Long, OrdenCompraDetalleEPService> {
 
 	@Override
 	@RequestMapping(value = "/ordenCompraDetalle", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -42,6 +44,13 @@ public class OrdenCompraDetalleRestController extends AbstractDTORestController<
 	@RequestMapping(value = "/ordenCompraDetalle/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> delete(@PathVariable Long id) throws BusinessException {
 		return super.delete(id);
+	}
+
+	@RequestMapping(value = "/ordenCompraDetalle/{id}/cancelar", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<JSONResponse> cancelarPieza(@PathVariable Long id,
+			@RequestBody Map<String, String> operacion) {
+		this.service.cancelarPieza(id, operacion != null ? operacion.get("motivo") : null);
+		return OKDATA(true);
 	}
 
 	@Resource(name = "ordenCompraDetalleEPService")

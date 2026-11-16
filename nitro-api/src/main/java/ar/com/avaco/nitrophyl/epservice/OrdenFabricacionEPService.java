@@ -11,6 +11,9 @@ import ar.com.avaco.nitrophyl.dto.OrdenFabricacionDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenFabricacionFilterDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenTrabajoResponseDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenTrabajoResumenDTO;
+import ar.com.avaco.nitrophyl.dto.AsignacionStockOrdenFabricacionDTO;
+import ar.com.avaco.nitrophyl.dto.PiezaStockLoteDisponibleDTO;
+import ar.com.avaco.nitrophyl.dto.PiezaLoteFabricacionDTO;
 
 public interface OrdenFabricacionEPService extends CRUDEPService<Long, OrdenFabricacionDTO> {
 
@@ -20,11 +23,27 @@ public interface OrdenFabricacionEPService extends CRUDEPService<Long, OrdenFabr
 
 	void asignar(Long idOrdenFabricacion, OrdenFabricacionAsignacionDTO asignacion);
 
+	void asignarStock(Long idOrdenFabricacion, AsignacionStockOrdenFabricacionDTO asignacion);
+
+	List<PiezaStockLoteDisponibleDTO> listarStockDisponible(Long idPieza);
+
+	List<PiezaLoteFabricacionDTO> listarPiezasProducidasAsociadasAlLote(Long idLote);
+
 	OrdenTrabajoResponseDTO generarOrdenTrabajo(Long idOrdenFabricacion);
 
 	Map<String, List<OrdenTrabajoResumenDTO>> generarResumen(List<Long> ids);
 
 	void reordenar(Long idOrdenFabricacion, Integer nuevaPosicion);
+
+	void facturar(Long idOrdenFabricacion);
+
+	void cancelarPedido(Long idOrdenCompraDetallePedido, String motivo);
+
+	void cancelarPieza(Long idOrdenCompraDetalle, String motivo);
+
+	void cancelarOrdenCompra(Long idOrdenCompra, String motivo);
+
+	void modificarCantidadPedido(Long idOrdenCompraDetallePedido, Integer cantidadNueva, String motivo);
 
 
 }

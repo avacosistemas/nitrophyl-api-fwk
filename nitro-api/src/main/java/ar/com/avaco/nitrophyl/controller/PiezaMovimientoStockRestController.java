@@ -31,7 +31,7 @@ public class PiezaMovimientoStockRestController
 
 	@RequestMapping(value = "/pieza/stock/movimiento/ingreso/manual", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> ingresoManual(@RequestBody PiezaMovimientoStockDTO dto) {
-		this.service.registrarIngresoManual(dto.getIdPieza(), dto.getCantidad(), dto.getFecha(), dto.getObservacion());
+		this.service.registrarIngresoManual(dto);
 		return OKDATA(true);
 	}
 

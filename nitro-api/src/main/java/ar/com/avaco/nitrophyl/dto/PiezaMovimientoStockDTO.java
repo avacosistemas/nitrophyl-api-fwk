@@ -4,6 +4,8 @@
 package ar.com.avaco.nitrophyl.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -34,5 +36,8 @@ public class PiezaMovimientoStockDTO extends DTOAuditableEntity<Long> {
 	private String observacion;
 
 	private OrigenMovimientoStock origen;
+
+	@Builder.Default
+	private List<Long> idLotesOrigen = new ArrayList<Long>();
 
 }

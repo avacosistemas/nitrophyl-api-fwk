@@ -79,6 +79,10 @@ public class OrdenCompra extends AuditableEntity<Long> {
 	@Column(name = "OBSERVACIONES")
 	private String observaciones;
 
+	/** Audit marker set when the OC is changed after its OFs have been generated. */
+	@Column(name = "MODIFICADA", nullable = false)
+	private boolean modificada;
+
 	public TipoDespacho getTipoDespacho() {
 		return tipoDespacho;
 	}
@@ -176,6 +180,14 @@ public class OrdenCompra extends AuditableEntity<Long> {
 
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
+	}
+
+	public boolean isModificada() {
+		return modificada;
+	}
+
+	public void setModificada(boolean modificada) {
+		this.modificada = modificada;
 	}
 
 }

@@ -5,6 +5,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import javax.transaction.Transactional;
+import javax.transaction.Transactional;
 
 import javax.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
@@ -12,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ar.com.avaco.fwk.core.exception.BusinessException;
+import ar.com.avaco.fwk.core.exception.ErrorValidationException;
 import ar.com.avaco.nitrophyl.domain.entities.administracion.EmpresaTransporte;
 import ar.com.avaco.nitrophyl.domain.entities.cliente.Cliente;
 import ar.com.avaco.nitrophyl.domain.entities.cliente.ClienteDomicilio;
@@ -26,8 +30,11 @@ import ar.com.avaco.nitrophyl.domain.entities.pieza.cliente.PiezaCliente;
 import ar.com.avaco.nitrophyl.dto.OrdenCompraDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenCompraDetalleDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenCompraDetallePedidoDTO;
+import ar.com.avaco.nitrophyl.dto.OrdenCompraHistorialDTO;
 import ar.com.avaco.nitrophyl.service.fabricacion.OrdenCompraService;
+import ar.com.avaco.nitrophyl.service.fabricacion.OrdenCompraHistorialService;
 import ar.com.avaco.nitrophyl.service.fabricacion.OrdenFabricacionService;
+import ar.com.avaco.nitrophyl.epservice.OrdenFabricacionEPService;
 import ar.com.avaco.nitrophyl.service.pieza.CotizacionService;
 import ar.com.avaco.nitrophyl.service.pieza.PiezaClienteService;
 import ar.com.avaco.nitrophyl.service.pieza.PiezaService;
@@ -56,16 +63,41 @@ public class OrdenCompraEPServiceImpl
 	@Autowired
 	private OrdenFabricacionService ordenFabricacionService;
 
+	@Autowired
+	private OrdenCompraHistorialService historialService;
+
+	@Autowired
+	private OrdenFabricacionEPService ordenFabricacionEPService;
+
 	@Override
+	@Transactional
 	public void generarOrdenFabrica(Long idOC) {
-		OrdenCompra ordenCompra = this.service.get(idOC);
-		ordenFabricacionService.generarOrdenes(ordenCompra.getDetalle());
-		ordenCompra.setEstado(EstadoOrdenCompra.PENDIENTE);
-		this.service.update(ordenCompra);
+		ordenFabricacionEPService.create(idOC);
 	}
-	
+
 	@Override
+	public List<OrdenCompraHistorialDTO> listarHistorial(Long idOC) {
+		this.service.get(idOC);
+		return historialService.listarPorOrdenCompra(idOC).stream().map(h -> {
+			OrdenCompraHistorialDTO dto = new OrdenCompraHistorialDTO();
+			dto.setId(h.getId());
+			dto.setTipoEvento(h.getTipoEvento());
+			dto.setTipoEntidad(h.getTipoEntidad());
+			dto.setIdEntidad(h.getIdEntidad());
+			dto.setMotivo(h.getMotivo());
+			dto.setDetalle(h.getDetalle());
+			dto.setFechaEvento(h.getFechaEvento());
+			return dto;
+		}).collect(Collectors.toList());
+	}
+
+	@Override
+	@Transactional
 	public OrdenCompraDTO save(OrdenCompraDTO dto) throws BusinessException {
+		if (dto.getDetalle() != null && dto.getDetalle().stream().filter(d -> d.getEntregasSolicitadas() != null)
+				.flatMap(d -> d.getEntregasSolicitadas().stream())
+				.anyMatch(p -> p.getCantidad() == null || p.getCantidad() < 0))
+			throw new ErrorValidationException("Las cantidades solicitadas deben ser cero o mayores", null);
 
 		// Armo el cliente
 		Cliente cliente = Cliente.ofId(dto.getIdCliente());
@@ -93,19 +125,17 @@ public class OrdenCompraEPServiceImpl
 		OrdenCompra ordenCompra = new OrdenCompra();
 		ordenCompra.setCliente(cliente);
 		ordenCompra.setComprobante(dto.getComprobante());
-		
-		if (dto.getGenerarOrdenFabrica()) {
-			ordenCompra.setEstado(EstadoOrdenCompra.PENDIENTE);
-		} else {
-			ordenCompra.setEstado(EstadoOrdenCompra.INGRESADA);
-		}
-		
-		ordenCompra.setFecha(LocalDate.parse(dto.getFecha(), DateTimeFormatter.ofPattern(DateUtils.PATTERN_dd_MM_yyyy)));
+
+		boolean generarOrdenFabrica = Boolean.TRUE.equals(dto.getGenerarOrdenFabrica());
+		ordenCompra.setEstado(generarOrdenFabrica ? EstadoOrdenCompra.PENDIENTE : EstadoOrdenCompra.INGRESADA);
+
+		ordenCompra
+				.setFecha(LocalDate.parse(dto.getFecha(), DateTimeFormatter.ofPattern(DateUtils.PATTERN_dd_MM_yyyy)));
 		ordenCompra.setTipoDespacho(dto.getTipoDespacho());
 		ordenCompra.setEmpresaTransporte(transporte);
 		ordenCompra.setDomicilioEnvio(domicilio);
 		ordenCompra.setMediosEnvio(mediosEnvio);
-		
+
 		ordenCompra.setObservaciones(dto.getObservaciones());
 
 		ordenCompra.setArchivo(oca);
@@ -124,7 +154,7 @@ public class OrdenCompraEPServiceImpl
 			detalle.setDescuento(detalleDTO.getDescuento());
 			detalle.setObservacionDescuento(detalleDTO.getObservacionDescuento());
 			detalle.setObservacion(detalleDTO.getObservacion());
-			
+
 			// Si existe una cotizacion y se usa la vigente
 			if (detalleDTO.getIdCotizacion() != null) {
 				detalle.setCotizacion(cotizacionService.get(detalleDTO.getIdCotizacion()));
@@ -174,20 +204,29 @@ public class OrdenCompraEPServiceImpl
 
 		// Guardo la nueva orden de compra
 		this.service.save(ordenCompra);
-
-		if (dto.getGenerarOrdenFabrica()) {
+		if (generarOrdenFabrica) {
 			ordenFabricacionService.generarOrdenes(ordenCompra.getDetalle());
 		}
-		
+
 		return dto;
 
 	}
 
 	@Override
+	@Transactional
 	public OrdenCompraDTO update(OrdenCompraDTO dto) throws BusinessException {
 
 		// Obtengo la OC
 		OrdenCompra ordenCompra = this.service.get(dto.getId());
+		boolean generarOrdenFabrica = Boolean.TRUE.equals(dto.getGenerarOrdenFabrica());
+		boolean tieneOrdenesFabricacion = ordenFabricacionService.existenParaOrdenCompra(ordenCompra.getId());
+		if (tieneOrdenesFabricacion)
+			throw new ErrorValidationException("La OC con OF generadas debe modificarse mediante las acciones específicas",
+					null);
+		if (dto.getDetalle() != null && dto.getDetalle().stream().filter(d -> d.getEntregasSolicitadas() != null)
+				.flatMap(d -> d.getEntregasSolicitadas().stream())
+				.anyMatch(p -> p.getCantidad() == null || p.getCantidad() < 0))
+			throw new ErrorValidationException("Las cantidades solicitadas deben ser cero o mayores", null);
 
 		// Armo el cliente
 		Cliente cliente = Cliente.ofId(dto.getIdCliente());
@@ -206,52 +245,49 @@ public class OrdenCompraEPServiceImpl
 				? String.join(",", dto.getMediosEnvio())
 				: null;
 
-
 		// Armo la orden de compra
 		ordenCompra.setCliente(cliente);
 		ordenCompra.setComprobante(dto.getComprobante());
-		
-		if (dto.getGenerarOrdenFabrica()) {
-			ordenCompra.setEstado(EstadoOrdenCompra.PENDIENTE);
-		} else {
-			ordenCompra.setEstado(EstadoOrdenCompra.INGRESADA);
-		}
-		
-		ordenCompra.setFecha(LocalDate.parse(dto.getFecha(), DateTimeFormatter.ofPattern(DateUtils.PATTERN_dd_MM_yyyy)));
+
+		ordenCompra.setEstado(generarOrdenFabrica ? EstadoOrdenCompra.PENDIENTE : EstadoOrdenCompra.INGRESADA);
+
+		ordenCompra
+				.setFecha(LocalDate.parse(dto.getFecha(), DateTimeFormatter.ofPattern(DateUtils.PATTERN_dd_MM_yyyy)));
 		ordenCompra.setTipoDespacho(dto.getTipoDespacho());
 		ordenCompra.setEmpresaTransporte(transporte);
 		ordenCompra.setDomicilioEnvio(domicilio);
 		ordenCompra.setMediosEnvio(mediosEnvio);
-		
+
 		ordenCompra.setObservaciones(dto.getObservaciones());
 
 		// Si viene un archivo nuevo entonces lo piso, sino dejo el actual.
 		if (dto.getArchivo() != null && dto.getArchivo().getArchivo() != null && dto.getArchivo().getNombre() != null) {
 			// Armo el archivo adjunto
-			OrdenCompraArchivo oca = ordenCompra.getArchivo() == null ? new OrdenCompraArchivo() : ordenCompra.getArchivo();
+			OrdenCompraArchivo oca = ordenCompra.getArchivo() == null ? new OrdenCompraArchivo()
+					: ordenCompra.getArchivo();
 			oca.setArchivo(dto.getArchivo().getArchivo());
 			oca.setNombre(dto.getArchivo().getNombre());
 			ordenCompra.setArchivo(oca);
 		}
 
 		List<OrdenCompraDetalle> detalles = new ArrayList<OrdenCompraDetalle>();
-		
+
 		// Por cada pieza
 		for (OrdenCompraDetalleDTO detalleDTO : dto.getDetalle()) {
-			
+
 			// Armo la pieza
 			Pieza pieza = piezaService.get(detalleDTO.getIdPieza());
 
 			// Armo el detalle
 			OrdenCompraDetalle detalle = new OrdenCompraDetalle();
-			
+
 			// Seteo el id del detalle, sea null o tenga id.
 			detalle.setId(detalleDTO.getId());
 			detalle.setOrdenCompra(ordenCompra);
 			detalle.setPieza(pieza);
-			
+
 			detalle.setObservacion(detalleDTO.getObservacion());
-			
+
 			detalle.setObservacionDescuento(detalleDTO.getObservacionDescuento());
 			detalle.setDescuento(detalleDTO.getDescuento());
 
@@ -289,6 +325,7 @@ public class OrdenCompraEPServiceImpl
 
 				// Armo el pedido, seteo cantidad y fecha estimada de entrega
 				OrdenCompraDetallePedido pedido = new OrdenCompraDetallePedido();
+				pedido.setId(pedidoDTO.getId());
 				pedido.setCantidad(pedidoDTO.getCantidad());
 				pedido.setFechaEntregaSolicitada(LocalDate.parse(pedidoDTO.getFechaEntregaSolicitada(),
 						DateTimeFormatter.ofPattern(DateUtils.PATTERN_dd_MM_yyyy)));
@@ -300,21 +337,19 @@ public class OrdenCompraEPServiceImpl
 
 			// Agrego el detalle a una lista aparte
 			detalles.add(detalle);
-			
+
 		}
 
 		// Limpio del detalle actual
 		ordenCompra.getDetalle().clear();
-		
+
 		// Agrego todo el detalle complet
 		ordenCompra.getDetalle().addAll(detalles);
 
 		this.service.update(ordenCompra);
-		
-		if (dto.getGenerarOrdenFabrica()) {
+		if (generarOrdenFabrica) {
 			ordenFabricacionService.generarOrdenes(ordenCompra.getDetalle());
 		}
-		
 		return dto;
 	}
 
@@ -333,6 +368,7 @@ public class OrdenCompraEPServiceImpl
 				StringUtils.isNotBlank(entity.getMediosEnvio()) ? Arrays.asList(entity.getMediosEnvio().split(","))
 						: new ArrayList<String>());
 		dto.setIdDomicilioEnvio(entity.getDomicilioEnvio() != null ? entity.getDomicilioEnvio().getId() : null);
+		dto.setModificada(entity.isModificada());
 
 		dto.getDetalle().forEach(x -> {
 			Pieza pieza = entity.getDetalle().stream().filter(p -> p.getPieza().getId().equals(x.getIdPieza()))
@@ -352,6 +388,9 @@ public class OrdenCompraEPServiceImpl
 
 	@Override
 	public void cancelar(Long id, String motivo) {
-		this.service.cancelar(id, motivo);
+		if (!ordenFabricacionService.existenParaOrdenCompra(id))
+			throw new ErrorValidationException("La cancelación de una OC está disponible después de generar las OF",
+					null);
+		ordenFabricacionEPService.cancelarOrdenCompra(id, motivo);
 	}
 }

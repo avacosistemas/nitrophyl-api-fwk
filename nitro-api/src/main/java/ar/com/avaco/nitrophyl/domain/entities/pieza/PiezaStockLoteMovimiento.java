@@ -15,6 +15,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import ar.com.avaco.fwk.core.domain.AuditableEntity;
+import ar.com.avaco.nitrophyl.domain.entities.fabricacion.OrdenFabricacionEntrega;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,8 +28,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @EqualsAndHashCode(callSuper = false)
 @Entity
-@Table(name = "PIEZA_MOVIMIENTO_STOCK")
-public class PiezaMovimientoStock extends AuditableEntity<Long> {
+@Table(name = "PIEZA_STOCK_LOTE_MOV")
+public class PiezaStockLoteMovimiento extends AuditableEntity<Long> {
 
 	private static final long serialVersionUID = 7323370582622832488L;
 
@@ -42,14 +43,18 @@ public class PiezaMovimientoStock extends AuditableEntity<Long> {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "ID_PIEZA", nullable = false)
-	private Pieza pieza;
+	@JoinColumn(name = "ID_PIEZA_STOCK_LOTE", nullable = false)
+	private PiezaStockLote piezaStockLote;
 
-	@Column(name = "CANTIDAD", nullable = false)
-	private Integer cantidad;
+	@ManyToOne
+	@JoinColumn(name = "ID_OF_ENTREGA", nullable = true)
+	private OrdenFabricacionEntrega ordenFabricacionEntrega;
 
 	@Column(name = "FECHA", nullable = false)
 	private LocalDate fecha;
+
+	@Column(name = "CANTIDAD", nullable = false)
+	private Integer cantidad;
 
 	@Column(name = "OBSERVACION")
 	private String observacion;

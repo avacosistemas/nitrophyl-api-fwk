@@ -24,6 +24,7 @@ import org.hibernate.annotations.Parameter;
 
 import ar.com.avaco.fwk.core.domain.AuditableEntity;
 import ar.com.avaco.fwk.security.domain.Usuario;
+import ar.com.avaco.nitrophyl.domain.entities.pieza.PiezaStockReserva;
 
 @Entity
 @Table(name = "ORDEN_FABRICACION", uniqueConstraints = {
@@ -63,6 +64,9 @@ public class OrdenFabricacion extends AuditableEntity<Long> {
 
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "ordenFabricacion")
 	private Set<OrdenFabricacionEntrega> entregas = new HashSet<OrdenFabricacionEntrega>();
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "ordenFabricacion")
+	private Set<PiezaStockReserva> reservas = new HashSet<PiezaStockReserva>();
 
 	@ManyToOne
 	@JoinColumn(name = "ID_SEC_FAB", nullable = true)
@@ -131,6 +135,14 @@ public class OrdenFabricacion extends AuditableEntity<Long> {
 
 	public void setEntregas(Set<OrdenFabricacionEntrega> entregas) {
 		this.entregas = entregas;
+	}
+
+	public Set<PiezaStockReserva> getReservas() {
+		return reservas;
+	}
+
+	public void setReservas(Set<PiezaStockReserva> reservas) {
+		this.reservas = reservas;
 	}
 
 	public SectorFabrica getSector() {

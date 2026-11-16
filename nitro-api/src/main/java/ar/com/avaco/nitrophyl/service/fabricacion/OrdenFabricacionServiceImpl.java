@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import ar.com.avaco.fwk.core.component.service.NJBaseService;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.EstadoOrdenFabricacion;
+import ar.com.avaco.nitrophyl.domain.entities.fabricacion.EstadoOrdenCompra;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.OrdenCompraDetalle;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.OrdenCompraDetallePedido;
 import ar.com.avaco.nitrophyl.domain.entities.fabricacion.OrdenFabricacion;
@@ -38,6 +39,44 @@ public class OrdenFabricacionServiceImpl extends NJBaseService<Long, OrdenFabric
 			}
 		}
 		this.save(ordenes);
+	}
+
+	@Override
+	public boolean existenParaOrdenCompra(Long idOrdenCompra) {
+		return repository.existenParaOrdenCompra(idOrdenCompra);
+	}
+
+	@Override
+	public List<OrdenFabricacion> listarPorOrdenCompra(Long idOrdenCompra) {
+		return repository.listarPorOrdenCompra(idOrdenCompra);
+	}
+
+	@Override
+	public java.util.Optional<OrdenFabricacion> buscarPorPedidoId(Long idPedido) {
+		return repository.buscarPorPedidoId(idPedido);
+	}
+
+	@Override
+	public EstadoOrdenCompra calcularEstadoOrdenCompra(Long idOrdenCompra) {
+		List<OrdenFabricacion> ordenes = repository.listarPorOrdenCompra(idOrdenCompra);
+		if (!ordenes.isEmpty() && ordenes.stream().allMatch(of -> of.getEstado() == EstadoOrdenFabricacion.CANCELADA)) {
+			return EstadoOrdenCompra.CANCELADA;
+		}
+		if (!ordenes.isEmpty() && ordenes.stream().allMatch(of -> of.getEstado() == EstadoOrdenFabricacion.FACTURADA
+				|| of.getEstado() == EstadoOrdenFabricacion.CANCELADA)) {
+			return EstadoOrdenCompra.FACTURADA;
+		}
+		if (!ordenes.isEmpty() && ordenes.stream()
+				.allMatch(of -> of.getEstado() == EstadoOrdenFabricacion.FINALIZADA
+						|| of.getEstado() == EstadoOrdenFabricacion.FACTURADA
+						|| of.getEstado() == EstadoOrdenFabricacion.CANCELADA)) {
+			return EstadoOrdenCompra.FINALIZADA;
+		}
+		if (ordenes.stream().anyMatch(of -> of.getEstado() == EstadoOrdenFabricacion.EN_PROCESO
+				|| of.getEstado() == EstadoOrdenFabricacion.FINALIZADA)) {
+			return EstadoOrdenCompra.EN_PROCESO;
+		}
+		return EstadoOrdenCompra.PENDIENTE;
 	}
 
 	private OrdenFabricacion generarOrdenFabricacion(OrdenCompraDetallePedido pedido) {

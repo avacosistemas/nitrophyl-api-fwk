@@ -16,6 +16,7 @@ import ar.com.avaco.fwk.core.component.dto.JSONResponse;
 import ar.com.avaco.fwk.core.component.dto.PageDTO;
 import ar.com.avaco.fwk.core.exception.BusinessException;
 import ar.com.avaco.nitrophyl.dto.OrdenFabricacionEntregaDTO;
+import ar.com.avaco.nitrophyl.dto.AccionEntregaOrdenFabricacionDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenFabricacionEntregaFilterDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenFabricacionEntregaGrillaDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenFabricacionEntregaListadoDTO;
@@ -47,6 +48,20 @@ public class OrdenFabricacionEntregaRestController
 		JSONResponse response = new JSONResponse();
 		response.setStatus(JSONResponse.OK);
 		return new ResponseEntity<JSONResponse>(response, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/ordenFabricacion/entregas/{idEntrega}/cancelar", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<JSONResponse> cancelar(@PathVariable Long idEntrega,
+			@RequestBody AccionEntregaOrdenFabricacionDTO accion) {
+		this.service.cancelar(idEntrega, accion);
+		return OKDATA(true);
+	}
+
+	@RequestMapping(value = "/ordenFabricacion/entregas/{idEntrega}/reasignar", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<JSONResponse> reasignar(@PathVariable Long idEntrega,
+			@RequestBody AccionEntregaOrdenFabricacionDTO accion) {
+		this.service.reasignar(idEntrega, accion);
+		return OKDATA(true);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package ar.com.avaco.nitrophyl.repository.fabricacion;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +13,18 @@ import ar.com.avaco.nitrophyl.dto.ResumenMaquinaOrdenTrabajoDTO;
 
 public interface OrdenFabricacionRepository
 		extends NJRepository<Long, OrdenFabricacion>, OrdenFabricacionRepositoryCustom {
+
+	@Query(value = "SELECT EXISTS (SELECT 1 FROM orden_fabricacion ofab "
+			+ "JOIN orden_compra_detalle_pedido ocdp ON ocdp.id_orden_compra_detalle_pedido = ofab.id_oc_det_pedido "
+			+ "JOIN orden_compra_detalle ocd ON ocd.id_orden_compra_detalle = ocdp.id_orden_compra_detalle "
+			+ "WHERE ocd.id_orden_compra = :idOrdenCompra)", nativeQuery = true)
+	boolean existenParaOrdenCompra(@Param("idOrdenCompra") Long idOrdenCompra);
+
+	@Query("SELECT ofab FROM OrdenFabricacion ofab WHERE ofab.ordenCompraDetallePedido.ordenCompraDetalle.ordenCompra.id = :idOrdenCompra")
+	List<OrdenFabricacion> listarPorOrdenCompra(@Param("idOrdenCompra") Long idOrdenCompra);
+
+	@Query("SELECT ofab FROM OrdenFabricacion ofab JOIN FETCH ofab.ordenCompraDetallePedido pedido WHERE pedido.id = :idPedido")
+	Optional<OrdenFabricacion> buscarPorPedidoId(@Param("idPedido") Long idPedido);
 
 	@Query(value = "SELECT EXISTS ( " + "    SELECT 1 " + "    FROM orden_fabricacion of2 "
 			+ "    INNER JOIN orden_compra_detalle_pedido ocdp2 "
@@ -25,7 +38,7 @@ public interface OrdenFabricacionRepository
 			+ "            ON ocd.id_orden_compra_detalle = ocdp.id_orden_compra_detalle "
 			+ "        WHERE of1.id_orden_fabricacion = :idOrdenFabricacion " + "    ) "
 			+ "    AND of2.id_orden_fabricacion <> :idOrdenFabricacion "
-			+ "    AND UPPER(COALESCE(of2.estado, '')) <> 'FINALIZADA' " + ")", nativeQuery = true)
+			+ "    AND UPPER(COALESCE(of2.estado, '')) NOT IN ('FINALIZADA', 'CANCELADA') " + ")", nativeQuery = true)
 	boolean existenOrdenesNoFinalizadasMismaOC(@Param("idOrdenFabricacion") Long idOrdenFabricacion);
 
 	@Query("SELECT new ar.com.avaco.nitrophyl.dto.ResumenMaquinaOrdenTrabajoDTO(" +

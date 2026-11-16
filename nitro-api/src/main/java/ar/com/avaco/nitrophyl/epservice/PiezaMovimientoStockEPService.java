@@ -10,4 +10,6 @@ public interface PiezaMovimientoStockEPService extends CRUDEPService<Long, Pieza
 
 	void registrarIngresoManual(Long idProducto, Integer cantidad, LocalDate fecha, String observacion);
 
+	void registrarIngresoManual(PiezaMovimientoStockDTO dto);
+
 }

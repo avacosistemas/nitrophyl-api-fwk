@@ -16,6 +16,7 @@ import ar.com.avaco.fwk.core.component.controller.AbstractDTORestController;
 import ar.com.avaco.fwk.core.component.dto.JSONResponse;
 import ar.com.avaco.fwk.core.component.dto.PageDTO;
 import ar.com.avaco.fwk.core.exception.BusinessException;
+import ar.com.avaco.nitrophyl.dto.OrdenCompraCancelarDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenCompraDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenCompraListadoDTO;
 import ar.com.avaco.nitrophyl.epservice.OrdenCompraEPService;
@@ -59,17 +60,16 @@ public class OrdenCompraRestController
 		return OKDATA(true);
 	}
 
-	@RequestMapping(value = "/ordenCompra/cancelar/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<JSONResponse> cancelar(@PathVariable Long id, @RequestBody Map<String, String> body)
-			throws BusinessException {
-		this.service.cancelar(id, body.get("observaciones"));
-		return OKDATA(id);
+	@RequestMapping(value = "/ordenCompra/{id}/historial", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<JSONResponse> historial(@PathVariable Long id) {
+		return OKDATA(this.service.listarHistorial(id));
 	}
 
-	@Override
-	@RequestMapping(value = "/ordenCompra/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<JSONResponse> delete(@PathVariable Long id) throws BusinessException {
-		return super.delete(id);
+	@RequestMapping(value = "/ordenCompra/cancelar/{id}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<JSONResponse> cancelar(@PathVariable Long id, @RequestBody OrdenCompraCancelarDTO body)
+			throws BusinessException {
+		this.service.cancelar(id, body.getObservaciones());
+		return OKDATA(id);
 	}
 
 	@Override

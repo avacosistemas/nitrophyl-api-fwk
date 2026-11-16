@@ -23,6 +23,8 @@ import ar.com.avaco.nitrophyl.dto.OrdenFabricacionDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenFabricacionFilterDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenTrabajoResponseDTO;
 import ar.com.avaco.nitrophyl.dto.OrdenTrabajoResumenDTO;
+import ar.com.avaco.nitrophyl.dto.AsignacionStockOrdenFabricacionDTO;
+import ar.com.avaco.nitrophyl.dto.PiezaLoteFabricacionDTO;
 import ar.com.avaco.nitrophyl.epservice.OrdenFabricacionEPService;
 
 @RestController
@@ -52,9 +54,32 @@ public class OrdenFabricacionRestController
 		return new ResponseEntity<JSONResponse>(response, HttpStatus.OK);
 	}
 
+	@RequestMapping(value = "/ordenFabricacion/{idOrdenFabricacion}/asignarStock", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<JSONResponse> asignarStock(@PathVariable Long idOrdenFabricacion,
+			@RequestBody AsignacionStockOrdenFabricacionDTO asignacion) {
+		this.service.asignarStock(idOrdenFabricacion, asignacion);
+		return OKDATA(true);
+	}
+
+	@RequestMapping(value = "/ordenFabricacion/stockDisponible/{idPieza}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<JSONResponse> stockDisponible(@PathVariable Long idPieza) {
+		return OKDATA(this.service.listarStockDisponible(idPieza));
+	}
+
+	@RequestMapping(value = "/ordenFabricacion/{idOrdenFabricacion}/facturar", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<JSONResponse> facturar(@PathVariable Long idOrdenFabricacion) {
+		this.service.facturar(idOrdenFabricacion);
+		return OKDATA(true);
+	}
+
+	@RequestMapping(value = "/ordenFabricacion/lote/{idLote}/piezas", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<JSONResponse> piezasProducidasPorLote(@PathVariable Long idLote) {
+		List<PiezaLoteFabricacionDTO> piezas = this.service.listarPiezasProducidasAsociadasAlLote(idLote);
+		return OKDATA(piezas);
+	}
+
 	@RequestMapping(value = "/ordenFabricacion/reordenar/{idOrdenFabricacion}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<JSONResponse> asignar(@PathVariable Long idOrdenFabricacion,
-			Integer nuevaPosicion) {
+	public ResponseEntity<JSONResponse> asignar(@PathVariable Long idOrdenFabricacion, Integer nuevaPosicion) {
 		this.service.reordenar(idOrdenFabricacion, nuevaPosicion);
 		JSONResponse response = new JSONResponse();
 		response.setStatus(JSONResponse.OK);

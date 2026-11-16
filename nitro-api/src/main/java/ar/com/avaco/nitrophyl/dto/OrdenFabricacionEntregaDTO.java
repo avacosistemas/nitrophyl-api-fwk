@@ -21,6 +21,8 @@ public class OrdenFabricacionEntregaDTO extends DTOAuditableEntity<Long> {
 
 	private Long idUsuario;
 
+	private String observaciones;
+
 	private List<LoteEntregaDTO> lotes = new ArrayList<LoteEntregaDTO>();
 
 	private EmpleadoDTO operario;
@@ -52,6 +54,9 @@ public class OrdenFabricacionEntregaDTO extends DTOAuditableEntity<Long> {
 	public Long getIdUsuario() {
 		return idUsuario;
 	}
+
+	public String getObservaciones() { return observaciones; }
+	public void setObservaciones(String observaciones) { this.observaciones = observaciones; }
 
 	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;

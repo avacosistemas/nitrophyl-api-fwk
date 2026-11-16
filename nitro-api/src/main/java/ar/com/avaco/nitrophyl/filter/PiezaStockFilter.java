@@ -32,13 +32,13 @@ public class PiezaStockFilter extends AbstractFilter {
 		List<FilterData> filters = new ArrayList<FilterData>();
 
 		if (StringUtils.isNotBlank(denominacion))
-			filters.add(new FilterData("pieza.denominacion", denominacion, FilterDataType.LIKE));
+			filters.add(new FilterData("piezaStock.pieza.denominacion", denominacion, FilterDataType.LIKE));
 
 		if (idFormula != null)
-			filters.add(new FilterData("pieza.detalleFormula.formula.id", idFormula, FilterDataType.EQUALS));
+			filters.add(new FilterData("piezaStock.pieza.detalleFormula.formula.id", idFormula, FilterDataType.EQUALS));
 
 		if (codigo != null)
-			filters.add(new FilterData("pieza.codigo", codigo, FilterDataType.LIKE));
+			filters.add(new FilterData("piezaStock.pieza.codigo", codigo, FilterDataType.LIKE));
 
 		return filters;
 	}

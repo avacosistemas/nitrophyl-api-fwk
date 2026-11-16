@@ -4,6 +4,8 @@ public enum EstadoOrdenFabricacion {
 
 	PENDIENTE,
 	EN_PROCESO,
-	FINALIZADA
+	FINALIZADA,
+	FACTURADA,
+	CANCELADA
 	
 }

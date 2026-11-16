@@ -169,9 +169,6 @@ public class Pieza extends AuditableEntity<Long> {
 	@Column(name = "OBSERVACIONES_REVISION")
 	private String observacionesRevision;
 
-	@OneToOne(mappedBy = "pieza", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	private PiezaStock stock;
-
 	public static Pieza ofId(Long id) {
 		Pieza pieza = new Pieza();
 		pieza.setId(id);
@@ -368,14 +365,6 @@ public class Pieza extends AuditableEntity<Long> {
 		this.observacionesRevision = observacionesRevision;
 	}
 
-	public PiezaStock getStock() {
-		return stock;
-	}
-
-	public void setStock(PiezaStock stock) {
-		this.stock = stock;
-	}
-	
 	public String getDescripcion() {
 		return "(" + this.codigo + ") " + this.denominacion;
 	}

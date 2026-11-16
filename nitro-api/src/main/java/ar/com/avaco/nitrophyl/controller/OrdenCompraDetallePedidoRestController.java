@@ -14,10 +14,12 @@ import ar.com.avaco.fwk.core.component.controller.AbstractDTORestController;
 import ar.com.avaco.fwk.core.component.dto.JSONResponse;
 import ar.com.avaco.fwk.core.exception.BusinessException;
 import ar.com.avaco.nitrophyl.dto.OrdenCompraDetallePedidoDTO;
+import ar.com.avaco.nitrophyl.dto.OperacionOrdenCompraDetallePedidoDTO;
 import ar.com.avaco.nitrophyl.epservice.OrdenCompraDetallePedidoEPService;
 
 @RestController
-public class OrdenCompraDetallePedidoRestController extends AbstractDTORestController<OrdenCompraDetallePedidoDTO, Long, OrdenCompraDetallePedidoEPService> {
+public class OrdenCompraDetallePedidoRestController
+		extends AbstractDTORestController<OrdenCompraDetallePedidoDTO, Long, OrdenCompraDetallePedidoEPService> {
 
 	@Override
 	@RequestMapping(value = "/ordenCompraDetallePedido", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -42,6 +44,20 @@ public class OrdenCompraDetallePedidoRestController extends AbstractDTORestContr
 	@RequestMapping(value = "/ordenCompraDetallePedido/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> delete(@PathVariable Long id) throws BusinessException {
 		return super.delete(id);
+	}
+
+	@RequestMapping(value = "/ordenCompraDetallePedido/{id}/cantidad", method = RequestMethod.PATCH, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<JSONResponse> modificarCantidad(@PathVariable Long id,
+			@RequestBody OperacionOrdenCompraDetallePedidoDTO operacion) {
+		this.service.modificarCantidad(id, operacion);
+		return OKDATA(true);
+	}
+
+	@RequestMapping(value = "/ordenCompraDetallePedido/{id}/cancelar", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<JSONResponse> cancelar(@PathVariable Long id,
+			@RequestBody OperacionOrdenCompraDetallePedidoDTO operacion) {
+		this.service.cancelar(id, operacion != null ? operacion.getMotivo() : null);
+		return OKDATA(true);
 	}
 
 	@Resource(name = "ordenCompraDetallePedidoEPService")

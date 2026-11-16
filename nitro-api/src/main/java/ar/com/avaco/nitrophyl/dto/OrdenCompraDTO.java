@@ -34,6 +34,10 @@ public class OrdenCompraDTO extends DTOAuditableEntity<Long> {
 
 	private Boolean generarOrdenFabrica;
 
+	private Boolean modificada;
+
+	private String motivoOperacion;
+
 	public TipoDespacho getTipoDespacho() {
 		return tipoDespacho;
 	}
@@ -129,6 +133,11 @@ public class OrdenCompraDTO extends DTOAuditableEntity<Long> {
 	public void setGenerarOrdenFabrica(Boolean generarOrdenFabrica) {
 		this.generarOrdenFabrica = generarOrdenFabrica;
 	}
+
+	public Boolean getModificada() { return modificada; }
+	public void setModificada(Boolean modificada) { this.modificada = modificada; }
+	public String getMotivoOperacion() { return motivoOperacion; }
+	public void setMotivoOperacion(String motivoOperacion) { this.motivoOperacion = motivoOperacion; }
 
 	public String getObservaciones() {
 		return observaciones;

@@ -21,6 +21,7 @@ import ar.com.avaco.fwk.core.domain.AuditableEntity;
 import ar.com.avaco.fwk.security.domain.Usuario;
 import ar.com.avaco.nitrophyl.domain.entities.lote.Lote;
 
+/** Immutable production event: quantity, date, lots, operator, and OF. */
 @Entity
 @Table(name = "ORDEN_FABRICACION_ENTREGA")
 public class OrdenFabricacionEntrega extends AuditableEntity<Long> {
