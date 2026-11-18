@@ -25,13 +25,12 @@ public class CotizacionServiceImpl extends NJBaseService<Long, Cotizacion, Cotiz
 	}
 
 	@Override
+	public boolean existsByPiezaCliente(Long idPiezaCliente) {
+		return this.repository.existsByPiezaCliente_Id(idPiezaCliente);
+	}
+
+	@Override
 	public PageDTO<CotizacionDTO> listCotizaciones(CotizacionFilterDTO filter) {
-		
-		if (filter.getIdPieza() != null) {
-			Pieza one = piezaRepository.getOne(filter.getIdPieza());
-			filter.setCodigo(one.getCodigo());
-		}
-		
 		return this.repository.list(filter);
 	}
 	

@@ -15,6 +15,8 @@ public class CotizacionDTO extends DTOAuditableEntity<Long> {
 	private String pieza;
 	private Long idPieza;
 
+	private String codigoPieza;
+	
 	private String formula;
 
 	private Double valor;
@@ -29,7 +31,7 @@ public class CotizacionDTO extends DTOAuditableEntity<Long> {
 	}
 
 	public CotizacionDTO(Long id, String cliente, Long idCliente, String pieza, Long idPieza, String formula,
-			Double valor, Date fecha, String observaciones, Long revisionPieza) {
+			Double valor, Date fecha, String observaciones, Long revisionPieza, String codigoPieza) {
 		this.id = id;
 		this.cliente = cliente;
 		this.idCliente = idCliente;
@@ -40,6 +42,17 @@ public class CotizacionDTO extends DTOAuditableEntity<Long> {
 		this.fecha = fecha;
 		this.observaciones = observaciones;
 		this.revisionPieza = revisionPieza;
+		this.codigoPieza = codigoPieza;
+	}
+	
+	
+
+	public String getCodigoPieza() {
+		return codigoPieza;
+	}
+
+	public void setCodigoPieza(String codigoPieza) {
+		this.codigoPieza = codigoPieza;
 	}
 
 	public Double getValor() {

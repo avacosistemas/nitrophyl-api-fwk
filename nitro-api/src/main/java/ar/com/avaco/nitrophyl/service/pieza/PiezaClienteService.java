@@ -7,4 +7,6 @@ public interface PiezaClienteService extends NJService<Long, PiezaCliente> {
 
 	PiezaCliente getByPiezaCliente(Long idCliente, Long idPieza);
 
+	boolean hasCotizaciones(Long idPiezaCliente);
+
 }

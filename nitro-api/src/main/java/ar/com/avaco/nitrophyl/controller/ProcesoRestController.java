@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ar.com.avaco.fwk.core.component.controller.AbstractDTORestController;
 import ar.com.avaco.fwk.core.component.dto.JSONResponse;
 import ar.com.avaco.fwk.core.exception.BusinessException;
+import ar.com.avaco.nitrophyl.dto.BombeoDTO;
 import ar.com.avaco.nitrophyl.dto.DesmoldantepostcuraPUTDTO;
 import ar.com.avaco.nitrophyl.dto.MoldeoPUTDTO;
 import ar.com.avaco.nitrophyl.dto.ProcesoDTO;

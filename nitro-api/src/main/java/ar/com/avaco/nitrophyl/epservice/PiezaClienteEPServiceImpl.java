@@ -12,6 +12,7 @@ import ar.com.avaco.nitrophyl.domain.entities.pieza.cliente.PiezaCliente;
 import ar.com.avaco.nitrophyl.dto.CotizacionDTO;
 import ar.com.avaco.nitrophyl.dto.PiezaClienteDTO;
 import ar.com.avaco.nitrophyl.service.pieza.PiezaClienteService;
+import ar.com.avaco.nitrophyl.service.pieza.PiezaService;
 import ar.com.avaco.fwk.core.component.epservice.CRUDAuditableEPBaseService;
 
 @Service("piezaClienteEPService")
@@ -20,6 +21,7 @@ public class PiezaClienteEPServiceImpl
 		implements PiezaClienteEPService {
 
 	private CotizacionEPService cotizacionEPService;
+	private PiezaService piezaService;
 	
 	public PiezaClienteEPServiceImpl() {
 		super(PiezaCliente.class, PiezaClienteDTO.class);
@@ -70,7 +72,19 @@ public class PiezaClienteEPServiceImpl
 		}
 		return save;
 	}
-	
+
+	@Override
+	public void remove(Long id) {
+		if (this.service.hasCotizaciones(id)) {
+			throw new ErrorValidationException("No se puede eliminar la pieza del cliente porque tiene cotizaciones asociadas", null);
+		}
+
+		PiezaCliente piezaCliente = this.service.get(id);
+		Pieza pieza = piezaCliente.getPieza();
+		pieza.getClientes().remove(piezaCliente);
+		this.piezaService.update(pieza);
+	}
+
 	@Override
 	@Resource(name = "piezaClienteService")
 	protected void setService(PiezaClienteService service) {
@@ -80,6 +94,11 @@ public class PiezaClienteEPServiceImpl
 	@Resource(name = "cotizacionEPService")
 	public void setCotizacionEPService(CotizacionEPService cotizacionEPService) {
 		this.cotizacionEPService = cotizacionEPService;
+	}
+
+	@Resource(name = "piezaService")
+	public void setPiezaService(PiezaService piezaService) {
+		this.piezaService = piezaService;
 	}
 	
 }

@@ -42,7 +42,8 @@ public class CotizacionRepositoryImpl extends NJBaseRepository<Long, Cotizacion>
 				.append(" c.piezaCliente.pieza.detalleFormula.formula.nombre, ").append(" c.valor, ")
 				.append(" c.fecha, ")
 				.append(" c.observaciones , ")
-				.append(" c.piezaCliente.pieza.revision) ")
+				.append(" c.piezaCliente.pieza.revision, ")
+				.append(" c.piezaCliente.pieza.codigo) ")
 				.append(" FROM Cotizacion c ")
 				.append(" WHERE 1=1 ");
 
@@ -50,7 +51,7 @@ public class CotizacionRepositoryImpl extends NJBaseRepository<Long, Cotizacion>
 			sb.append(" AND c.piezaCliente.cliente.id = :idCliente ");
 		}
 		if (idPieza != null) {
-			sb.append(" AND c.piezaCliente.pieza.codigo = :codigo ");
+			sb.append(" AND c.piezaCliente.pieza.id = :idPieza ");
 		}
 
 		if (Boolean.TRUE.equals(soloVigentes)) {
@@ -76,7 +77,7 @@ public class CotizacionRepositoryImpl extends NJBaseRepository<Long, Cotizacion>
 			query.setParameter("idCliente", idCliente);
 		}
 		if (idPieza != null) {
-			query.setParameter("codigo", filter.getCodigo());
+			query.setParameter("idPieza", idPieza);
 		}
 
 		if (first != null && first > 0) {

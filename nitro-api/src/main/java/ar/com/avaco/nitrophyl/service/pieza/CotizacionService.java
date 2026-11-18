@@ -10,6 +10,8 @@ public interface CotizacionService extends NJService<Long, Cotizacion> {
 
 	Cotizacion getCotizacionVigente(Long idPiezaCliente);
 
+	boolean existsByPiezaCliente(Long idPiezaCliente);
+
 	PageDTO<CotizacionDTO> listCotizaciones(CotizacionFilterDTO filter);
 	
 }

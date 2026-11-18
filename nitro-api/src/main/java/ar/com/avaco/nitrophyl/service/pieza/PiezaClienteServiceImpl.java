@@ -31,11 +31,16 @@ public class PiezaClienteServiceImpl extends NJBaseService<Long, PiezaCliente, P
 			return byPiezaAndCliente.get();
 		return null;
 	}
+
+	@Override
+	public boolean hasCotizaciones(Long idPiezaCliente) {
+		return cotizacionService.existsByPiezaCliente(idPiezaCliente);
+	}
 	
 	@Override
 	public void remove(Long id) {
-		if (cotizacionService.getCotizacionVigente(id) != null) {
-			throw new ErrorValidationException("No se puede desasociar el cliente porque tiene una o varias cotizaciones asociadas", null);
+		if (hasCotizaciones(id)) {
+			throw new ErrorValidationException("No se puede eliminar la pieza del cliente porque tiene cotizaciones asociadas", null);
 		}
 		super.remove(id);
 	}

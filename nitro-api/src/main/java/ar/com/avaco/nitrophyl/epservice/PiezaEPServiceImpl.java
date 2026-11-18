@@ -514,6 +514,7 @@ public class PiezaEPServiceImpl extends CRUDAuditableEPBaseService<Long, PiezaDT
 					b.setPresion(bb.getPresion());
 					b.setProceso(proceso);
 					b.setTipo(bb.getTipo());
+					b.setPosicion(bb.getPosicion());
 					proceso.getBombeos().add(b);
 				}
 			}

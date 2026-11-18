@@ -1,6 +1,8 @@
 package ar.com.avaco.nitrophyl.controller;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
@@ -18,6 +20,7 @@ import ar.com.avaco.fwk.core.component.controller.AbstractDTORestController;
 import ar.com.avaco.fwk.core.component.dto.JSONResponse;
 import ar.com.avaco.fwk.core.component.dto.PageDTO;
 import ar.com.avaco.fwk.core.exception.BusinessException;
+import ar.com.avaco.nitrophyl.dto.BombeoDTO;
 import ar.com.avaco.nitrophyl.dto.PiezaBaseDTO;
 import ar.com.avaco.nitrophyl.dto.PiezaComboDTO;
 import ar.com.avaco.nitrophyl.dto.PiezaCreacionDTO;
@@ -46,8 +49,7 @@ public class PiezaRestController extends AbstractDTORestController<PiezaDTO, Lon
 
 	@RequestMapping(value = "/pieza/combo", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> listombo(@RequestParam(required = false) String nombre,
-			@RequestParam(required = false) Long idCliente,
-			@RequestParam(required = false) Boolean soloDelCliente) {
+			@RequestParam(required = false) Long idCliente, @RequestParam(required = false) Boolean soloDelCliente) {
 		boolean filtrarPorCliente = soloDelCliente != null ? soloDelCliente.booleanValue() : idCliente != null;
 		List<PiezaComboDTO> list = this.service.listCombo(nombre, idCliente, filtrarPorCliente);
 		JSONResponse response = new JSONResponse();
@@ -59,6 +61,14 @@ public class PiezaRestController extends AbstractDTORestController<PiezaDTO, Lon
 	@RequestMapping(value = "/pieza/{idPieza}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<JSONResponse> getByIdEdicion(@PathVariable Long idPieza) {
 		PiezaEdicionDTO pieza = this.service.getByIdEdicion(idPieza);
+		List<BombeoDTO> bombeosOrdenados = pieza.getBombeos().stream()
+			    .sorted(Comparator.comparing(
+			        BombeoDTO::getPosicion,
+			        Comparator.nullsLast(Comparator.naturalOrder())
+			    ))
+			    .collect(Collectors.toList());
+		pieza.getBombeos().clear();
+		pieza.getBombeos().addAll(bombeosOrdenados);
 		JSONResponse response = new JSONResponse();
 		response.setData(pieza);
 		response.setStatus(JSONResponse.OK);

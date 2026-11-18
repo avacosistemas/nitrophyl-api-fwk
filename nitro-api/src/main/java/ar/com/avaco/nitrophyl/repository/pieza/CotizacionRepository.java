@@ -9,4 +9,6 @@ public interface CotizacionRepository extends NJRepository<Long, Cotizacion>, Co
 
 	Optional<Cotizacion> findFirstByPiezaClienteIdOrderByFechaDesc(Long clientePiezaId);
 
+	boolean existsByPiezaCliente_Id(Long idPiezaCliente);
+
 }
